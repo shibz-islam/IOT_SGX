@@ -1,0 +1,9 @@
+//
+// Created by shihab on 9/11/19.
+//
+
+#ifndef IOTENCLAVE_ENCLAVEHELPER_H
+#define IOTENCLAVE_ENCLAVEHELPER_H
+
+
+#endif //IOTENCLAVE_ENCLAVEHELPER_H
