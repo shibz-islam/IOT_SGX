@@ -73,6 +73,8 @@ enclave {
 
     	public void ecall_decrypt_message([user_check] struct message* msg);
     	public void ecall_encrypt_message([user_check] struct message* msg);
+
+    	public void ecall_decrypt_rule([user_check] struct message* msg);
     };
 
 

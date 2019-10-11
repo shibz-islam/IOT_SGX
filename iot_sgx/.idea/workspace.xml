@@ -11,7 +11,23 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="475cbf6d-f6e1-4415-b1d2-dcb9052363c8" name="Default Changelist" comment="" />
+    <list default="true" id="475cbf6d-f6e1-4415-b1d2-dcb9052363c8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_Code/kafkaConsumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/kafkaConsumer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_Code/kafkaProd.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/kafkaProd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_Code/socketClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/socketClient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/App.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/JSONParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/JSONParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/SocketConnection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/SocketConnection.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/SocketConnection.h" beforeDir="false" afterPath="$PROJECT_DIR$/App/SocketConnection.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/Enclave.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/Enclave.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/Enclave.edl" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/Enclave.edl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/MessageParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/MessageParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/RuleBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/RuleBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleBase.h" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,33 +89,33 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="93" />
-          <entry key="cpp" value="6511" />
-          <entry key="edl" value="268" />
-          <entry key="h" value="404" />
+          <entry key="cpp" value="7681" />
+          <entry key="edl" value="274" />
+          <entry key="h" value="614" />
           <entry key="py" value="67" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="6915" />
-          <entry key="PLAIN_TEXT" value="361" />
+          <entry key="ObjectiveC" value="8295" />
+          <entry key="PLAIN_TEXT" value="367" />
           <entry key="Python" value="67" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="Makefile" value="8" />
+          <entry key="Makefile" value="9" />
           <entry key="c" value="4" />
-          <entry key="cpp" value="38" />
+          <entry key="cpp" value="39" />
           <entry key="edl" value="4" />
-          <entry key="h" value="63" />
+          <entry key="h" value="72" />
           <entry key="py" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ObjectiveC" value="105" />
-          <entry key="PLAIN_TEXT" value="12" />
+          <entry key="ObjectiveC" value="115" />
+          <entry key="PLAIN_TEXT" value="13" />
           <entry key="Python" value="2" />
         </counts>
       </usages-collector>
@@ -110,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/App.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1365">
-              <caret line="262" column="27" selection-start-line="262" selection-start-column="21" selection-end-line="262" selection-end-column="27" />
+            <state relative-caret-position="341">
+              <caret line="376" selection-start-line="376" selection-end-line="376" />
               <folding>
                 <element signature="e#1604#1622#0" expanded="true" />
                 <element signature="e#4115#4711#0" />
@@ -122,13 +138,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/SocketConnection.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="601">
+              <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
+              <folding>
+                <element signature="e#39#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/JSONParser.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-150">
-              <caret line="26" column="29" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="29" />
-              <folding>
-                <element signature="e#39#62#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="25">
+              <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -136,8 +161,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/Enclave.edl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
+            <state relative-caret-position="461">
+              <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -145,8 +170,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/Enclave.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+            <state relative-caret-position="536">
+              <caret line="157" column="28" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="28" />
               <folding>
                 <element signature="e#1603#1623#0" expanded="true" />
               </folding>
@@ -154,11 +179,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+            <state relative-caret-position="1215">
+              <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
               <folding>
                 <element signature="e#40#61#0" expanded="true" />
               </folding>
@@ -167,25 +192,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
+        <entry file="file://$PROJECT_DIR$/Enclave/Constants.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="541">
-              <caret line="80" column="35" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="35" />
-              <folding>
-                <element signature="e#40#68#0" expanded="true" />
-                <element signature="e#109#128#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="270">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/MessageParser.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="75" column="29" lean-forward="true" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
+            <state relative-caret-position="766">
+              <caret line="91" selection-start-line="91" selection-end-line="91" />
               <folding>
                 <element signature="e#39#73#0" expanded="true" />
+                <element signature="e#1377#1429#0" />
+                <element signature="e#1460#1813#0" />
               </folding>
             </state>
           </provider>
@@ -210,10 +233,12 @@
       <find>gcm_temp</find>
       <find>ocall_decrypt_sensor_value</find>
       <find>ecall_decrypt_message</find>
-      <find>sock_conn</find>
       <find>updated</find>
       <find>anal</find>
       <find>device</find>
+      <find>PORT</find>
+      <find>sockfd</find>
+      <find>sock_conn</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -223,7 +248,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/App/mongodb.py" />
-        <option value="$PROJECT_DIR$/App/SocketConnection.h" />
         <option value="$PROJECT_DIR$/App/CurlHelper.cpp" />
         <option value="$PROJECT_DIR$/App/CurlHelper.h" />
         <option value="$PROJECT_DIR$/MongoHelper.cpp" />
@@ -235,23 +259,25 @@
         <option value="$PROJECT_DIR$/App/aes_gcm.h" />
         <option value="$PROJECT_DIR$/App/unicode_converter.py" />
         <option value="$PROJECT_DIR$/App/bridge.cpp" />
-        <option value="$PROJECT_DIR$/App/SocketConnection.cpp" />
         <option value="$PROJECT_DIR$/App/Message.h" />
         <option value="$PROJECT_DIR$/App/aes_gcm.cpp" />
         <option value="$PROJECT_DIR$/Enclave/analytics_utils.h" />
         <option value="$PROJECT_DIR$/Enclave/analytics_utils.cpp" />
-        <option value="$PROJECT_DIR$/App/App.cpp" />
-        <option value="$PROJECT_DIR$/App/JSONParser.cpp" />
         <option value="$PROJECT_DIR$/App/JSONParser.h" />
         <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/Enclave/EnclaveHelper.h" />
         <option value="$PROJECT_DIR$/Enclave/EnclaveHelper.cpp" />
-        <option value="$PROJECT_DIR$/Enclave/RuleBase.h" />
         <option value="$PROJECT_DIR$/Enclave/MessageParser.h" />
         <option value="$PROJECT_DIR$/Enclave/Enclave.edl" />
-        <option value="$PROJECT_DIR$/Enclave/RuleBase.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/RuleBase.h" />
         <option value="$PROJECT_DIR$/Enclave/Enclave.cpp" />
+        <option value="$PROJECT_DIR$/App/JSONParser.cpp" />
+        <option value="$PROJECT_DIR$/App/SocketConnection.h" />
+        <option value="$PROJECT_DIR$/App/SocketConnection.cpp" />
         <option value="$PROJECT_DIR$/Enclave/MessageParser.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/Constants.h" />
+        <option value="$PROJECT_DIR$/App/App.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/RuleBase.cpp" />
       </list>
     </option>
   </component>
@@ -263,9 +289,9 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="87" />
-    <option name="y" value="85" />
-    <option name="width" value="1613" />
+    <option name="x" value="67" />
+    <option name="y" value="104" />
+    <option name="width" value="1614" />
     <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -384,18 +410,18 @@
       <workItem from="1566934623582" duration="2008000" />
       <workItem from="1567621125664" duration="10487000" />
       <workItem from="1567795780163" duration="101000" />
-      <workItem from="1567804996781" duration="39304000" />
+      <workItem from="1567804996781" duration="81688000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192090000" />
+    <option name="totallyTimeSpent" value="234474000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="87" y="85" width="1613" height="1032" extended-state="0" />
+    <frame x="67" y="104" width="1614" height="1032" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16975112" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16964285" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -406,10 +432,10 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3292683" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012837" side_tool="true" weight="0.3291866" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.4987163" visible="true" weight="0.107538804" />
+      <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.4987163" weight="0.107538804" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -427,14 +453,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/App/App.cpp</url>
-          <line>353</line>
+          <line>354</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Include/analytics_utils.h" />
     <entry file="file://$PROJECT_DIR$/Include/analytics_utils.cpp" />
     <entry file="file:///usr/include/c++/7/bits/stl_algobase.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -533,20 +558,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/SocketConnection.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/unistd.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="362" column="15" selection-start-line="362" selection-start-column="15" selection-end-line="362" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/bridge.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
@@ -566,13 +577,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Message.h" />
-    <entry file="file://$PROJECT_DIR$/App/Enclave_u.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/Enclave_u.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -625,16 +629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/SocketConnection.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-389">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#39#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/Enclave.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-164" />
@@ -678,13 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="128" column="111" selection-start-line="128" selection-start-column="111" selection-end-line="128" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/unicode_converter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -692,22 +679,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/App.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1365">
-          <caret line="262" column="27" selection-start-line="262" selection-start-column="21" selection-end-line="262" selection-end-column="27" />
-          <folding>
-            <element signature="e#1604#1622#0" expanded="true" />
-            <element signature="e#4115#4711#0" />
-            <element signature="e#4714#7588#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/7/bits/stl_map.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
           <caret line="528" column="6" selection-start-line="528" selection-start-column="6" selection-end-line="528" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="35" />
+          <folding>
+            <element signature="e#40#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/Enclave.edl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/SocketConnection.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/unistd.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="362" column="15" selection-start-line="362" selection-start-column="15" selection-end-line="362" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/JSONParser.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Enclave_u.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="129" column="44" selection-start-line="129" selection-start-column="36" selection-end-line="129" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -721,67 +755,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/JSONParser.cpp">
+    <entry file="file://$PROJECT_DIR$/Enclave/Constants.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-150">
-          <caret line="26" column="29" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="29" />
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/SocketConnection.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="601">
+          <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
           <folding>
-            <element signature="e#39#62#0" expanded="true" />
+            <element signature="e#39#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/Enclave.edl">
+    <entry file="file://$PROJECT_DIR$/App/App.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+        <state relative-caret-position="341">
+          <caret line="376" selection-start-line="376" selection-end-line="376" />
           <folding>
-            <element signature="e#40#61#0" expanded="true" />
+            <element signature="e#1604#1622#0" expanded="true" />
+            <element signature="e#4115#4711#0" />
+            <element signature="e#4714#7588#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/Enclave.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+        <state relative-caret-position="536">
+          <caret line="157" column="28" selection-start-line="157" selection-start-column="21" selection-end-line="157" selection-end-column="28" />
           <folding>
             <element signature="e#1603#1623#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
+    <entry file="file://$PROJECT_DIR$/Enclave/MessageParser.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="80" column="35" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="35" />
+        <state relative-caret-position="766">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
           <folding>
-            <element signature="e#40#68#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
+            <element signature="e#39#73#0" expanded="true" />
+            <element signature="e#1377#1429#0" />
+            <element signature="e#1460#1813#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/MessageParser.cpp">
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="75" column="29" lean-forward="true" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
+        <state relative-caret-position="1215">
+          <caret line="81" column="9" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
           <folding>
-            <element signature="e#39#73#0" expanded="true" />
+            <element signature="e#40#61#0" expanded="true" />
           </folding>
         </state>
       </provider>

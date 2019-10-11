@@ -53,6 +53,7 @@
 #include <string>
 #include <curl/curl.h>
 #include <jsoncpp/json/json.h>
+#include <thread>
 
 #include "SocketConnection.h"
 #include "JSONParser.h"
@@ -356,7 +357,7 @@ int open_socket()
     printf("Opening Socket...\n");
     char buffer[LIMIT];
     int n;
-    sock_conn = establish_connection();
+    sock_conn = establish_connection(20001);
     int count = 0;
     while(1){
         bzero(buffer,LIMIT);
@@ -368,6 +369,7 @@ int open_socket()
 
         struct message msg[1];
         parse_data_with_tag(buffer, msg);
+        printf("---------Here 1--------");
         ecall_decrypt_message(global_eid, msg);
 
         if(strcmp(buffer, "quit")==0)
@@ -379,6 +381,39 @@ int open_socket()
         
     }
     close_connection();
+    return 0;
+}
+
+
+int open_socket_for_rules()
+{
+    printf("Opening Socket for rules...\n");
+    char buffer[LIMIT];
+    int n;
+    int sock_conn2 = establish_connection_for_rule(20002);
+    int count = 0;
+    while(1){
+        bzero(buffer,LIMIT);
+        n = read(sock_conn2,buffer,LIMIT);
+        if (n < 0)
+            perror("ERROR reading from socket");
+
+        printf("Enc Msg: %s\n",buffer);
+
+        struct message msg[1];
+        parse_data_with_tag(buffer, msg);
+        printf("---------Here--------");
+        ecall_decrypt_rule(global_eid, msg);
+
+        if(strcmp(buffer, "quit")==0)
+            break;
+
+        count++;
+        if(count==100)
+            break;
+
+    }
+    close_connection_for_rule();
     return 0;
 }
 
@@ -398,7 +433,12 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    open_socket();
+//    open_socket();
+//    open_socket_for_rules();
+    std::thread t1(open_socket);
+    std::thread t2(open_socket_for_rules);
+    t1.join();
+    t2.join();
 
 //    ocall_manager();
 

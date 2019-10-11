@@ -6,50 +6,84 @@
 #include "MessageParser.h"
 #include "Enclave.h"
 #include "Enclave_t.h"
+#include "Constants.h"
 
 #include <map>
 #include <string>
 
 
-float THRESHOLD_TEMP = 25.0;
+std::map<std::string, std::map<std::string, std::string>>ruleset;
 
 
-void compareFoobot(std::map<std::string, std::string>mmap){
-    float temp_value = std::stof(mmap.at("data"));
-    if(temp_value < THRESHOLD_TEMP){
-        printf("Temp value: %f\n", temp_value);
-        /*Do something*/
-        std::string status = "ON";
+void save_rule_base(char *msg){
+    std::map<std::string, std::string>rule_map = parse_decrypted_string(msg);
 
-        struct device newMDevice[1];
-        newMDevice->uid = "1234";
-        newMDevice->state = (char*) status.c_str();
-        newMDevice->type = "Bulb";
-        std::string newMsg =  device_to_string(newMDevice);
 
-        struct message newMSG[1];
-        newMSG->text = (char*) newMsg.c_str();
-        ecall_encrypt_message(newMSG);
-    } else{
-        printf("Foobot Temp greater than threshold %f\n", THRESHOLD_TEMP);
+    std::string device_id;
+    auto it = rule_map.find(Rule_DeviceID);
+    if ( it != rule_map.end() ){
+        device_id = it->second.c_str();
+        printf("%s: %s\n", Rule_DeviceID, device_id);
+        ruleset.insert(std::pair<std::string, std::map<std::string, std::string>>(device_id, rule_map));
     }
+    else
+        printf("Couldn't find %s\n", Rule_DeviceID);
+
+
+    printf("Initial size of map = %ld\n", ruleset.size());
+//    for(auto it = ruleset.cbegin(); it != ruleset.cend(); ++it)
+//    {
+//        printf("Key=%s, map size=%ld\n", it->first.c_str(), it->second.size());
+//    }
 }
 
 
 void start_rule_base(char *msg){
     std::map<std::string, std::string>device_info_map = parse_decrypted_string(msg);
-    std::string device_type = device_info_map.at("deviceType");
+    std::string device_id = device_info_map.at(Rule_DeviceID);
+    printf("Device Id = %s\n", device_id);
 
-    if(device_type == "Foobot"){
-        printf("***Foobot -> device type = %s\n", device_type);
-        compareFoobot(device_info_map);
+    auto it = ruleset.find(device_id);
+    if ( it != ruleset.end() ){
+        std::map<std::string, std::string>rule_map = it->second;
+        int rule_operator = std::stoi(rule_map.at(Rule_Operator));
+        float device_data = std::stof(device_info_map.at("data"));
+
+        switch(rule_operator){
+            case Operator_Gt:
+                {
+                    float threshold = std::stof(rule_map.at(Rule_Threshold));
+                    if(device_data > threshold)
+                        printf("%f > %f\n", device_data, threshold);
+                    else
+                        printf("GT condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
+                    break;
+                }
+            case Operator_Lt:
+                {
+                    float threshold = std::stof(rule_map.at(Rule_Threshold));
+                    if(device_data < threshold)
+                        printf("%f < %f\n", device_data, threshold);
+                    else
+                        printf("LT condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
+                    break;
+                }
+            case Operator_Eq:
+                {
+                    float threshold = std::stof(rule_map.at(Rule_Threshold));
+                    if (device_data == threshold)
+                        printf("%f == %f\n", device_data, threshold);
+                    else
+                        printf("EQ condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
+                    break;
+                }
+            default:
+                printf("Unknown operator for data %f\n", device_data);
+        }
     }
-    else if(device_type == "Bulb"){
-        printf("***Bulb -> device type = %s\n", device_type);
-    }
-    else{
-        printf("***Invalid device type = %s\n", device_type);
-    }
+    else
+        printf("Couldn't find %s\n", device_id);
+
 }
 
 

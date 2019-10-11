@@ -22,6 +22,7 @@ std::map<std::string, std::string> parse_decrypted_string(char *decMessage) {
     removeChar(decMessage, '}');
     removeChar(decMessage, '"');
     removeChar(decMessage, ' ');
+    removeChar(decMessage, '\'');
     printf("After removing extra characters: %s\n", decMessage);
 
     std::map<std::string, std::string> mmap;
@@ -31,7 +32,7 @@ std::map<std::string, std::string> parse_decrypted_string(char *decMessage) {
 
     while ((token = strtok_r(rest, ",", &rest)))
     {
-        printf("Token: %s\n", token);
+//        printf("Token: %s\n", token);
         char *token2;
         char *rest2 = token;
         int c = 0;
@@ -45,11 +46,11 @@ std::map<std::string, std::string> parse_decrypted_string(char *decMessage) {
         }
         mmap.insert(std::pair<std::string, std::string>(k, v));
     }
-    printf("Initial size of map = %ld\n", mmap.size());
-    for(auto it = mmap.cbegin(); it != mmap.cend(); ++it)
-    {
-        printf("Key=%s, Value=%s\n", it->first.c_str(), it->second.c_str());
-    }
+//    printf("Initial size of map = %ld\n", mmap.size());
+//    for(auto it = mmap.cbegin(); it != mmap.cend(); ++it)
+//    {
+//        printf("Key=%s, Value=%s\n", it->first.c_str(), it->second.c_str());
+//    }
 
     return mmap;
 }
@@ -87,3 +88,4 @@ std::string map_to_string(std::map<std::string,std::string> mmap) {
     printf("String from Map = %s\n", result.c_str());
     return result;
 }
+

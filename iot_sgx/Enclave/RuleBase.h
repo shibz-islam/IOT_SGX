@@ -6,5 +6,6 @@
 #define IOTENCLAVE_RULEBASE_H
 
 void start_rule_base(char *msg);
+void save_rule_base(char *msg);
 
 #endif //IOTENCLAVE_RULEBASE_H

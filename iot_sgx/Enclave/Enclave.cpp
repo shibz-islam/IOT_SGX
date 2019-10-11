@@ -147,7 +147,20 @@ void ecall_decrypt_message(struct message *msg){
 
     start_rule_base(decMessage);
 
-
 }
 
 
+void ecall_decrypt_rule(struct message* msg){
+    char* encMessage =  msg->text;
+    size_t len = strlen(encMessage);
+    char* tag = msg->tag;
+    size_t decMessageLen = len;
+    printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
+    printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
+    char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
+    decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
+    decMessage[decMessageLen] = '\0';
+    printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
+
+    save_rule_base(decMessage);
+}
