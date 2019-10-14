@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d071ba42-a5a7-438a-85fd-ddbdf379f994" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../iot_sgx/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafkaConsumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/kafkaConsumer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafkaProd.py" beforeDir="false" afterPath="$PROJECT_DIR$/kafkaProd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socketClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/socketClient.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/App.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/App.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/Constants.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/app" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/app" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/enclave.signed.so" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/enclave.signed.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/enclave.so" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/enclave.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/mongodb.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -205,13 +189,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user_rulebase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+            <state relative-caret-position="222">
+              <caret line="115" column="17" lean-forward="true" selection-start-line="115" selection-start-column="17" selection-end-line="115" selection-end-column="17" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
-                <marker date="1571090033909" expanded="true" signature="2333:2334" ph="..." />
-                <marker date="1571090033909" expanded="true" signature="2333:2793" ph="..." />
-                <marker date="1571090033909" expanded="true" signature="2872:3894" ph="..." />
+                <marker date="1571090082625" expanded="true" signature="2333:2334" ph="..." />
+                <marker date="1571090082625" expanded="true" signature="2333:2793" ph="..." />
+                <marker date="1571090082625" expanded="true" signature="2872:3894" ph="..." />
               </folding>
             </state>
           </provider>
@@ -282,7 +266,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="276" />
     <option name="y" value="54" />
     <option name="width" value="1593" />
@@ -522,13 +506,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="276" y="54" width="1593" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49835527" visible="true" weight="0.17323853" />
       <window_info id="Structure" order="1" sideWeight="0.50164473" side_tool="true" weight="0.19615385" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4524887" visible="true" weight="0.35550708" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4524887" visible="true" weight="0.35550708" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49923548" weight="0.3991276" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -537,7 +522,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50064105" side_tool="true" weight="0.6434879" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.54751134" side_tool="true" visible="true" weight="0.35550708" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.54751134" side_tool="true" visible="true" weight="0.35550708" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.48727497" weight="0.32723358" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -850,13 +835,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/user_rulebase.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+        <state relative-caret-position="222">
+          <caret line="115" column="17" lean-forward="true" selection-start-line="115" selection-start-column="17" selection-end-line="115" selection-end-column="17" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <marker date="1571090033909" expanded="true" signature="2333:2334" ph="..." />
-            <marker date="1571090033909" expanded="true" signature="2333:2793" ph="..." />
-            <marker date="1571090033909" expanded="true" signature="2872:3894" ph="..." />
+            <marker date="1571090082625" expanded="true" signature="2333:2334" ph="..." />
+            <marker date="1571090082625" expanded="true" signature="2333:2793" ph="..." />
+            <marker date="1571090082625" expanded="true" signature="2872:3894" ph="..." />
           </folding>
         </state>
       </provider>

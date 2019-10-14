@@ -11,26 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="475cbf6d-f6e1-4415-b1d2-dcb9052363c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/kafkaConsumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/kafkaConsumer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/kafkaProd.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/kafkaProd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/socketClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/socketClient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/App.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/App.o" beforeDir="false" afterPath="$PROJECT_DIR$/App/App.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/JSONParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/JSONParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App/JSONParser.o" beforeDir="false" afterPath="$PROJECT_DIR$/App/JSONParser.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enclave/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/Constants.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enclave/RuleBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enclave/RuleBase.o" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleBase.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app" beforeDir="false" afterPath="$PROJECT_DIR$/app" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enclave.signed.so" beforeDir="false" afterPath="$PROJECT_DIR$/enclave.signed.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enclave.so" beforeDir="false" afterPath="$PROJECT_DIR$/enclave.so" afterDir="false" />
-    </list>
+    <list default="true" id="475cbf6d-f6e1-4415-b1d2-dcb9052363c8" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +73,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="93" />
-          <entry key="cpp" value="7859" />
+          <entry key="cpp" value="7861" />
           <entry key="edl" value="274" />
           <entry key="h" value="755" />
           <entry key="py" value="67" />
@@ -100,7 +81,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="8614" />
+          <entry key="ObjectiveC" value="8616" />
           <entry key="PLAIN_TEXT" value="367" />
           <entry key="Python" value="67" />
         </counts>
@@ -126,14 +107,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/App.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1216">
-              <caret line="437" column="14" lean-forward="true" selection-start-line="437" selection-start-column="14" selection-end-line="437" selection-end-column="14" />
+            <state relative-caret-position="-3149">
+              <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
               <folding>
                 <element signature="e#1604#1622#0" expanded="true" />
-                <element signature="e#2112#2136#0" expanded="true" />
                 <element signature="e#4115#4711#0" />
                 <element signature="e#4714#7588#0" />
                 <element signature="e#8500#10214#0" />
@@ -193,11 +173,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-210">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="75">
+              <caret line="47" column="66" lean-forward="true" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
               <folding>
                 <element signature="e#40#61#0" expanded="true" />
               </folding>
@@ -209,7 +189,7 @@
         <entry file="file://$PROJECT_DIR$/Enclave/Constants.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
+              <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -291,11 +271,11 @@
         <option value="$PROJECT_DIR$/App/SocketConnection.cpp" />
         <option value="$PROJECT_DIR$/Enclave/MessageParser.cpp" />
         <option value="$PROJECT_DIR$/App/SocketManager.cpp" />
-        <option value="$PROJECT_DIR$/App/App.cpp" />
         <option value="$PROJECT_DIR$/App/SocketManager.h" />
         <option value="$PROJECT_DIR$/App/JSONParser.cpp" />
         <option value="$PROJECT_DIR$/Enclave/Constants.h" />
         <option value="$PROJECT_DIR$/Enclave/RuleBase.cpp" />
+        <option value="$PROJECT_DIR$/App/App.cpp" />
       </list>
     </option>
   </component>
@@ -428,12 +408,12 @@
       <workItem from="1566934623582" duration="2008000" />
       <workItem from="1567621125664" duration="10487000" />
       <workItem from="1567795780163" duration="101000" />
-      <workItem from="1567804996781" duration="90220000" />
+      <workItem from="1567804996781" duration="90415000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243006000" />
+    <option name="totallyTimeSpent" value="243201000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="58" width="1614" height="1032" extended-state="0" />
@@ -471,7 +451,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/App/App.cpp</url>
-          <line>355</line>
+          <line>352</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
@@ -810,17 +790,7 @@
     <entry file="file://$PROJECT_DIR$/Enclave/Constants.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-210">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#40#61#0" expanded="true" />
-          </folding>
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -836,14 +806,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/App.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1216">
-          <caret line="437" column="14" lean-forward="true" selection-start-line="437" selection-start-column="14" selection-end-line="437" selection-end-column="14" />
+        <state relative-caret-position="-3149">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
           <folding>
             <element signature="e#1604#1622#0" expanded="true" />
-            <element signature="e#2112#2136#0" expanded="true" />
             <element signature="e#4115#4711#0" />
             <element signature="e#4714#7588#0" />
             <element signature="e#8500#10214#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="47" column="66" lean-forward="true" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
+          <folding>
+            <element signature="e#40#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
