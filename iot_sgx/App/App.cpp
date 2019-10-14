@@ -55,12 +55,13 @@
 #include <jsoncpp/json/json.h>
 #include <thread>
 
-#include "SocketConnection.h"
+//#include "SocketConnection.h"
 #include "JSONParser.h"
-#include "CurlHelper.h"
+//#include "CurlHelper.h"
 #include "MongoHelper.h"
 #include "aes_gcm.h"
 
+#include "SocketManager.h"
 
 
 /* Global EID shared by multiple threads */
@@ -68,7 +69,7 @@ sgx_enclave_id_t global_eid = 0;
 sgx_status_t ret = SGX_SUCCESS;
 sgx_launch_token_t token = {0};
 int updated = 0;
-int sock_conn = 0;
+int socketConnection = 0;
 
 
 typedef struct _sgx_errlist_t {
@@ -288,7 +289,7 @@ void ocall_print_string(const char *str)
 
 void ocall_get_message_from_enclave(struct message* msg){
     std::string json_msg = make_json_from_message(msg);
-    write(sock_conn, json_msg.c_str(), json_msg.size());
+    write(socketConnection, json_msg.c_str(), json_msg.size());
 }
 
 
@@ -354,66 +355,65 @@ void ocall_manager()
 
 int open_socket()
 {
-    printf("Opening Socket...\n");
+    printf("Opening Socket for IoT Data...\n");
     char buffer[LIMIT];
     int n;
-    sock_conn = establish_connection(20001);
+    SocketManager socketObj(20001);
+    socketConnection = socketObj.establish_connection();
     int count = 0;
     while(1){
         bzero(buffer,LIMIT);
-        n = read(sock_conn,buffer,LIMIT);
+        n = read(socketConnection,buffer,LIMIT);
         if (n < 0)
             perror("ERROR reading from socket");
 
         printf("%s\n",buffer);
+        if(strcmp(buffer, "quit")==0)
+            break;
+
 
         struct message msg[1];
         parse_data_with_tag(buffer, msg);
         printf("---------Here 1--------");
         ecall_decrypt_message(global_eid, msg);
 
-        if(strcmp(buffer, "quit")==0)
-            break;
-
         count++;
         if(count==100)
             break;
-        
     }
-    close_connection();
+    socketObj.close_connection();
     return 0;
 }
 
 
 int open_socket_for_rules()
 {
-    printf("Opening Socket for rules...\n");
+    printf("Opening Socket for Rules...\n");
     char buffer[LIMIT];
     int n;
-    int sock_conn2 = establish_connection_for_rule(20002);
+    SocketManager socketObj(20002);
+    int socketConnection2 = socketObj.establish_connection();
     int count = 0;
     while(1){
         bzero(buffer,LIMIT);
-        n = read(sock_conn2,buffer,LIMIT);
+        n = read(socketConnection2,buffer,LIMIT);
         if (n < 0)
             perror("ERROR reading from socket");
 
         printf("Enc Msg: %s\n",buffer);
+        if(strcmp(buffer, "quit")==0)
+            break;
 
         struct message msg[1];
         parse_data_with_tag(buffer, msg);
         printf("---------Here--------");
         ecall_decrypt_rule(global_eid, msg);
 
-        if(strcmp(buffer, "quit")==0)
-            break;
-
         count++;
         if(count==100)
             break;
-
     }
-    close_connection_for_rule();
+    socketObj.close_connection();
     return 0;
 }
 
@@ -433,8 +433,6 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-//    open_socket();
-//    open_socket_for_rules();
     std::thread t1(open_socket);
     std::thread t2(open_socket_for_rules);
     t1.join();

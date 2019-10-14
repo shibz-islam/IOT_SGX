@@ -5,14 +5,14 @@
 #ifndef IOTENCLAVE_CONSTANTS_H
 #define IOTENCLAVE_CONSTANTS_H
 
-const std::string Rule_ID = "ruleID";
-const std::string Rule_UserID = "userID";
-const std::string Rule_DeviceID = "deviceID";
-const std::string Rule_Threshold = "threshold";
-const std::string Rule_Operator = "operator";
+const std::string RULE_ID = "ruleID";
+const std::string RULE_USER_ID = "userID";
+const std::string RULE_DEVICE_ID = "deviceID";
+const std::string RULE_THRESHOLD = "threshold";
+const std::string RULE_OPERATOR = "operator";
 
-enum OperatorEnum {Operator_Gt, Operator_Lt, Operator_Eq, Operator_Unknown};
-enum ActionEnum {email, alert};
+enum EnumOperator {OPERATOR_GT, OPERATOR_LT, OPERATOR_EQ, OPERATOR_UNKNOWN};
+enum EnumAction {EMAIL, ALERT};
 
 
 #endif //IOTENCLAVE_CONSTANTS_H

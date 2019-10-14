@@ -20,7 +20,7 @@ from datetime import timedelta
 
 
 
-soc = socketClient.connect_to_server()
+soc = socketClient.connect_to_server(port=20001)
 
 
 def process(time, rdd):        

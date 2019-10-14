@@ -53,8 +53,6 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         std::cout << decoded_tag.data() << std::endl;
 
 
-
-    // This works
         char *temp = (char *) malloc((decoded.size()+1)*sizeof(char));
         memcpy(temp, decoded.data(), decoded.size());
         temp[decoded.size()] = '\0';

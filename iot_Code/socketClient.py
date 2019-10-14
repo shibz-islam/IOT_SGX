@@ -2,12 +2,12 @@ import socket, json, time
 import CryptoHelper, Helper, Properties
 
 
-def connect_to_server():
+def connect_to_server(port=20003):
     # Create a socket object
     s = socket.socket()
 
     # Define the port on which you want to connect
-    port = 20003
+    # port = 20003
 
     # connect to the server on local computer
     s.connect(('127.0.0.1', port))

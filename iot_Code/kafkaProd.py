@@ -38,7 +38,7 @@ def call_flask_app():
 def call_test_data_for_sgx():
     Properties.START_TIME = time.time()
     print("Start time = ", Properties.START_TIME)
-    resBulb = {'deviceId': '10', 'deviceType': 'Foobot', 'data': '20.0'}
+    resBulb = {'deviceId': '345', 'deviceType': 'Foobot', 'data': '20.0'}
     json_data = Helper.get_json_data(resBulb)
     print(json_data)
 

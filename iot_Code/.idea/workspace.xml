@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d071ba42-a5a7-438a-85fd-ddbdf379f994" name="Default Changelist" comment="" />
+    <list default="true" id="d071ba42-a5a7-438a-85fd-ddbdf379f994" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../iot_sgx/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafkaConsumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/kafkaConsumer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafkaProd.py" beforeDir="false" afterPath="$PROJECT_DIR$/kafkaProd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socketClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/socketClient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/App.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/App.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/Constants.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.o" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleBase.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/app" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/app" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/enclave.signed.so" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/enclave.signed.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/enclave.so" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/enclave.so" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +32,9 @@
     <SUITE FILE_PATH="coverage/iot_Code$test.coverage" NAME="test Coverage Results" MODIFIED="1559593030554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$Flask__flaskApp_py_.coverage" NAME="Flask (flaskApp.py) Coverage Results" MODIFIED="1560381484234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$pytest_in_CryptoHelper_py.coverage" NAME="pytest in CryptoHelper.py Coverage Results" MODIFIED="1568160241541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/iot_Code$kafkaProd.coverage" NAME="kafkaProd Coverage Results" MODIFIED="1568245294767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/iot_Code$kafkaProd.coverage" NAME="kafkaProd Coverage Results" MODIFIED="1570828565755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$KMeansClusteringSpark.coverage" NAME="KMeansClusteringSpark Coverage Results" MODIFIED="1566680176819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/iot_Code$user_rulebase.coverage" NAME="user_rulebase Coverage Results" MODIFIED="1571090042279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$Helper.coverage" NAME="Helper Coverage Results" MODIFIED="1566677581004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$kafkaConsumer.coverage" NAME="kafkaConsumer Coverage Results" MODIFIED="1564610264688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/iot_Code$pytest_for_CryptoHelper_test.coverage" NAME="pytest for CryptoHelper.test Coverage Results" MODIFIED="1566674645478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -82,44 +102,62 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1629347175">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="2606" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="2606" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kafkaConsumer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="16" column="45" lean-forward="true" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+            <state relative-caret-position="255">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
               <folding>
-                <marker date="1565896721872" expanded="true" signature="1158:1361" ph="..." />
-                <marker date="1565896721872" expanded="true" signature="1316:1361" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/kafkaProd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
-              <folding>
-                <element signature="e#113#143#0" expanded="true" />
-                <marker date="1568245289501" expanded="true" signature="619:622" ph="..." />
-                <marker date="1568245289501" expanded="true" signature="1241:1244" ph="..." />
-                <marker date="1568245289501" expanded="true" signature="2690:2721" ph="..." />
+                <element signature="e#259#269#0" expanded="true" />
+                <marker date="1570828556653" expanded="true" signature="1168:1371" ph="..." />
+                <marker date="1570828556653" expanded="true" signature="1326:1371" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Helper.py">
+        <entry file="file://$PROJECT_DIR$/kafkaProd.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
-              <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+            <state relative-caret-position="-285">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
+                <element signature="e#113#143#0" expanded="true" />
+                <marker date="1570828436148" expanded="true" signature="619:622" ph="..." />
+                <marker date="1570828436148" expanded="true" signature="1242:1245" ph="..." />
+                <marker date="1570828436148" expanded="true" signature="2691:2722" ph="..." />
               </folding>
             </state>
           </provider>
@@ -137,8 +175,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CryptoHelper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="70" column="10" lean-forward="true" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+            <state relative-caret-position="242">
+              <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
                 <marker date="1568163373915" expanded="true" signature="592:595" ph="..." />
@@ -152,23 +190,42 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/socketClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+            <state relative-caret-position="240">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-                <marker date="1568161135149" expanded="true" signature="92:406" ph="..." />
-                <marker date="1568161135149" expanded="true" signature="731:732" ph="..." />
-                <marker date="1568161135149" expanded="true" signature="982:1026" ph="..." />
+                <marker date="1570571693697" expanded="true" signature="102:418" ph="..." />
+                <marker date="1570571693697" expanded="true" signature="743:744" ph="..." />
+                <marker date="1570571693697" expanded="true" signature="994:1038" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/user_rulebase.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+                <marker date="1571090033909" expanded="true" signature="2333:2334" ph="..." />
+                <marker date="1571090033909" expanded="true" signature="2333:2793" ph="..." />
+                <marker date="1571090033909" expanded="true" signature="2872:3894" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/readme.txt">
+        <entry file="file://$PROJECT_DIR$/Constants.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="255">
+              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+              <folding>
+                <marker date="1571080771470" expanded="true" signature="397:398" ph="..." />
+                <marker date="1571080771470" expanded="true" signature="423:428" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -186,7 +243,15 @@
     <findStrings>
       <find>foo</find>
       <find>gcm_output_len</find>
+      <find>resData</find>
+      <find>&quot;</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -198,14 +263,16 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/Job.py" />
-        <option value="$PROJECT_DIR$/kafkaConsumer.py" />
         <option value="$PROJECT_DIR$/cryptoTest.c" />
         <option value="$PROJECT_DIR$/KMeansClusteringSpark.py" />
         <option value="$PROJECT_DIR$/Properties.py" />
-        <option value="$PROJECT_DIR$/socketClient.py" />
         <option value="$PROJECT_DIR$/Helper.py" />
         <option value="$PROJECT_DIR$/CryptoHelper.py" />
+        <option value="$PROJECT_DIR$/socketClient.py" />
         <option value="$PROJECT_DIR$/kafkaProd.py" />
+        <option value="$PROJECT_DIR$/kafkaConsumer.py" />
+        <option value="$PROJECT_DIR$/Constants.py" />
+        <option value="$PROJECT_DIR$/user_rulebase.py" />
       </list>
     </option>
   </component>
@@ -215,18 +282,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="169" />
-    <option name="y" value="59" />
-    <option name="width" value="1657" />
-    <option name="height" value="1057" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="276" />
+    <option name="y" value="54" />
+    <option name="width" value="1593" />
+    <option name="height" value="1047" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -238,6 +305,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -260,7 +328,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.kafkaProd">
+  <component name="RunManager" selected="Python.user_rulebase">
     <configuration name="Helper" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="iot_Code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -327,6 +395,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="user_rulebase" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="iot_Code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_rulebase.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="iot_Code" type="Python.FlaskServer" factoryName="Flask server">
       <module name="iot_Code" />
       <option name="target" value="$PROJECT_DIR$/flaskApp.py" />
@@ -340,22 +430,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest for CryptoHelper.test" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="iot_Code" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;CryptoHelper.test&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="pytest in CryptoHelper.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
@@ -378,17 +452,17 @@
       <item itemvalue="Flask server.iot_Code" />
       <item itemvalue="Python.kafkaProd" />
       <item itemvalue="Python.KMeansClusteringSpark" />
-      <item itemvalue="Python tests.pytest for CryptoHelper.test" />
       <item itemvalue="Python.Helper" />
       <item itemvalue="Python tests.pytest in CryptoHelper.py" />
+      <item itemvalue="Python.user_rulebase" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.user_rulebase" />
         <item itemvalue="Python.kafkaProd" />
         <item itemvalue="Python tests.pytest in CryptoHelper.py" />
         <item itemvalue="Python.KMeansClusteringSpark" />
         <item itemvalue="Python.Helper" />
-        <item itemvalue="Python tests.pytest for CryptoHelper.test" />
       </list>
     </recent_temporary>
   </component>
@@ -447,16 +521,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="169" y="59" width="1657" height="1057" extended-state="0" />
-    <editor active="true" />
+    <frame x="276" y="54" width="1593" height="1047" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49835527" visible="true" weight="0.1626319" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49835527" visible="true" weight="0.17323853" />
       <window_info id="Structure" order="1" sideWeight="0.50164473" side_tool="true" weight="0.19615385" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.45375544" weight="0.3519914" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4524887" visible="true" weight="0.35550708" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49923548" weight="0.3991276" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" side_tool="true" weight="0.3289183" />
@@ -464,13 +537,13 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50064105" side_tool="true" weight="0.6434879" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.54624456" side_tool="true" visible="true" weight="0.3519914" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.54751134" side_tool="true" visible="true" weight="0.35550708" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.48727497" weight="0.32723358" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" weight="0.09497207" />
-      <window_info anchor="right" id="R Graphics" order="4" weight="0.32948717" />
+      <window_info anchor="right" id="R Graphics" order="4" weight="0.3289977" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" weight="0.32960895" />
     </layout>
@@ -665,11 +738,7 @@
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.7/site-packages/Crypto/Cipher/AES.pyi">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-248">
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-248" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.7/json/__init__.py">
@@ -683,12 +752,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="562">
           <caret line="198" column="44" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#2700#6628#0" />
-            <marker date="1566513951064" expanded="true" signature="8114:8461" ph="..." />
-            <marker date="1566513951064" expanded="false" signature="8479:9698" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -699,31 +762,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/readme.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+        <state relative-caret-position="240">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/kafkaConsumer.py">
+    <entry file="file://$PROJECT_DIR$/readme.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="16" column="45" lean-forward="true" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
-          <folding>
-            <marker date="1565896721872" expanded="true" signature="1158:1361" ph="..." />
-            <marker date="1565896721872" expanded="true" signature="1316:1361" ph="..." />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -736,8 +788,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CryptoHelper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="70" column="10" lean-forward="true" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+        <state relative-caret-position="242">
+          <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
             <marker date="1568163373915" expanded="true" signature="592:595" ph="..." />
@@ -747,28 +799,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/socketClient.py">
+    <entry file="file://$PROJECT_DIR$/kafkaConsumer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="35" column="32" lean-forward="true" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
+        <state relative-caret-position="255">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <marker date="1568161135149" expanded="true" signature="92:406" ph="..." />
-            <marker date="1568161135149" expanded="true" signature="731:732" ph="..." />
-            <marker date="1568161135149" expanded="true" signature="982:1026" ph="..." />
+            <element signature="e#259#269#0" expanded="true" />
+            <marker date="1570828556653" expanded="true" signature="1168:1371" ph="..." />
+            <marker date="1570828556653" expanded="true" signature="1326:1371" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kafkaProd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="-285">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
           <folding>
             <element signature="e#113#143#0" expanded="true" />
-            <marker date="1568245289501" expanded="true" signature="619:622" ph="..." />
-            <marker date="1568245289501" expanded="true" signature="1241:1244" ph="..." />
-            <marker date="1568245289501" expanded="true" signature="2690:2721" ph="..." />
+            <marker date="1570828436148" expanded="true" signature="619:622" ph="..." />
+            <marker date="1570828436148" expanded="true" signature="1242:1245" ph="..." />
+            <marker date="1570828436148" expanded="true" signature="2691:2722" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socketClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+            <marker date="1570571693697" expanded="true" signature="102:418" ph="..." />
+            <marker date="1570571693697" expanded="true" signature="743:744" ph="..." />
+            <marker date="1570571693697" expanded="true" signature="994:1038" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <folding>
+            <marker date="1571080771470" expanded="true" signature="397:398" ph="..." />
+            <marker date="1571080771470" expanded="true" signature="423:428" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_rulebase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="122" column="10" lean-forward="true" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+            <marker date="1571090033909" expanded="true" signature="2333:2334" ph="..." />
+            <marker date="1571090033909" expanded="true" signature="2333:2793" ph="..." />
+            <marker date="1571090033909" expanded="true" signature="2872:3894" ph="..." />
           </folding>
         </state>
       </provider>
