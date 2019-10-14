@@ -55,13 +55,10 @@
 #include <jsoncpp/json/json.h>
 #include <thread>
 
-//#include "SocketConnection.h"
+#include "SocketManager.h"
 #include "JSONParser.h"
-//#include "CurlHelper.h"
 #include "MongoHelper.h"
 #include "aes_gcm.h"
-
-#include "SocketManager.h"
 
 
 /* Global EID shared by multiple threads */
