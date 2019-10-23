@@ -57,9 +57,9 @@
 
 #include "SocketManager.h"
 #include "JSONParser.h"
-#include "MongoHelper.h"
+#include "MongoManager.h"
 #include "aes_gcm.h"
-
+#include "MongoHelper.h"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -350,6 +350,32 @@ void ocall_manager()
 }
 
 
+void get_rules_from_db(){
+    MongoManager mObj("mongodb://localhost:27017", "IOT", "rulebase");
+    //mObj.initConnection();
+
+    int totalDocuments = mObj.getCount();
+    if(totalDocuments > 0)
+    {
+        std::vector<std::string> rules;
+        rules = mObj.getAllData();
+
+        struct message msg[totalDocuments];
+        char buffer[LIMIT];
+        std::string temp;
+        for (int i = 0; i < rules.size() ; ++i) {
+            temp = rules[i];
+            memcpy(buffer, temp.c_str(), temp.length());
+            parse_data_with_tag_index(buffer, msg, i);
+            //printf("###### i=%d, -- data= %s\n", i, msg[i].text);
+        }
+        //printf("size = %f\n", sizeof(msg)/ sizeof(msg[0]));
+        ecall_get_rules_from_db(global_eid, msg, totalDocuments);
+    }
+
+}
+
+
 int open_socket()
 {
     printf("Opening Socket for IoT Data...\n");
@@ -371,7 +397,6 @@ int open_socket()
 
         struct message msg[1];
         parse_data_with_tag(buffer, msg);
-        printf("---------Here 1--------");
         ecall_decrypt_message(global_eid, msg);
 
         count++;
@@ -403,7 +428,6 @@ int open_socket_for_rules()
 
         struct message msg[1];
         parse_data_with_tag(buffer, msg);
-        printf("---------Here--------");
         ecall_decrypt_rule(global_eid, msg);
 
         count++;
@@ -429,6 +453,8 @@ int SGX_CDECL main(int argc, char *argv[])
         getchar();
         return -1; 
     }
+
+    get_rules_from_db();
 
     std::thread t1(open_socket);
     std::thread t2(open_socket_for_rules);

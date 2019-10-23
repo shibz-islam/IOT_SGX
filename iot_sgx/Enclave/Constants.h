@@ -11,6 +11,8 @@ const std::string RULE_DEVICE_ID = "deviceID";
 const std::string RULE_THRESHOLD = "threshold";
 const std::string RULE_OPERATOR = "operator";
 
+const std::string SENSOR_DATA = "data";
+
 enum EnumOperator {OPERATOR_GT, OPERATOR_LT, OPERATOR_EQ, OPERATOR_UNKNOWN};
 enum EnumAction {EMAIL, ALERT};
 

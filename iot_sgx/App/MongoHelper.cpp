@@ -28,8 +28,8 @@ int mongo_setup_db()
     mongocxx::instance instance{}; // This should be done only once.
     mongocxx::uri uri("mongodb://localhost:27017");
     mongocxx::client client(uri);
-    mongocxx::database db = client["temp"];
-    coll = db["lamp"];
+    mongocxx::database db = client["IOT"];
+    coll = db["test"];
     return 0;
 }
 

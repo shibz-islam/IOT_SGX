@@ -15,6 +15,8 @@
 std::map<std::string, std::map<std::string, std::string>>ruleset;
 
 
+
+
 void save_rule_base(char *msg){
     std::map<std::string, std::string>rule_map = parse_decrypted_string(msg);
 
@@ -46,7 +48,7 @@ void start_rule_base(char *msg){
     if ( it != ruleset.end() ){
         std::map<std::string, std::string>rule_map = it->second;
         int rule_operator = std::stoi(rule_map.at(RULE_OPERATOR));
-        float device_data = std::stof(device_info_map.at("data"));
+        float device_data = std::stof(device_info_map.at(SENSOR_DATA));
 
         switch(rule_operator){
             case OPERATOR_GT:

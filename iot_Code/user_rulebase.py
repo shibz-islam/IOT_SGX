@@ -1,5 +1,6 @@
 import json, time, threading
 import socketClient, CryptoHelper, Helper, Constants
+from MongoManager import MongoManager
 
 
 # TO-DO: fetch these from DB
@@ -12,6 +13,7 @@ DeviceIDs = ['123', '234', '345']
 
 rule_json = {}
 soc = 0
+rule_db = 0
 # soc = socketClient.connect_to_server(port=20002)
 
 
@@ -79,6 +81,10 @@ def build_rule():
         print(rule_json)
 
         enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(rule_json)
+        # insert into DB
+        json_rule = json.loads(enc_rule)
+        rule_db.insert_one_into_db(json_rule)
+        # Send to SGX
         send_data(enc_rule)
     else:
         print("Exiting....")
@@ -86,44 +92,40 @@ def build_rule():
 
 
 def test_sample_rule():
-    soc2 = socketClient.connect_to_server(port=20002)
-    sample_rule = "{'deviceID': '345', 'ruleID': '526dfg', 'userID': '563y2k', 'name': 'HumRule', 'measurement': 'Humidity', 'operator': '0', 'threshold': 50.0, 'action': '0', 'email': 'shibz.islam@gmail.com', 'email_title': 'Alert!'}"
-    jd = Helper.get_json_data(sample_rule)
-    enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(jd)
-    socketClient.send_to_server(soc2, enc_rule)
-    soc2.close()
-
-
-def test_sample_data():
-    soc2 = socketClient.connect_to_server(port=20001)
-    sample_data = {'deviceID': '345', 'deviceType': 'Foobot', 'data': '70.0'}
+    sample_rule1 = "{'deviceID': '234', 'ruleID': '890jol', 'userID': '563y2k', 'name': 'TempRule', 'measurement': 'Temperature', 'operator': '1', 'threshold': 50.0, 'action': '0', 'email': 'abc@gmail.com', 'email_title': 'Alert!'}"
+    sample_rule2 = "{'deviceID': '567', 'ruleID': '469lef', 'userID': '563y2k', 'name': 'HumRule', 'measurement': 'Humidity', 'operator': '0', 'threshold': 50.0, 'action': '0', 'email': 'abc@gmail.com', 'email_title': 'Alert!'}"
     count = 0
     while True:
+        if count % 2 == 0:
+            sample_data = sample_rule1
+        else:
+            sample_data = sample_rule2
         jd = Helper.get_json_data(sample_data)
         enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(jd)
-        socketClient.send_to_server(soc2, enc_rule)
-        count+=1
-        if count == 10:
+        # insert into DB
+        json_rule = json.loads(enc_rule)
+        rule_db.insert_one_into_db(json_rule)
+        # Send to SGX
+        socketClient.send_to_server(soc, enc_rule)
+
+        count += 1
+        if count == 2:
             break
-        time.sleep(300)
-    soc2.close()
+        time.sleep(60)
 
 
 def test():
     t1 = threading.Thread(target=test_sample_rule)
     t1.start()
-
-    time.sleep(3)
-
-    t2 = threading.Thread(target=test_sample_data)
-    t2.start()
+    t1.join()
 
 
 if __name__ == '__main__':
-    # test()
-
+    rule_db = MongoManager(ip='localhost', port=27017, db_name='IOT', collection_name='rulebase')
+    rule_db.init_connection()
     soc = socketClient.connect_to_server(port=20002)
-    build_rule()
+    test()
+    # build_rule()
     soc.close()
 
     print("Finished!")

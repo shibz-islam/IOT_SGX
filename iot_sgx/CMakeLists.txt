@@ -30,6 +30,6 @@ add_executable(IoTEnclave
         Enclave/Enclave.cpp
         Enclave/Enclave.h
         Include/user_types.h
-        Include/analytics_utils.cpp Include/analytics_utils.h App/Sensor.cpp App/Sensor.h App/SocketConnection.cpp App/SocketConnection.h App/JSONParser.cpp App/JSONParser.h App/CurlHelper.cpp App/CurlHelper.h MongoHelper.cpp MongoHelper.h App/aes_gcm.cpp App/aes_gcm.h Enclave/RuleBase.cpp Enclave/RuleBase.h Enclave/MessageParser.cpp Enclave/MessageParser.h Enclave/EnclaveHelper.cpp Enclave/EnclaveHelper.h Enclave/Constants.h App/SocketManager.cpp App/SocketManager.h)
+        Include/analytics_utils.cpp Include/analytics_utils.h App/Sensor.cpp App/Sensor.h App/SocketConnection.cpp App/SocketConnection.h App/JSONParser.cpp App/JSONParser.h App/CurlHelper.cpp App/CurlHelper.h MongoHelper.cpp MongoHelper.h App/aes_gcm.cpp App/aes_gcm.h Enclave/RuleBase.cpp Enclave/RuleBase.h Enclave/MessageParser.cpp Enclave/MessageParser.h Enclave/EnclaveHelper.cpp Enclave/EnclaveHelper.h Enclave/Constants.h App/SocketManager.cpp App/SocketManager.h App/MongoManager.cpp App/MongoManager.h)
 
 target_link_libraries(IoTEnclave ${sigsegv_LIBRARIES})
