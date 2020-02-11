@@ -53,7 +53,7 @@ void check_error_code(sgx_status_t stat){
 
 
 void decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut, char *tag){
-    printf("Started Test Decryption.....");
+    printf("Started Decryption.....");
     sgx_aes_gcm_128bit_key_t *key = (sgx_aes_gcm_128bit_key_t*)gcm_key;
     uint8_t *iv = (uint8_t *)gcm_iv;
     uint8_t *aad = (uint8_t *)gcm_aad;
@@ -66,6 +66,7 @@ void decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size
 
 
 void encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut, char *tagMessageIn){
+    printf("Started Encryption.....");
     sgx_aes_gcm_128bit_key_t *key = (sgx_aes_gcm_128bit_key_t*)gcm_key;
     uint8_t *iv = (uint8_t *)gcm_iv;
     uint8_t *aad = (uint8_t *)gcm_aad;
@@ -79,8 +80,8 @@ void encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size
     check_error_code(stat);
     memcpy(encMessageOut, p_dst, lenOut);
     memcpy(tagMessageIn, p_dst2, 16);
-    printf("ENCRYPTED MESSAGE: %s\n",(char*)encMessageOut);
-    printf("Tag: %s\n", (char*)tagMessageIn);
+    //printf("ENCRYPTED MESSAGE: %s\n",(char*)encMessageOut);
+    //printf("Tag: %s\n", (char*)tagMessageIn);
 }
 
 

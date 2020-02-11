@@ -15,6 +15,23 @@
 std::map<std::string, std::map<std::string, std::string>>ruleset;
 
 
+bool parse_rule(char *msg, struct rule* newRule){
+    std::map<std::string, std::string>rule_map = parse_decrypted_string(msg);
+
+    auto it = rule_map.find(RULE_DEVICE_ID);
+    if ( it != rule_map.end() ){
+        //printf("%s: %s\n", RULE_DEVICE_ID, it->second.c_str());
+        std::string value = map_to_string(rule_map);
+        newRule->deviceID = (char*)it->second.c_str();
+        newRule->rule = (char*)value.c_str();
+        return true;
+    }
+    else
+        printf("Couldn't find %s\n", RULE_DEVICE_ID);
+    return false;
+
+//    printf("Initial size of map = %ld\n", ruleset.size());
+}
 
 
 void save_rule_base(char *msg){
@@ -84,7 +101,6 @@ void start_rule_base(char *msg){
     }
     else
         printf("Couldn't find %s\n", device_id);
-
 }
 
 

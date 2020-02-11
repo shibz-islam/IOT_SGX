@@ -62,6 +62,14 @@ enclave {
          char* tag;
     };
 
+    struct rule {
+         char* deviceID;
+         char* rule;
+         int isEncrypted;
+         char* tag;
+         int count;
+    };
+
 
     /* define ECALLs here. */
     trusted {
@@ -77,6 +85,7 @@ enclave {
     	public void ecall_decrypt_rule([user_check] struct message* msg);
 
     	public void ecall_get_rules_from_db([user_check] struct message* msg, size_t len);
+
     };
 
 
@@ -89,7 +98,11 @@ enclave {
      */
     untrusted {
         void ocall_print_string([in, string] const char *str);
-        void ocall_get_message_from_enclave([user_check] struct message* msg);
+        void ocall_get_message_from_enclave([user_check] struct message *msg);
+
+        void ocall_store_rules([user_check] struct rule *rule_str);
+        void ocall_get_rules_by_id([user_check] struct rule* msg, [user_check] struct rule* ruleset, int len);
+        void ocall_get_rule_count_by_id([user_check] struct rule *newRule, [user_check] int *totalRules);
 
     };
 

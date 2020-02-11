@@ -70,11 +70,13 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         std::cout << ptr->text << std::endl;
 
         std::cout << "Done Parsing!" << std::endl;
+        return 1;
 
     } else{
-        std::cout << "Something wrong with the parsing." << std::endl;
+        //std::cout << "Something wrong with the parsing." << std::endl;
+        return 0;
     }
-    return 0;
+
 }
 
 

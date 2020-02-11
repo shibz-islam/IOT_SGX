@@ -37,14 +37,16 @@
 #include "analytics_utils.h"
 #include "MessageParser.h"
 #include "RuleBase.h"
+#include "Constants.h"
 
+
+
+/*
+ * For Test Purpose
+ */
 
 char savedString[100] = "Default Enclave savedText";
 int savedInt = -1;
-const char *keyname = "/home/shihab/Desktop/key.key";
-int keysize = 16;
-const char *ivname = "/home/shihab/Desktop/iv";
-int ivsize = 12;
 
 // change a buffer with a constant string
 void enclaveChangeBuffer(char *buf, size_t len)
@@ -108,8 +110,7 @@ int printf(const char* fmt, ...)
  * Crypto functions
  */
 
-void ecall_encrypt_message(struct message *msg){
-    char* decMessage =  msg->text;
+void encrypt_message(char* decMessage, struct message* newMSG){
     size_t decMessageLen = strlen(decMessage);
     size_t encMessageLen = decMessageLen;
     char *encMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
@@ -117,73 +118,113 @@ void ecall_encrypt_message(struct message *msg){
     encryptMessageAES(decMessage, decMessageLen, encMessage, encMessageLen, tag_msg);
     encMessage[encMessageLen] = '\0';
     tag_msg[16] = '\0';
-    printf("Encrypted message: %s with length %ld\n", encMessage, strlen(encMessage));
-    printf("Tag: %s with length %ld\n", tag_msg, strlen(tag_msg));
-
-    struct message newMSG[1];
+    //printf("Encrypted message: %s with length %ld\n", encMessage, strlen(encMessage));
+    //printf("Tag: %s with length %ld\n", tag_msg, strlen(tag_msg));
     newMSG->text = encMessage;
     newMSG->tag = tag_msg;
+}
+
+
+char* decrypt_message(char* encMessage, char* tag){
+    size_t len = strlen(encMessage);
+    size_t decMessageLen = len;
+    printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
+    //printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
+    char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
+    decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
+    decMessage[decMessageLen] = '\0';
+    printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
+    return decMessage;
+}
+
+
+/*
+ * Helper functions
+ */
+
+void get_rule_from_file(char *msg){
+    std::map<std::string, std::string>device_info_map = parse_decrypted_string(msg);
+    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
+    printf("Device Id = %s\n", device_id.c_str());
+    struct rule newRule[1];
+    newRule->deviceID = (char*)device_id.c_str();
+
+    int *totalRules = static_cast<int *>(malloc(sizeof(int)));
+    ocall_get_rule_count_by_id(newRule, totalRules);
+    printf("Total rules=%d with deviceID=%s\n", *totalRules, device_id.c_str());
+
+//    size_t len = *totalRules;
+    if(*totalRules>0)
+    {
+        struct rule ruleset[*totalRules];
+        ocall_get_rules_by_id(newRule, ruleset, *totalRules);
+
+        printf("Total Rules = %d\n", *totalRules);
+        for(int i=0; i < *totalRules; i=i+1){
+            printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
+            decrypt_message(ruleset[i].rule, ruleset[i].tag);
+            //TODO: handle the rules
+        }
+    } else{
+        printf("No rules for Device ID: %s\n",device_id.c_str());
+    }
+}
+
+
+/*
+ * ecall functions
+ */
+
+
+void ecall_encrypt_message(struct message *msg){
+    struct message newMSG[1];
+    encrypt_message(msg->text, newMSG);
     ocall_get_message_from_enclave(newMSG);
 }
 
 
 void ecall_decrypt_message(struct message *msg){
-    char* encMessage =  msg->text;
-    size_t len = strlen(encMessage);
-    char* tag = msg->tag;
-    size_t decMessageLen = len;
-    printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
-    printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
-    char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-    decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
-    decMessage[decMessageLen] = '\0';
-    printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
-
-
-//    struct message newMSG[1];
-//    newMSG->text = decMessage;
-//    ecall_encrypt_message(newMSG);
-
-
-    start_rule_base(decMessage);
-
+    char *decMessage = decrypt_message(msg->text, msg->tag);
+    get_rule_from_file(decMessage);
 }
 
 
 void ecall_decrypt_rule(struct message* msg){
-    char* encMessage =  msg->text;
-    size_t len = strlen(encMessage);
-    char* tag = msg->tag;
-    size_t decMessageLen = len;
-    printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
-    printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
-    char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-    decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
-    decMessage[decMessageLen] = '\0';
-    printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
+    char *decMessage = decrypt_message(msg->text, msg->tag);
 
-    save_rule_base(decMessage);
+    struct rule newRule[1];
+    if (parse_rule(decMessage, newRule))
+    {
+        printf("newRule.deviceid = %s\n", newRule->deviceID);
+        printf("newRule.rule = %s\n", newRule->rule);
+        char *decMessage = (char *) malloc((strlen(newRule->rule))*sizeof(char));
+        decMessage = newRule->rule;
+        struct message newMsg[1];
+        encrypt_message(decMessage, newMsg);
+
+        newRule->rule = newMsg->text;
+        newRule->tag = newMsg->tag;
+        newRule->isEncrypted = 1;
+
+        ocall_store_rules(newRule);
+    }
 }
 
-/*
-void ecall_get_rules_from_db(size_t len){
-
-}*/
 
 
 void ecall_get_rules_from_db(struct message* msg, size_t len){
-    printf("Total len = %ld\n", len);
-    for (int i = 0; i < len; ++i) {
-        char* encMessage =  msg[i].text;
-        size_t len = strlen(encMessage);
-        char* tag = msg[i].tag;
-        size_t decMessageLen = len;
-        printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
-        printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
-        char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-        decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
-        decMessage[decMessageLen] = '\0';
-        printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
-        save_rule_base(decMessage);
-    }
+//    printf("Total len = %ld\n", len);
+//    for (int i = 0; i < len; ++i) {
+//        char* encMessage =  msg[i].text;
+//        size_t len = strlen(encMessage);
+//        char* tag = msg[i].tag;
+//        size_t decMessageLen = len;
+//        printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
+//        printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
+//        char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
+//        decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
+//        decMessage[decMessageLen] = '\0';
+//        printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
+//        save_rule_base(decMessage);
+//    }
 }

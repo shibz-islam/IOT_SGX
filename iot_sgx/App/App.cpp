@@ -67,6 +67,7 @@ sgx_status_t ret = SGX_SUCCESS;
 sgx_launch_token_t token = {0};
 int updated = 0;
 int socketConnection = 0;
+char ruleFilePath[] = "/home/shihab/Desktop/rules.bin"; //TODO: remove hard-coded filepath
 
 
 typedef struct _sgx_errlist_t {
@@ -290,9 +291,122 @@ void ocall_get_message_from_enclave(struct message* msg){
 }
 
 
+void ocall_get_rule_count_by_id(struct rule *newRule, int *totalRules){
+    printf("---------ocall_get_rule_count_by_id----------\n");
+    FILE *fptr;
+    if ((fptr = fopen(ruleFilePath, "rb")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+    unsigned short stringLength = 0;
+    int count = 0;
+    std::vector<std::string> rule_tag_vec;
+    while (!feof(fptr)) {
+        size_t ret = fread(&stringLength, sizeof(unsigned short), 1, fptr);
+        if (ret > 0) {
+            //deviceID
+            char *deviceId_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(deviceId_from_file, sizeof(char), stringLength, fptr);
+            printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
+            //Rule
+            fread(&stringLength, sizeof(unsigned short), 1, fptr);
+            char *rule_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(rule_from_file, sizeof(char), stringLength, fptr);
+            //printf("Rule from file = %d, %s\n", stringLength, rule_from_file);
+            //Tag
+            fread(&stringLength, sizeof(unsigned short), 1, fptr);
+            char *tag_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(tag_from_file, sizeof(char), stringLength, fptr);
+            //printf("Rule from file = %d, %s\n", stringLength, tag_from_file);
+
+            if (strcmp(deviceId_from_file, newRule->deviceID) == 0){
+                count++;
+            }
+            free(deviceId_from_file);
+            free(rule_from_file);
+            free(tag_from_file);
+        }
+    }
+    printf("Total rules=%d with deviceID=%s\n", count, newRule->deviceID);
+    *totalRules = count;
+}
+
+
+void ocall_get_rules_by_id(struct rule *newRule, struct rule *ruleset, int len){
+    printf("---------ocall_get_rules_by_id----------\n");
+    FILE *fptr;
+    if ((fptr = fopen(ruleFilePath, "rb")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+    unsigned short stringLength = 0;
+    int count = 0;
+    while (!feof(fptr)) {
+        size_t ret = fread(&stringLength, sizeof(unsigned short), 1, fptr);
+        if (ret > 0) {
+            //deviceID
+            char *deviceId_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(deviceId_from_file, sizeof(char), stringLength, fptr);
+            printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
+            //Rule
+            fread(&stringLength, sizeof(unsigned short), 1, fptr);
+            char *rule_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(rule_from_file, sizeof(char), stringLength, fptr);
+            //printf("Rule from file = %d, %s\n", stringLength, rule_from_file);
+            //Tag
+            fread(&stringLength, sizeof(unsigned short), 1, fptr);
+            char *tag_from_file = (char*)malloc(sizeof(char) * stringLength);
+            fread(tag_from_file, sizeof(char), stringLength, fptr);
+            //printf("Tag from file = %d, %s\n", stringLength, tag_from_file);
+
+            if (strcmp(deviceId_from_file, newRule->deviceID) == 0){
+                ruleset[count].rule = rule_from_file;
+                ruleset[count].tag = tag_from_file;
+                count++;
+            }
+        }
+    }
+    fclose(fptr);
+
+//    printf("Total Rules = %d\n", count);
+//    for(int i=0; i < count; i=i+1){
+//        printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
+//    }
+
+}
+
+
+void ocall_store_rules(struct rule *newRule) {
+    printf("---------ocall_store_rules----------\n");
+    FILE *fptr;
+    if ((fptr = fopen(ruleFilePath, "ab")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+    //Device ID
+    unsigned short sizeOfId= strlen(newRule->deviceID) + 1;
+    fwrite(&sizeOfId, sizeof(unsigned short), 1, fptr);
+    fwrite(newRule->deviceID, sizeof(char), sizeOfId, fptr);
+    printf("deviceid = %d, %s\n", sizeOfId, newRule->deviceID);
+    //Rule
+    unsigned short sizeOfRule= strlen(newRule->rule) + 1;
+    fwrite(&sizeOfRule, sizeof(unsigned short), 1, fptr);
+    fwrite(newRule->rule, sizeof(char), sizeOfRule, fptr);
+    //printf("Rule from file = %d, %s\n", sizeOfRule, newRule->rule);
+    //Tag
+    unsigned short sizeOfTag= strlen(newRule->tag) + 1;
+    fwrite(&sizeOfTag, sizeof(unsigned short), 1, fptr);
+    fwrite(newRule->tag, sizeof(char), sizeOfTag, fptr);
+    //printf("Tag from file = %d, %s\n", sizeOfTag, newRule->tag);
+
+    fclose(fptr);
+}
+
+
 /*
  * OCall Manager
  */
+
 void ocall_test()
 {
     char buffer[MAX_BUF_LEN] = "Hello World!";
@@ -381,7 +495,7 @@ int open_socket()
     printf("Opening Socket for IoT Data...\n");
     char buffer[LIMIT];
     int n;
-    SocketManager socketObj(20001);
+    SocketManager socketObj(20004);
     socketConnection = socketObj.establish_connection();
     int count = 0;
     while(1){
@@ -390,14 +504,13 @@ int open_socket()
         if (n < 0)
             perror("ERROR reading from socket");
 
-        printf("%s\n",buffer);
+//        printf("Enc Msg: %s\n",buffer);
         if(strcmp(buffer, "quit")==0)
             break;
 
-
         struct message msg[1];
-        parse_data_with_tag(buffer, msg);
-        ecall_decrypt_message(global_eid, msg);
+        if(parse_data_with_tag(buffer, msg) > 0)
+            ecall_decrypt_message(global_eid, msg);
 
         count++;
         if(count==100)
@@ -413,7 +526,7 @@ int open_socket_for_rules()
     printf("Opening Socket for Rules...\n");
     char buffer[LIMIT];
     int n;
-    SocketManager socketObj(20002);
+    SocketManager socketObj(20003);
     int socketConnection2 = socketObj.establish_connection();
     int count = 0;
     while(1){
@@ -422,13 +535,13 @@ int open_socket_for_rules()
         if (n < 0)
             perror("ERROR reading from socket");
 
-        printf("Enc Msg: %s\n",buffer);
+        //printf("Enc Msg: %s\n",buffer);
         if(strcmp(buffer, "quit")==0)
             break;
 
         struct message msg[1];
-        parse_data_with_tag(buffer, msg);
-        ecall_decrypt_rule(global_eid, msg);
+        if(parse_data_with_tag(buffer, msg) > 0)
+            ecall_decrypt_rule(global_eid, msg);
 
         count++;
         if(count==100)
@@ -454,7 +567,7 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    get_rules_from_db();
+    //get_rules_from_db();
 
     std::thread t1(open_socket);
     std::thread t2(open_socket_for_rules);
