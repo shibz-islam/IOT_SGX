@@ -36,59 +36,11 @@
 #include <string.h>
 #include "analytics_utils.h"
 #include "MessageParser.h"
-#include "RuleBase.h"
 #include "Constants.h"
+#include "RuleManager.h"
 
 
-
-/*
- * For Test Purpose
- */
-
-char savedString[100] = "Default Enclave savedText";
-int savedInt = -1;
-
-// change a buffer with a constant string
-void enclaveChangeBuffer(char *buf, size_t len)
-{
-    const char *secret = "Hello Enclave!";
-    if (len > strlen(secret))
-    {
-        memcpy(buf, secret, strlen(secret) + 1);
-    } else {
-        memcpy(buf, "false", strlen("false") + 1);
-    }
-}
-
-// write a var to the buffer
-void enclaveStringSave(char *input, size_t len) {
-    if ((strlen(input) + 1) < 100)
-    {
-        memcpy(savedString, input, strlen(input) + 1);
-    } else {
-        memcpy(input, "false", strlen("false") + 1);
-    }
-}
-
-// save the buffer to a var
-void enclaveStringLoad(char *output, size_t len) {
-    if (len > strlen(savedString))
-    {
-        memcpy(output, savedString, strlen(savedString) + 1);
-    } else {
-        memcpy(output, "false", strlen("false") + 1);
-    }
-}
-
-// save a int to a var
-void enclaveSaveInt(int input) {
-    savedInt = input;
-}
-
-// return a var
-int enclaveLoadInt() {
-    return savedInt;
-}
+RuleManager ruleManagerObj;
 
 /*
  * printf:
@@ -104,6 +56,16 @@ int printf(const char* fmt, ...)
     ocall_print_string(buf);
     return (int)strnlen(buf, BUFSIZ - 1) + 1;
 }
+
+
+/*
+ * Enclave Initialization
+ */
+//void ecall_initialize_enclave(){
+//    ruleManagerObj = RuleManager();
+//
+//}
+
 
 
 /*
@@ -139,37 +101,52 @@ char* decrypt_message(char* encMessage, char* tag){
 
 
 /*
- * Helper functions
+ * ocall functions
  */
 
-void get_rule_from_file(char *msg){
-    std::map<std::string, std::string>device_info_map = parse_decrypted_string(msg);
-    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
-    printf("Device Id = %s\n", device_id.c_str());
-    struct rule newRule[1];
-    newRule->deviceID = (char*)device_id.c_str();
 
-    int *totalRules = static_cast<int *>(malloc(sizeof(int)));
-    ocall_get_rule_count_by_id(newRule, totalRules);
-    printf("Total rules=%d with deviceID=%s\n", *totalRules, device_id.c_str());
+int get_rule_count_from_file(std::string device_id){
+    struct rule new_rule[1];
+    new_rule->deviceID = (char*)device_id.c_str();
 
-//    size_t len = *totalRules;
-    if(*totalRules>0)
-    {
-        struct rule ruleset[*totalRules];
-        ocall_get_rules_by_id(newRule, ruleset, *totalRules);
+    int *total_rules = static_cast<int *>(malloc(sizeof(int)));
+    ocall_get_rule_count_by_id(new_rule, total_rules);
+    printf("Total rules=%d with deviceID=%s\n", *total_rules, device_id.c_str());
+    return *total_rules;
+}
 
-        printf("Total Rules = %d\n", *totalRules);
-        for(int i=0; i < *totalRules; i=i+1){
-            printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
-            decrypt_message(ruleset[i].rule, ruleset[i].tag);
-            //TODO: handle the rules
-        }
-    } else{
-        printf("No rules for Device ID: %s\n",device_id.c_str());
+
+void get_rule_from_file(std::string device_id, struct rule *ruleset, int total_rules){
+    struct rule new_rule[1];
+    new_rule->deviceID = (char*)device_id.c_str();
+    ocall_get_rules_by_id(new_rule, ruleset, total_rules);
+
+    for(int i=0; i < total_rules; i=i+1){
+        printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
+        char *decMSG =  decrypt_message(ruleset[i].rule, ruleset[i].tag);
+        ruleset[i].deviceID = new_rule->deviceID;
+        ruleset[i].rule = decMSG;
+        ruleset[i].isEncrypted = 0;
+        //TODO: handle the rules
     }
 }
 
+void save_rule_in_file(struct rule *newRule){
+    char *decMessage = (char *) malloc((strlen(newRule->rule))*sizeof(char));
+    decMessage = newRule->rule;
+    struct message newMsg[1];
+    encrypt_message(decMessage, newMsg);
+
+    newRule->rule = newMsg->text;
+    newRule->tag = newMsg->tag;
+    newRule->isEncrypted = 1;
+
+    ocall_store_rules(newRule);
+}
+
+void sendAlertForRuleActionEmail(struct ruleActionProperty *property){
+    ocall_send_alert_for_rule_action_email(property);
+}
 
 /*
  * ecall functions
@@ -185,7 +162,29 @@ void ecall_encrypt_message(struct message *msg){
 
 void ecall_decrypt_message(struct message *msg){
     char *decMessage = decrypt_message(msg->text, msg->tag);
-    get_rule_from_file(decMessage);
+
+    //TODO: Check memory first
+    std::map<std::string, std::string>device_info_map = parse_decrypted_string(decMessage);
+    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
+    printf("Device Id = %s\n", device_id.c_str());
+
+    if(ruleManagerObj.isRuleExistInCache(device_id))
+    {
+        ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
+    }
+    else
+    {
+        int total_rules = get_rule_count_from_file(device_id);
+        if(total_rules>0)
+        {   struct rule ruleset[total_rules];
+            get_rule_from_file(device_id, ruleset, total_rules);
+            ruleManagerObj.saveRulesInCache(ruleset, total_rules);
+            ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
+        }
+        else {
+            printf("No rules for Device ID: %s\n",device_id.c_str());
+        }
+    }
 }
 
 
@@ -193,38 +192,13 @@ void ecall_decrypt_rule(struct message* msg){
     char *decMessage = decrypt_message(msg->text, msg->tag);
 
     struct rule newRule[1];
-    if (parse_rule(decMessage, newRule))
+    if (ruleManagerObj.parseRule(decMessage, newRule))
     {
         printf("newRule.deviceid = %s\n", newRule->deviceID);
         printf("newRule.rule = %s\n", newRule->rule);
-        char *decMessage = (char *) malloc((strlen(newRule->rule))*sizeof(char));
-        decMessage = newRule->rule;
-        struct message newMsg[1];
-        encrypt_message(decMessage, newMsg);
 
-        newRule->rule = newMsg->text;
-        newRule->tag = newMsg->tag;
-        newRule->isEncrypted = 1;
+        ruleManagerObj.saveRulesInCache(newRule, 1);
 
-        ocall_store_rules(newRule);
+        save_rule_in_file(newRule);
     }
-}
-
-
-
-void ecall_get_rules_from_db(struct message* msg, size_t len){
-//    printf("Total len = %ld\n", len);
-//    for (int i = 0; i < len; ++i) {
-//        char* encMessage =  msg[i].text;
-//        size_t len = strlen(encMessage);
-//        char* tag = msg[i].tag;
-//        size_t decMessageLen = len;
-//        printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
-//        printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
-//        char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-//        decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
-//        decMessage[decMessageLen] = '\0';
-//        printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
-//        save_rule_base(decMessage);
-//    }
 }

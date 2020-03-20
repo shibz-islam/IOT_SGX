@@ -103,15 +103,15 @@ def test_sample_rule():
         jd = Helper.get_json_data(sample_data)
         enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(jd)
         # insert into DB
-        json_rule = json.loads(enc_rule)
-        rule_db.insert_one_into_db(json_rule)
+        # json_rule = json.loads(enc_rule)
+        # rule_db.insert_one_into_db(json_rule)
         # Send to SGX
         socketClient.send_to_server(soc, enc_rule)
 
         count += 1
         if count == 2:
             break
-        time.sleep(60)
+        # time.sleep(60)
 
 
 def test():
@@ -121,9 +121,9 @@ def test():
 
 
 if __name__ == '__main__':
-    rule_db = MongoManager(ip='localhost', port=27017, db_name='IOT', collection_name='rulebase')
-    rule_db.init_connection()
-    soc = socketClient.connect_to_server(port=20002)
+    #rule_db = MongoManager(ip='localhost', port=27017, db_name='IOT', collection_name='rulebase')
+    #rule_db.init_connection()
+    soc = socketClient.connect_to_server(port=20003)
     test()
     # build_rule()
     soc.close()

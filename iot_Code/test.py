@@ -33,9 +33,9 @@ def aes_gcm_encryption():
 
 
 def simulate_iot_data():
-    soc2 = socketClient.connect_to_server(port=20001)
-    sample_data1 = {'deviceID': '123', 'deviceType': 'TemperatureSensor', 'data': '90.0'}
-    sample_data2 = {'deviceID': '345', 'deviceType': 'HumiditySensor', 'data': '70.0'}
+    soc2 = socketClient.connect_to_server(port=20004)
+    sample_data1 = {'deviceID': '234', 'deviceType': 'TemperatureSensor', 'data': '90.0'}
+    sample_data2 = {'deviceID': '567', 'deviceType': 'HumiditySensor', 'data': '70.0'}
     count = 0
     while True:
         if count%2==0:
@@ -46,9 +46,9 @@ def simulate_iot_data():
         enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(jd)
         socketClient.send_to_server(soc2, enc_rule)
         count += 1
-        if count == 10:
+        if count == 2:
             break
-        time.sleep(30)
+        # time.sleep(30)
     soc2.close()
 
 
@@ -71,5 +71,5 @@ def save_rule_in_db():
 if __name__ == '__main__':
     # aes_gcm_encryption()
     simulate_iot_data()
-    
+
 

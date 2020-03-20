@@ -99,7 +99,7 @@ else
 endif
 
 App_Cpp_Flags := $(App_C_Flags)
-App_Link_Flags := -L$(SGX_LIBRARY_PATH) -l$(Urts_Library_Name) -L/usr/local/lib -lmongocxx -lbsoncxx -lcurl -ljsoncpp -lssl -lcrypto -lpthread
+App_Link_Flags := -L$(SGX_LIBRARY_PATH) -l$(Urts_Library_Name) -L/usr/local/lib -lmongocxx -lbsoncxx -lcurl -ljsoncpp -lssl -lcrypto -lpthread -lPocoNet
 
 ifneq ($(SGX_MODE), HW)
 	App_Link_Flags += -lsgx_uae_service_sim
@@ -126,7 +126,7 @@ else
 endif
 Crypto_Library_Name := sgx_tcrypto
 
-Enclave_Cpp_Files := Enclave/Enclave.cpp Enclave/analytics_utils.cpp Enclave/MessageParser.cpp Enclave/RuleBase.cpp $(wildcard Enclave/Edger8rSyntax/*.cpp) $(wildcard Enclave/TrustedLibrary/*.cpp)
+Enclave_Cpp_Files := Enclave/Enclave.cpp Enclave/analytics_utils.cpp Enclave/MessageParser.cpp Enclave/RuleManager.cpp Enclave/LRUCache.cpp $(wildcard Enclave/Edger8rSyntax/*.cpp) $(wildcard Enclave/TrustedLibrary/*.cpp)
 Enclave_Include_Paths := -IInclude -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/libcxx
 
 Enclave_C_Flags := $(Enclave_Include_Paths) -nostdinc -fvisibility=hidden -fpie -ffunction-sections -fdata-sections

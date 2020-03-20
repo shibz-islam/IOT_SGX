@@ -60,6 +60,7 @@
 #include "MongoManager.h"
 #include "aes_gcm.h"
 #include "MongoHelper.h"
+#include "EmailManager.h"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -251,32 +252,16 @@ int initialize_enclave(void)
     ecall_libcxx_functions();
     ecall_thread_functions();
 
+    //ecall_initialize_enclave();
+
     return 0;
-}
-
-
-/*
- * Test AES
- */
-void local_aes_test()
-{
-    char data[] = "{'deviceId': 2, 'deviceType': 'Bulb', 'data': 1234}";
-    struct message msg[1];
-    msg->text = data;
-
-    char *encMessage = (char *) malloc((strlen(data)+1)*sizeof(char));
-    char *tag = new char[16];
-    aes_gcm_encrypt(data, strlen(data), encMessage, tag);
-
-    char *decMessage = (char *) malloc((strlen(encMessage))*sizeof(char));
-    aes_gcm_decrypt(encMessage, strlen(encMessage), decMessage, tag);
-    printf("dec msg: %s\n", decMessage);
 }
 
 
 /*
  * OCall functions
  */
+
 void ocall_print_string(const char *str)
 {
     /* Proxy/Bridge will check the length and null-terminate 
@@ -331,7 +316,6 @@ void ocall_get_rule_count_by_id(struct rule *newRule, int *totalRules){
     *totalRules = count;
 }
 
-
 void ocall_get_rules_by_id(struct rule *newRule, struct rule *ruleset, int len){
     printf("---------ocall_get_rules_by_id----------\n");
     FILE *fptr;
@@ -375,7 +359,6 @@ void ocall_get_rules_by_id(struct rule *newRule, struct rule *ruleset, int len){
 
 }
 
-
 void ocall_store_rules(struct rule *newRule) {
     printf("---------ocall_store_rules----------\n");
     FILE *fptr;
@@ -403,67 +386,13 @@ void ocall_store_rules(struct rule *newRule) {
 }
 
 
+void ocall_send_alert_for_rule_action_email(struct ruleActionProperty *property){
+    printf("Sending email...\n");
+    //sendEmail("dml.utd@gmail.com", std::string(property->address), "", "Alert!", std::string(property->msg), "password");
+}
+
+
 /*
- * OCall Manager
- */
-
-void ocall_test()
-{
-    char buffer[MAX_BUF_LEN] = "Hello World!";
-    char secret[MAX_BUF_LEN] = "My secret string";
-    char retSecret[MAX_BUF_LEN] = "";
-    int secretIntValue = 0;
-    int *secretIntPointer = &secretIntValue;
-    // A bunch of Enclave calls (ECALL) will happen here.
-
-    printf("\nApp: Buffertests:\n");
-
-    // Change the buffer in the enclave
-    printf("App: Buffer before change: %s\n", buffer);
-    enclaveChangeBuffer(global_eid, buffer, MAX_BUF_LEN);
-    printf("App: Buffer after change: %s\n", buffer);
-
-
-    printf("\nApp: Stringtests:\n");
-
-    // Load a string from enclave
-    // should return the default savedString from the enclave
-    enclaveStringLoad(global_eid, retSecret, MAX_BUF_LEN);
-    printf("App: Returned Secret: %s\n", retSecret);
-
-    // Save a string in the enclave
-    enclaveStringSave(global_eid, secret, strlen(secret)+1);
-    printf("App: Saved Secret: %s\n", secret);
-
-    // Load a string from enclave
-    // should return our secret string
-    enclaveStringLoad(global_eid, retSecret, MAX_BUF_LEN);
-    printf("App: Load Secret: %s\n", retSecret);
-
-
-    printf("\nApp: Integertests:\n");
-
-    // Load integer from enclave
-    // should return defauld savedInt from enclave
-    enclaveLoadInt(global_eid, secretIntPointer);
-    printf("App: secretIntValue first load: %d\n", secretIntValue);
-
-    // Save integer to enclave
-    enclaveSaveInt(global_eid, 1337);
-    printf("App: saved a 1337 to the enclave. \n", 1337);
-
-    // Load integer from enclave
-    // should return our saved 1337
-    enclaveLoadInt(global_eid, secretIntPointer);
-    printf("App: secretIntValue second load after 1337 was saved: %d\n", secretIntValue);
-}
-
-void ocall_manager()
-{
-    local_aes_test();
-}
-
-
 void get_rules_from_db(){
     MongoManager mObj("mongodb://localhost:27017", "IOT", "rulebase");
     //mObj.initConnection();
@@ -484,11 +413,10 @@ void get_rules_from_db(){
             //printf("###### i=%d, -- data= %s\n", i, msg[i].text);
         }
         //printf("size = %f\n", sizeof(msg)/ sizeof(msg[0]));
-        ecall_get_rules_from_db(global_eid, msg, totalDocuments);
+        //ecall_get_rules_from_db(global_eid, msg, totalDocuments);
     }
-
 }
-
+*/
 
 int open_socket()
 {
