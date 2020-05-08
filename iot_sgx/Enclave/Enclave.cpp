@@ -31,6 +31,7 @@
 
 #include "Enclave.h"
 #include "Enclave_t.h" /* print_string */
+#include "sgx_trts.h"
 #include <stdarg.h>
 #include <stdio.h> /* vsnprintf */
 #include <string.h>
@@ -68,41 +69,9 @@ int printf(const char* fmt, ...)
 
 
 
-/*
- * Crypto functions
- */
-
-void encrypt_message(char* decMessage, struct message* newMSG){
-    size_t decMessageLen = strlen(decMessage);
-    size_t encMessageLen = decMessageLen;
-    char *encMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-    char *tag_msg = (char *) malloc((16+1)*sizeof(char));
-    encryptMessageAES(decMessage, decMessageLen, encMessage, encMessageLen, tag_msg);
-    encMessage[encMessageLen] = '\0';
-    tag_msg[16] = '\0';
-    //printf("Encrypted message: %s with length %ld\n", encMessage, strlen(encMessage));
-    //printf("Tag: %s with length %ld\n", tag_msg, strlen(tag_msg));
-    newMSG->text = encMessage;
-    newMSG->tag = tag_msg;
-}
-
-
-char* decrypt_message(char* encMessage, char* tag){
-    size_t len = strlen(encMessage);
-    size_t decMessageLen = len;
-    printf("### From Enclave - Data, tag: \n %s\n %s\n", encMessage, tag);
-    //printf("### From Enclave - Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
-    char *decMessage = (char *) malloc((decMessageLen+1)*sizeof(char));
-    decryptMessageAES(encMessage, len, decMessage, decMessageLen, tag);
-    decMessage[decMessageLen] = '\0';
-    printf("Decrypted message: %s with length %ld\n", decMessage, strlen(decMessage));
-    return decMessage;
-}
-
-
-/*
+/*****************
  * ocall functions
- */
+ *****************/
 
 
 int get_rule_count_from_file(std::string device_id){
@@ -111,7 +80,7 @@ int get_rule_count_from_file(std::string device_id){
 
     int *total_rules = static_cast<int *>(malloc(sizeof(int)));
     ocall_get_rule_count_by_id(new_rule, total_rules);
-    printf("Total rules=%d with deviceID=%s\n", *total_rules, device_id.c_str());
+    //printf("Total rules=%d with deviceID=%s\n", *total_rules, device_id.c_str());
     return *total_rules;
 }
 
@@ -122,23 +91,39 @@ void get_rule_from_file(std::string device_id, struct rule *ruleset, int total_r
     ocall_get_rules_by_id(new_rule, ruleset, total_rules);
 
     for(int i=0; i < total_rules; i=i+1){
-        printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
-        char *decMSG =  decrypt_message(ruleset[i].rule, ruleset[i].tag);
+        //printf("*** Rule=%s, Tag=%s\n", ruleset[i].rule, ruleset[i].tag);
+        char *decMessage = (char *) malloc((strlen(ruleset[i].rule)+1)*sizeof(char));
+        sgx_status_t status = decryptMessageAES(ruleset[i].rule, strlen(ruleset[i].rule), decMessage, strlen(ruleset[i].rule), ruleset[i].tag);
+        if(status != 0){
+            printf("Error! Decryption failed!");
+            free(decMessage);
+            delete ruleset;
+            return;
+        }
         ruleset[i].deviceID = new_rule->deviceID;
-        ruleset[i].rule = decMSG;
+        ruleset[i].rule = decMessage;
         ruleset[i].isEncrypted = 0;
         //TODO: handle the rules
     }
 }
 
 void save_rule_in_file(struct rule *newRule){
-    char *decMessage = (char *) malloc((strlen(newRule->rule))*sizeof(char));
-    decMessage = newRule->rule;
-    struct message newMsg[1];
-    encrypt_message(decMessage, newMsg);
+    char *encMessage = (char *) malloc((strlen(newRule->rule)+1)*sizeof(char));
+    char *tag_msg = (char *) malloc((16+1)*sizeof(char));
+    sgx_status_t status = encryptMessageAES(newRule->rule, strlen(newRule->rule), encMessage, strlen(newRule->rule), tag_msg);
+    if(status != 0){
+        printf("Error! Encryption failed!");
+        free(encMessage);
+        free(tag_msg);
+        delete newRule;
+        return;
+    }
+    //encrypt_message(decMessage, newMsg);
+    //printf("######## Testing decryption\n");
+    //decrypt_message(newMsg->text, newMsg->tag);
 
-    newRule->rule = newMsg->text;
-    newRule->tag = newMsg->tag;
+    newRule->rule = encMessage;
+    newRule->tag = tag_msg;
     newRule->isEncrypted = 1;
 
     ocall_store_rules(newRule);
@@ -148,25 +133,46 @@ void sendAlertForRuleActionEmail(struct ruleActionProperty *property){
     ocall_send_alert_for_rule_action_email(property);
 }
 
-/*
- * ecall functions
- */
-
-
-void ecall_encrypt_message(struct message *msg){
-    struct message newMSG[1];
-    encrypt_message(msg->text, newMSG);
-    ocall_get_message_from_enclave(newMSG);
+void sendAlertForRuleActionDevice(struct ruleActionProperty *property){
+    char *encMessage = (char *) malloc((strlen(property->msg)+1)*sizeof(char));
+    char *tag_msg = (char *) malloc((16+1)*sizeof(char));
+    sgx_status_t status = encryptMessageAES(property->msg, strlen(property->msg), encMessage, strlen(property->msg), tag_msg);
+    if(status != 0){
+        printf("Error! Decryption failed!");
+        free(encMessage);
+        free(tag_msg);
+        delete property;
+        return;
+    }
+    property->msg = encMessage;
+    property->tag = tag_msg;
+    ocall_send_alert_for_rule_action_device(property);
 }
 
 
-void ecall_decrypt_message(struct message *msg){
-    char *decMessage = decrypt_message(msg->text, msg->tag);
 
+/*********************
+ * ecall functions
+ *********************/
+
+
+
+void ecall_decrypt_message(struct message *msg){
+    char *decMessage = (char *) malloc((strlen(msg->text)+1)*sizeof(char));
+    sgx_status_t status = decryptMessageAES(msg->text, strlen(msg->text), decMessage, strlen(msg->text), msg->tag);
+    //printf("Status = %d\n", status);
+    if(status != 0){
+        printf("Error! Decryption failed!");
+        free(decMessage);
+        //delete[] msg->text;
+        //delete[] msg->tag;
+        //delete msg;
+        return;
+    }
     //TODO: Check memory first
     std::map<std::string, std::string>device_info_map = parse_decrypted_string(decMessage);
     std::string device_id = device_info_map.at(RULE_DEVICE_ID);
-    printf("Device Id = %s\n", device_id.c_str());
+    //printf("$$ Device Id = %s\n", device_id.c_str());
 
     if(ruleManagerObj.isRuleExistInCache(device_id))
     {
@@ -182,20 +188,28 @@ void ecall_decrypt_message(struct message *msg){
             ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
         }
         else {
-            printf("No rules for Device ID: %s\n",device_id.c_str());
+            printf("No rules found in file for Device ID: %s\n",device_id.c_str());
         }
     }
 }
 
 
 void ecall_decrypt_rule(struct message* msg){
-    char *decMessage = decrypt_message(msg->text, msg->tag);
-
+    char *decMessage = (char *) malloc((strlen(msg->text)+1)*sizeof(char));
+    sgx_status_t status = decryptMessageAES(msg->text, strlen(msg->text), decMessage, strlen(msg->text), msg->tag);
+    if (status != 0){
+        printf("Error! Decryption failed!");
+        free(decMessage);
+        //delete[] msg->text;
+        //delete[] msg->tag;
+        //delete msg;
+        return;
+    }
     struct rule newRule[1];
     if (ruleManagerObj.parseRule(decMessage, newRule))
     {
-        printf("newRule.deviceid = %s\n", newRule->deviceID);
-        printf("newRule.rule = %s\n", newRule->rule);
+        //printf("newRule.deviceid = %s\n", newRule->deviceID);
+        //printf("newRule.rule = %s\n", newRule->rule);
 
         ruleManagerObj.saveRulesInCache(newRule, 1);
 

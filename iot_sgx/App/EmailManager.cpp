@@ -23,7 +23,7 @@ void sendEmail(std::string from, std::string to, std::string cc, std::string sub
 
     e.setSMTP_host("smtps://smtp.gmail.com:465");
     e.setSMTP_username(from);
-    e.setSMTP_password(pass);
+    e.setSMTP_password("dml12345");
 
     //e.addAttachment("/home/matthew/Git Projects/Very-Simple-SMTPS/email.cpp");
     // e.addAttachment("email.h");

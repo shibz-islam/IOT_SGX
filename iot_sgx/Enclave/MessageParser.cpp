@@ -6,11 +6,11 @@
 #include "MessageParser.h"
 #include "Enclave.h"
 #include "Enclave_t.h" /* print_string */
-
+#include "Constants.h"
 
 void removeChar(char *s, int c){
-
-    int j, n = strlen(s);
+    int n = strlen(s);
+    int i,j = 0;
     for (int i=j=0; i<n; i++)
         if (s[i] != c)
             s[j++] = s[i];
@@ -18,12 +18,13 @@ void removeChar(char *s, int c){
 }
 
 std::map<std::string, std::string> parse_decrypted_string(char *decMessage) {
+    //printf("Before removing extra characters: %s\n", decMessage);
     removeChar(decMessage, '{');
     removeChar(decMessage, '}');
     removeChar(decMessage, '"');
     removeChar(decMessage, ' ');
     removeChar(decMessage, '\'');
-    printf("After removing extra characters: %s\n", decMessage);
+    //printf("After removing extra characters: %s\n", decMessage);
 
     std::map<std::string, std::string> mmap;
 
@@ -47,10 +48,10 @@ std::map<std::string, std::string> parse_decrypted_string(char *decMessage) {
         mmap.insert(std::pair<std::string, std::string>(k, v));
     }
 //    printf("Initial size of map = %ld\n", mmap.size());
-//    for(auto it = mmap.cbegin(); it != mmap.cend(); ++it)
-//    {
-//        printf("Key=%s, Value=%s\n", it->first.c_str(), it->second.c_str());
-//    }
+    //for(auto it = mmap.cbegin(); it != mmap.cend(); ++it)
+    //{
+    //    printf("Key=%s, Value=%s\n", it->first.c_str(), it->second.c_str());
+    //}
 
     return mmap;
 }
@@ -88,6 +89,8 @@ std::string map_to_string(std::map<std::string,std::string> mmap) {
     printf("String from Map = %s\n", result.c_str());
     return result;
 }
+
+
 
 
 

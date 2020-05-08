@@ -61,6 +61,7 @@
 #include "aes_gcm.h"
 #include "MongoHelper.h"
 #include "EmailManager.h"
+#include "IoTMQTTWrapper.h"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -69,6 +70,8 @@ sgx_launch_token_t token = {0};
 int updated = 0;
 int socketConnection = 0;
 char ruleFilePath[] = "/home/shihab/Desktop/rules.bin"; //TODO: remove hard-coded filepath
+IoTMQTTWrapper *mqttObj;
+std::string topicForData = "topic/utd/iot/server/data";
 
 
 typedef struct _sgx_errlist_t {
@@ -270,11 +273,6 @@ void ocall_print_string(const char *str)
     printf("%s", str);
 }
 
-void ocall_get_message_from_enclave(struct message* msg){
-    std::string json_msg = make_json_from_message(msg);
-    write(socketConnection, json_msg.c_str(), json_msg.size());
-}
-
 
 void ocall_get_rule_count_by_id(struct rule *newRule, int *totalRules){
     printf("---------ocall_get_rule_count_by_id----------\n");
@@ -292,7 +290,7 @@ void ocall_get_rule_count_by_id(struct rule *newRule, int *totalRules){
             //deviceID
             char *deviceId_from_file = (char*)malloc(sizeof(char) * stringLength);
             fread(deviceId_from_file, sizeof(char), stringLength, fptr);
-            printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
+            //printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
             //Rule
             fread(&stringLength, sizeof(unsigned short), 1, fptr);
             char *rule_from_file = (char*)malloc(sizeof(char) * stringLength);
@@ -312,7 +310,7 @@ void ocall_get_rule_count_by_id(struct rule *newRule, int *totalRules){
             free(tag_from_file);
         }
     }
-    printf("Total rules=%d with deviceID=%s\n", count, newRule->deviceID);
+    //printf("Total rules=%d with deviceID=%s\n", count, newRule->deviceID);
     *totalRules = count;
 }
 
@@ -331,7 +329,7 @@ void ocall_get_rules_by_id(struct rule *newRule, struct rule *ruleset, int len){
             //deviceID
             char *deviceId_from_file = (char*)malloc(sizeof(char) * stringLength);
             fread(deviceId_from_file, sizeof(char), stringLength, fptr);
-            printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
+            //printf("deviceid = %d, %s\n", stringLength, deviceId_from_file);
             //Rule
             fread(&stringLength, sizeof(unsigned short), 1, fptr);
             char *rule_from_file = (char*)malloc(sizeof(char) * stringLength);
@@ -370,7 +368,7 @@ void ocall_store_rules(struct rule *newRule) {
     unsigned short sizeOfId= strlen(newRule->deviceID) + 1;
     fwrite(&sizeOfId, sizeof(unsigned short), 1, fptr);
     fwrite(newRule->deviceID, sizeof(char), sizeOfId, fptr);
-    printf("deviceid = %d, %s\n", sizeOfId, newRule->deviceID);
+    //printf("deviceid = %d, %s\n", sizeOfId, newRule->deviceID);
     //Rule
     unsigned short sizeOfRule= strlen(newRule->rule) + 1;
     fwrite(&sizeOfRule, sizeof(unsigned short), 1, fptr);
@@ -388,7 +386,14 @@ void ocall_store_rules(struct rule *newRule) {
 
 void ocall_send_alert_for_rule_action_email(struct ruleActionProperty *property){
     printf("Sending email...\n");
-    //sendEmail("dml.utd@gmail.com", std::string(property->address), "", "Alert!", std::string(property->msg), "password");
+    sendEmail("dml.utd@gmail.com", std::string(property->address), "", "Do not Reply", std::string(property->msg), "password");
+}
+
+
+void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property){
+    printf("Sending alert to device...\n");
+    std::string message = make_json_from_message(property);
+    mqttObj->publishMessage(property->address, message.c_str());
 }
 
 
@@ -418,6 +423,25 @@ void get_rules_from_db(){
 }
 */
 
+
+/*
+ * MQTT
+*/
+
+void MQTTSetup(){
+    mosqpp::lib_init();
+    mqttObj = new IoTMQTTWrapper("iot_mqtt_server", "localhost", 1883); //TODO: Remove hard-coded values
+    mqttObj->loop_start();
+    mosqpp::lib_cleanup();
+}
+
+void didReceiveMessageFromMQTT(char* payload){
+    struct message msg[1];
+    if(parse_data_with_tag(payload, msg) > 0)
+        ecall_decrypt_message(global_eid, msg);
+}
+
+
 int open_socket()
 {
     printf("Opening Socket for IoT Data...\n");
@@ -432,16 +456,18 @@ int open_socket()
         if (n < 0)
             perror("ERROR reading from socket");
 
-//        printf("Enc Msg: %s\n",buffer);
-        if(strcmp(buffer, "quit")==0)
-            break;
+        if(strlen(buffer) > 0){
+            //printf("buffer len: %d\n",strlen(buffer));
+            if(strcmp(buffer, "quit")==0)
+                break;
 
-        struct message msg[1];
-        if(parse_data_with_tag(buffer, msg) > 0)
-            ecall_decrypt_message(global_eid, msg);
+            struct message msg[1];
+            if(parse_data_with_tag(buffer, msg) > 0)
+                ecall_decrypt_message(global_eid, msg);
 
-        count++;
-        if(count==100)
+            count++;
+        }
+        if(count==200)
             break;
     }
     socketObj.close_connection();
@@ -463,20 +489,29 @@ int open_socket_for_rules()
         if (n < 0)
             perror("ERROR reading from socket");
 
-        //printf("Enc Msg: %s\n",buffer);
-        if(strcmp(buffer, "quit")==0)
-            break;
+        if(strlen(buffer) > 0){
+            //printf("buffer len: %d\n",strlen(buffer));
+            if(strcmp(buffer, "quit")==0)
+                break;
 
-        struct message msg[1];
-        if(parse_data_with_tag(buffer, msg) > 0)
-            ecall_decrypt_rule(global_eid, msg);
+            struct message msg[1];
+            if(parse_data_with_tag(buffer, msg) > 0)
+                ecall_decrypt_rule(global_eid, msg);
 
-        count++;
+            count++;
+        }
         if(count==100)
             break;
     }
     socketObj.close_connection();
     return 0;
+}
+
+
+void start_mqtt_service(){
+    MQTTSetup();
+    mqttObj->subscribeTopic(topicForData.c_str());
+    while (true){}
 }
 
 
@@ -495,14 +530,18 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
+    MQTTSetup();
+
     //get_rules_from_db();
 
     std::thread t1(open_socket);
     std::thread t2(open_socket_for_rules);
+
     t1.join();
     t2.join();
 
 //    ocall_manager();
+
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);

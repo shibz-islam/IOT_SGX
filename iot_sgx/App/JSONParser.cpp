@@ -9,10 +9,10 @@
 #include <jsoncpp/json/json.h>
 #include "../cppcodec/base32_crockford.hpp"
 #include "../cppcodec/base64_rfc4648.hpp"
+#include "../cppcodec/base64.h"
 
 
-
-std::string make_json_from_message(struct message *ptr)
+std::string make_json_from_message(struct ruleActionProperty *ptr)
 {
     Json::Value root;
 //    root["deviceID"] = ptr->uid;
@@ -20,7 +20,7 @@ std::string make_json_from_message(struct message *ptr)
 
     using base64 = cppcodec::base64_rfc4648;
 
-    std::string encoded_text = base64::encode(ptr->text, strlen(ptr->text));
+    std::string encoded_text = base64::encode(ptr->msg, strlen(ptr->msg));
     std::string encoded_tag = base64::encode(ptr->tag, strlen(ptr->tag));
 
     root["ciphertext"] = encoded_text;
@@ -43,6 +43,8 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         std::cout << "\nJSON data received:" << std::endl;
         std::cout << jsonData.toStyledString() << std::endl;
 
+        /*CPPCodec*/
+        /*
         using base64 = cppcodec::base64_rfc4648;
         std::vector<uint8_t> decoded = base64::decode(jsonData["ciphertext"].asString().c_str(), jsonData["ciphertext"].asString().length());
         std::cout << "decoded size: " << decoded.size() << '\n';
@@ -52,28 +54,50 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         std::cout << "decoded_tag size: " << decoded_tag.size() << '\n';
         std::cout << decoded_tag.data() << std::endl;
 
-
         char *temp = (char *) malloc((decoded.size()+1)*sizeof(char));
         memcpy(temp, decoded.data(), decoded.size());
         temp[decoded.size()] = '\0';
-        std::cout << temp << std::endl;
         std::cout << strlen(temp) << std::endl;
+        std::cout << temp << std::endl;
 
         char *temp_tag = (char *) malloc((decoded_tag.size()+1)*sizeof(char));
         memcpy(temp_tag, decoded_tag.data(), decoded_tag.size());
         temp_tag[decoded_tag.size()] = '\0';
-        std::cout << temp_tag << std::endl;
         std::cout << strlen(temp_tag) << std::endl;
+        std::cout << temp_tag << std::endl;
+         */
+
+        /*base64.cpp*/
+        std::string decoded = base64_decode(jsonData["ciphertext"].asString());
+        //std::cout << "Decoding: " << decoded << std::endl;
+        //std::cout << decoded.length() << std::endl;
+
+        std::string decoded_tag = base64_decode(jsonData["tag"].asString());
+        //std::cout << "Decoding: " << decoded_tag << std::endl;
+        //std::cout << decoded_tag.length() << std::endl;
+
+        char *temp = (char *) malloc((decoded.length()+1)*sizeof(char));
+        memcpy(temp, (char*)decoded.c_str(), decoded.length());
+        temp[decoded.length()] = '\0';
+        //std::cout << strlen(temp) << std::endl;
+        //std::cout << temp << std::endl;
+
+        char *temp_tag = (char *) malloc((decoded_tag.length()+1)*sizeof(char));
+        memcpy(temp_tag, decoded_tag.c_str(), decoded_tag.length());
+        temp_tag[decoded_tag.length()] = '\0';
+        //std::cout << strlen(temp_tag) << std::endl;
+        //std::cout << temp_tag << std::endl;
+
+        //std::cout << sizeof(temp) << std::endl;
 
         ptr->text = temp;
         ptr->tag = temp_tag;
-        std::cout << ptr->text << std::endl;
 
         std::cout << "Done Parsing!" << std::endl;
         return 1;
 
     } else{
-        //std::cout << "Something wrong with the parsing." << std::endl;
+        std::cout << "Something wrong with the parsing." << std::endl;
         return 0;
     }
 

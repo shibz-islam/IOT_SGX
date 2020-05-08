@@ -12,6 +12,7 @@
 #include "Enclave_t.h"
 
 
+
 static sgx_aes_gcm_128bit_key_t key2 = { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf };
 
 static const unsigned char gcm_key[] = {
@@ -52,8 +53,10 @@ void check_error_code(sgx_status_t stat){
 
 
 
-void decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut, char *tag){
+sgx_status_t decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut, char *tag){
     printf("Started Decryption.....");
+    //printf("\n### Data, tag: \n %s\n %s\n", encMessageIn, tag);
+    //printf("### Data, tag sizes: \n %ld\n %ld\n", len, strlen(tag));
     sgx_aes_gcm_128bit_key_t *key = (sgx_aes_gcm_128bit_key_t*)gcm_key;
     uint8_t *iv = (uint8_t *)gcm_iv;
     uint8_t *aad = (uint8_t *)gcm_aad;
@@ -61,27 +64,41 @@ void decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size
     uint8_t p_dst[BUFLEN] = {0};
     sgx_status_t stat = sgx_rijndael128GCM_decrypt(key, encMessage, len, p_dst, iv, SGX_AESGCM_IV_SIZE, aad, 16, (sgx_aes_gcm_128bit_tag_t *) tag );
     check_error_code(stat);
-    memcpy(decMessageOut, p_dst, lenOut);
+    if(stat == 0){
+        memcpy(decMessageOut, p_dst, lenOut);
+        decMessageOut[lenOut] = '\0';
+    }else{
+        printf("Error! Decryption failed, with status code %d\n", stat);
+    }
+    //printf("### Decrypted message: %s with length %ld\n", decMessageOut, strlen(decMessageOut));
+    return stat;
 }
 
 
-void encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut, char *tagMessageIn){
+sgx_status_t encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut, char *tagMessageIn){
     printf("Started Encryption.....");
+    //printf("\n### Message to encrypt: %s\n", decMessageIn);
+    //printf("###MessageLen:%d, encMessageLen:%d\n",len, lenOut);
     sgx_aes_gcm_128bit_key_t *key = (sgx_aes_gcm_128bit_key_t*)gcm_key;
     uint8_t *iv = (uint8_t *)gcm_iv;
     uint8_t *aad = (uint8_t *)gcm_aad;
     uint8_t  *decMessage = (uint8_t *)decMessageIn;
-    uint8_t p_dst[BUFLEN] = {0};
+    uint8_t p_dst[lenOut] = {0};
+    uint8_t p_dst2[16] = {0};
 
-    uint8_t p_dst2[BUFLEN] = {0};
-//    (sgx_aes_gcm_128bit_tag_t *) tag;
-
-    sgx_status_t stat = sgx_rijndael128GCM_encrypt(key, decMessage, len, p_dst, iv, SGX_AESGCM_IV_SIZE, aad, 16, (sgx_aes_gcm_128bit_tag_t *) p_dst2);
+    sgx_status_t stat = sgx_rijndael128GCM_encrypt(key, decMessage, len, p_dst, iv, SGX_AESGCM_IV_SIZE, aad, SGX_AESGCM_MAC_SIZE, (sgx_aes_gcm_128bit_tag_t *) p_dst2);
     check_error_code(stat);
-    memcpy(encMessageOut, p_dst, lenOut);
-    memcpy(tagMessageIn, p_dst2, 16);
-    //printf("ENCRYPTED MESSAGE: %s\n",(char*)encMessageOut);
-    //printf("Tag: %s\n", (char*)tagMessageIn);
+    if(stat == 0){
+        memcpy(encMessageOut, p_dst, lenOut);
+        memcpy(tagMessageIn, p_dst2, SGX_AESGCM_MAC_SIZE);
+        encMessageOut[lenOut] = '\0';
+        tagMessageIn[SGX_AESGCM_MAC_SIZE] = '\0';
+    } else{
+        printf("Error! Encryption failed, with status code %d\n", stat);
+    }
+    //printf("### Encrypted message: %s with length %ld\n", encMessageOut, strlen(encMessageOut));
+    //printf("### Tag: %s with length %ld\n", tagMessageIn, strlen(tagMessageIn));
+    return stat;
 }
 
 

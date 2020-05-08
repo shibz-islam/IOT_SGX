@@ -8,6 +8,8 @@
 #include "Enclave.h"
 #include "Enclave_t.h"
 
+#define CACHE_SIZE 5
+
 
 /*** HELPER METHODS ***/
 
@@ -20,12 +22,14 @@
 
 RuleManager::RuleManager() {
     //TODO: initialize the map
-    cache = new LRUCache(5);
+    cache = new LRUCache(CACHE_SIZE);
 }
 
 
 void RuleManager::saveRulesInCache(struct rule *newRule, int count) {
     for (int i = 0; i < count; ++i) {
+        //printf("*** deviceID = %s\n", newRule[i].deviceID);
+        //printf("*** rule = %s\n", newRule[i].rule);
         cache->put(std::string(newRule[i].deviceID), std::string(newRule[i].rule));
     }
 }
@@ -53,8 +57,14 @@ bool RuleManager::parseRule(char *msg, struct rule *newRule) {
     auto it = rule_map.find(RULE_DEVICE_ID);
     if ( it != rule_map.end() ){
         //printf("%s: %s\n", RULE_DEVICE_ID, it->second.c_str());
+        std::string device_id_str = rule_map[RULE_DEVICE_ID];
+        char* deviceID =  (char *) malloc((device_id_str.length()+1)*sizeof(char));
+        memcpy(deviceID, device_id_str.c_str(), device_id_str.length()+1);
+        deviceID[device_id_str.length()] = '\0';
+
         std::string value = map_to_string(rule_map);
-        newRule->deviceID = (char*)it->second.c_str();
+
+        newRule->deviceID = deviceID;
         newRule->rule = (char*)value.c_str();
         return true;
     }
@@ -73,9 +83,11 @@ bool RuleManager::parseRule(char *msg, struct rule *newRule) {
  * @param msg
  */
 void RuleManager::checkRuleSatisfiability(std::string device_id, std::map<std::string,std::string> device_info_map) {
-    printf("Device Id = %s\n", device_id);
+    //printf("*** Device Id = %s\n", device_id.c_str());
     std::string rule_str = cache->get(device_id);
     std::map<std::string, std::string>rule_map = parse_decrypted_string((char*)rule_str.c_str());
+
+    //printf("*** Rule string: %s\n", rule_str.c_str());
 
     int rule_operator = std::stoi(rule_map.at(RULE_OPERATOR));
     float device_data = std::stof(device_info_map.at(SENSOR_DATA));
@@ -133,7 +145,7 @@ void RuleManager::checkRuleSatisfiability(std::string device_id, std::map<std::s
 
     if(!success){
         int rule_action = std::stoi(rule_map.at(RULE_ACTION));
-        struct ruleActionProperty *property;
+        struct ruleActionProperty property[1];
         switch(rule_action){
             case EMAIL:
             {
@@ -156,6 +168,12 @@ void RuleManager::checkRuleSatisfiability(std::string device_id, std::map<std::s
             }
             case DEVICE:
             {
+                property->type = rule_action;
+                std::string topic_str = rule_map.at(RULE_EMAIL) + device_id;
+                printf("topic: %s\n", topic_str.c_str());
+                property->address = (char*) topic_str.c_str();
+                property->msg = (char*) msg.c_str();
+                sendAlertForRuleActionDevice(property);
                 //TODO: handle alert
                 break;
             }

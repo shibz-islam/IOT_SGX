@@ -67,6 +67,9 @@ void ecall_libc_functions(void);
 void ecall_libcxx_functions(void);
 void ecall_thread_functions(void);
 
+
+void didReceiveMessageFromMQTT(char* payload);
+
 #if defined(__cplusplus)
 }
 #endif

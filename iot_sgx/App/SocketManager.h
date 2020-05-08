@@ -5,7 +5,7 @@
 #ifndef IOTENCLAVE_SOCKETMANAGER_H
 #define IOTENCLAVE_SOCKETMANAGER_H
 
-#define LIMIT 1024
+#define LIMIT 2048
 
 class SocketManager {
 private:

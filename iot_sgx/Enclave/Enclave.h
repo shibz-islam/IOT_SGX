@@ -41,6 +41,7 @@ extern "C" {
 
 int printf(const char* fmt, ...);
 void sendAlertForRuleActionEmail(struct ruleActionProperty *property);
+void sendAlertForRuleActionDevice(struct ruleActionProperty *property);
 
 #if defined(__cplusplus)
 }

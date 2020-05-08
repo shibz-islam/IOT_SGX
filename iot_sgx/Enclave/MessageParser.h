@@ -12,4 +12,5 @@ std::map<std::string, std::string> parse_decrypted_string(char *decMessage);
 std::string device_to_string(struct device *device);
 std::string map_to_string(std::map<std::string,std::string> mmap);
 
+
 #endif //IOTENCLAVE_MESSAGEPARSER_H

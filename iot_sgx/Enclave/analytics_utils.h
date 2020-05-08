@@ -15,8 +15,8 @@
 #define IOTENCLAVE_ANALYTICS_UTILS_H
 
 
-void decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut, char *tag);
-void encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut, char *tagMessageIn);
+sgx_status_t decryptMessageAES(char *encMessageIn, size_t len, char *decMessageOut, size_t lenOut, char *tag);
+sgx_status_t encryptMessageAES(char *decMessageIn, size_t len, char *encMessageOut, size_t lenOut, char *tagMessageIn);
 
 
 
