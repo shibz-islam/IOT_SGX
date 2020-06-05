@@ -6,6 +6,7 @@
 #include "Enclave_u.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "string.h"
 #include <jsoncpp/json/json.h>
 #include "../cppcodec/base32_crockford.hpp"
 #include "../cppcodec/base64_rfc4648.hpp"
@@ -76,11 +77,19 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         //std::cout << "Decoding: " << decoded_tag << std::endl;
         //std::cout << decoded_tag.length() << std::endl;
 
+
         char *temp = (char *) malloc((decoded.length()+1)*sizeof(char));
         memcpy(temp, (char*)decoded.c_str(), decoded.length());
         temp[decoded.length()] = '\0';
         //std::cout << strlen(temp) << std::endl;
         //std::cout << temp << std::endl;
+
+        if (memcmp(temp, decoded.c_str(), decoded.length()) == 0){
+            //std::cout << "Copy successfull" << std::endl;
+        } else{
+            std::cout << "Copy Unsuccessfull...Parsing incomplete!" << std::endl;
+            return 0;
+        }
 
         char *temp_tag = (char *) malloc((decoded_tag.length()+1)*sizeof(char));
         memcpy(temp_tag, decoded_tag.c_str(), decoded_tag.length());
@@ -88,10 +97,9 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         //std::cout << strlen(temp_tag) << std::endl;
         //std::cout << temp_tag << std::endl;
 
-        //std::cout << sizeof(temp) << std::endl;
-
         ptr->text = temp;
         ptr->tag = temp_tag;
+        ptr->textLength = decoded.length();
 
         std::cout << "Done Parsing!" << std::endl;
         return 1;

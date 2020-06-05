@@ -39,6 +39,7 @@
 #include "MessageParser.h"
 #include "Constants.h"
 #include "RuleManager.h"
+#include "cJSON.h"
 
 
 RuleManager ruleManagerObj;
@@ -62,10 +63,9 @@ int printf(const char* fmt, ...)
 /*
  * Enclave Initialization
  */
-//void ecall_initialize_enclave(){
-//    ruleManagerObj = RuleManager();
-//
-//}
+void ecall_initialize_enclave(){
+
+}
 
 
 
@@ -195,8 +195,8 @@ void ecall_decrypt_message(struct message *msg){
 
 
 void ecall_decrypt_rule(struct message* msg){
-    char *decMessage = (char *) malloc((strlen(msg->text)+1)*sizeof(char));
-    sgx_status_t status = decryptMessageAES(msg->text, strlen(msg->text), decMessage, strlen(msg->text), msg->tag);
+    char *decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
+    sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
     if (status != 0){
         printf("Error! Decryption failed!");
         free(decMessage);
@@ -211,8 +211,8 @@ void ecall_decrypt_rule(struct message* msg){
         //printf("newRule.deviceid = %s\n", newRule->deviceID);
         //printf("newRule.rule = %s\n", newRule->rule);
 
-        ruleManagerObj.saveRulesInCache(newRule, 1);
+        //ruleManagerObj.saveRulesInCache(newRule, 1);
 
-        save_rule_in_file(newRule);
+        //save_rule_in_file(newRule);
     }
 }

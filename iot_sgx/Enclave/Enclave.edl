@@ -60,6 +60,7 @@ enclave {
     struct message {
          char* text;
          char* tag;
+         size_t textLength;
     };
 
     struct rule {
@@ -81,7 +82,7 @@ enclave {
 
     /* define ECALLs here. */
     trusted {
-    	//public void ecall_initialize_enclave();
+    	public void ecall_initialize_enclave();
 
     	public void ecall_decrypt_message([user_check] struct message* msg);
     	public void ecall_decrypt_rule([user_check] struct message* msg);

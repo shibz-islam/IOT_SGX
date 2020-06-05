@@ -70,7 +70,7 @@ sgx_status_t decryptMessageAES(char *encMessageIn, size_t len, char *decMessageO
     }else{
         printf("Error! Decryption failed, with status code %d\n", stat);
     }
-    //printf("### Decrypted message: %s with length %ld\n", decMessageOut, strlen(decMessageOut));
+    printf("### Decrypted message: %s with length %ld\n", decMessageOut, strlen(decMessageOut));
     return stat;
 }
 
