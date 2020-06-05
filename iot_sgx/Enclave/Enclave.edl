@@ -79,6 +79,29 @@ enclave {
         char* tag;
     };
 
+    struct RuleEvent{
+        char *capability;
+        char *attribute;
+        char *value;
+        char *valueType;
+        char *unit;
+        bool isDevice;
+    };
+
+    struct DeviceEvent{
+        char *deviceId;
+        char *capability;
+        char *attribute;
+        char *value;
+        char *valueType;
+        char *unit;
+    };
+
+    struct DeviceCommand{
+        char *deviceId;
+        char *command;
+    };
+
 
     /* define ECALLs here. */
     trusted {

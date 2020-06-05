@@ -255,8 +255,6 @@ int initialize_enclave(void)
     ecall_libcxx_functions();
     ecall_thread_functions();
 
-    //ecall_initialize_enclave();
-
     return 0;
 }
 
@@ -529,17 +527,18 @@ int SGX_CDECL main(int argc, char *argv[])
         getchar();
         return -1; 
     }
-    //ecall_initialize_enclave(global_eid);
+
+    ecall_initialize_enclave(global_eid);
 
 
-    MQTTSetup();
+    //MQTTSetup();
 
     //get_rules_from_db();
 
-    //std::thread t1(open_socket);
+    std::thread t1(open_socket);
     std::thread t2(open_socket_for_rules);
 
-    //t1.join();
+    t1.join();
     t2.join();
 
 //    ocall_manager();

@@ -25,6 +25,8 @@ public:
     bool parseRule(char *msg, struct rule* newRule);
     void checkRuleSatisfiability(std::string device_id, std::map<std::string,std::string> device_info_map);
 
+    void didReceiveRule(char *rule);
+    void didReceiveDeviceEvent(char *event);
 };
 
 

@@ -64,7 +64,7 @@ int printf(const char* fmt, ...)
  * Enclave Initialization
  */
 void ecall_initialize_enclave(){
-
+    ruleManagerObj = new RuleManager();
 }
 
 
@@ -170,27 +170,29 @@ void ecall_decrypt_message(struct message *msg){
         return;
     }
     //TODO: Check memory first
-    std::map<std::string, std::string>device_info_map = parse_decrypted_string(decMessage);
-    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
-    //printf("$$ Device Id = %s\n", device_id.c_str());
+//    std::map<std::string, std::string>device_info_map = parse_decrypted_string(decMessage);
+//    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
+//    //printf("$$ Device Id = %s\n", device_id.c_str());
+//
+//    if(ruleManagerObj.isRuleExistInCache(device_id))
+//    {
+//        ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
+//    }
+//    else
+//    {
+//        int total_rules = get_rule_count_from_file(device_id);
+//        if(total_rules>0)
+//        {   struct rule ruleset[total_rules];
+//            get_rule_from_file(device_id, ruleset, total_rules);
+//            ruleManagerObj.saveRulesInCache(ruleset, total_rules);
+//            ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
+//        }
+//        else {
+//            printf("No rules found in file for Device ID: %s\n",device_id.c_str());
+//        }
+//    }
 
-    if(ruleManagerObj.isRuleExistInCache(device_id))
-    {
-        ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
-    }
-    else
-    {
-        int total_rules = get_rule_count_from_file(device_id);
-        if(total_rules>0)
-        {   struct rule ruleset[total_rules];
-            get_rule_from_file(device_id, ruleset, total_rules);
-            ruleManagerObj.saveRulesInCache(ruleset, total_rules);
-            ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
-        }
-        else {
-            printf("No rules found in file for Device ID: %s\n",device_id.c_str());
-        }
-    }
+    ruleManagerObj.didReceiveDeviceEvent(decMessage);
 }
 
 
@@ -205,14 +207,14 @@ void ecall_decrypt_rule(struct message* msg){
         //delete msg;
         return;
     }
-    struct rule newRule[1];
-    if (ruleManagerObj.parseRule(decMessage, newRule))
-    {
-        //printf("newRule.deviceid = %s\n", newRule->deviceID);
-        //printf("newRule.rule = %s\n", newRule->rule);
+//    struct rule newRule[1];
+//    if (ruleManagerObj.parseRule(decMessage, newRule))
+//    {
+//        //printf("newRule.deviceid = %s\n", newRule->deviceID);
+//        //printf("newRule.rule = %s\n", newRule->rule);
+//        ruleManagerObj.saveRulesInCache(newRule, 1);
+//        save_rule_in_file(newRule);
+//    }
 
-        //ruleManagerObj.saveRulesInCache(newRule, 1);
-
-        //save_rule_in_file(newRule);
-    }
+    ruleManagerObj.didReceiveRule(decMessage);
 }

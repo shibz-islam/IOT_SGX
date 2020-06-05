@@ -7,8 +7,9 @@
 #include "Constants.h"
 #include "Enclave.h"
 #include "Enclave_t.h"
+#include "RuleParser.h"
 
-#define CACHE_SIZE 5
+#define CACHE_SIZE 20
 
 
 /*** HELPER METHODS ***/
@@ -184,8 +185,70 @@ void RuleManager::checkRuleSatisfiability(std::string device_id, std::map<std::s
     }
 }
 
-
-
 RuleManager::~RuleManager() {
 
+}
+
+std::vector<std::string> split(std::string s, std::string delimiter){
+    std::vector<std::string> list;
+    size_t pos = 0;
+    std::string token;
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        list.push_back(token);
+        s.erase(0, pos + delimiter.length());
+    }
+    list.push_back(s);
+    return list;
+}
+
+void RuleManager::didReceiveRule(char *rule){
+    if (isRuleTypeIFAction(rule)){
+        printf("Enclave# isRuleTypeIFAction\n");
+        std::vector<std::string> deviceIdVector = parseRuleForDeviceID(rule);
+        if (!deviceIdVector.empty()){
+            //store Rules in cache
+            for (const auto &id : deviceIdVector) {
+                printf("Enclave# device id: %s\n", id.c_str());
+                cache->put(id, std::string(rule));
+            }
+        } else{
+            printf("Enclave# deviceIdVector empty\n");
+        }
+    }
+    else{
+        //TODO: handle Every/Sleep Actions
+        printf("Enclave# not IFAction\n");
+    }
+}
+
+void RuleManager::didReceiveDeviceEvent(char *event){
+    DeviceEvent *deviceEvent = new DeviceEvent();
+    if(parseDeviceEventData(event, deviceEvent)){
+        printf("Enclave# parseDeviceEventData successful\n");
+        //TODO: fetch Rule for deviceID
+        if(cache->isKeyPresent(std::string(deviceEvent->deviceId))){
+            //TODO: check rule satisfiability with device event
+            std::string rule_str = cache->get(std::string(deviceEvent->deviceId));
+            std::vector<std::string> rulesList = split(rule_str, ";");
+            for (auto &rule : rulesList) {
+                //printf("rule: %s\n", item.c_str());
+                bool isSuccess = checkRuleSatisfiabilityWithDeviceEvent((char*)rule.c_str(), deviceEvent);
+                std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands((char*)rule.c_str(), isSuccess);
+                if(!deviceCommands.empty()){
+                    for (const auto &dc : deviceCommands) {
+                        printf("Enclave# device id: %s\n", dc->deviceId);
+                        printf("Enclave# command: %s\n", dc->command);
+                    }
+                } else{
+                    printf("Enclave# deviceCommandsVector empty\n");
+                }
+            }
+            rulesList.clear();
+        } else{
+            printf("Enclave# key not present in cache\n");
+        }
+    } else{
+        printf("Enclave# parseDeviceEventData unsuccessful\n");
+    }
 }
