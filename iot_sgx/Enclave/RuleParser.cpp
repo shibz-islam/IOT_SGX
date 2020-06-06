@@ -53,7 +53,7 @@ std::string parseConditionValue(const cJSON *condition){
         }
     }
     else {
-        printf("Unknown Condition Value\n");
+        printf("Unknown Condition Value ");
         return NULL;
     }
 }
@@ -63,7 +63,7 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
     char *conditionType = condition->string;
 
     if (strcmp(conditionType, "equals") == 0){
-        printf("*** equals\n");
+        //printf("*** equals ");
         const cJSON *conditionLeft = cJSON_GetObjectItemCaseSensitive(condition, "left");
         if (parseOperandDevice(conditionLeft->child, event)){
             const cJSON *conditionRight = cJSON_GetObjectItemCaseSensitive(condition, "right");
@@ -88,7 +88,7 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
     else{
         if(strcmp(conditionType, "greater_than") == 0 || strcmp(conditionType, "greater_than_or_equals") == 0 || strcmp(conditionType, "less_than") == 0 || strcmp(conditionType, "less_than_or_equals") == 0 )
         {
-            printf("*** others\n");
+            //printf("*** others ");
             const cJSON *conditionRight = cJSON_GetObjectItemCaseSensitive(condition, "right");
             if (parseOperandDevice(conditionRight->child, event)){
                 const cJSON *conditionLeft = cJSON_GetObjectItemCaseSensitive(condition, "left");
@@ -106,11 +106,11 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
                     return (std::stod(event->value) <= std::stod(value.c_str()));
                 }
             } else{
-                printf("failed parseOperandDevice\n");
+                printf("failed parseOperandDevice ");
             }
         }
         else{
-            printf("Error: Unknown Condition Type\n");
+            printf("Error: Unknown Condition Type ");
         }
     }
     return false;
@@ -147,7 +147,7 @@ std::vector<char*> parseCommandIfForRuleCommand(const cJSON *command, bool isSat
         char *conditionType = condition->string;
         if(isSatisfied){
             if (strcmp(conditionType, "then") == 0){
-                printf("***then\n");
+                printf("***then ");
                 ruleCommandsVector = parseActionCommandsList(condition);
 //                for (int i = 0; i < ruleCommandsVector.size(); ++i) {
 //                    printf("Command Json: %s\n", ruleCommandsVector[i]);
@@ -157,7 +157,7 @@ std::vector<char*> parseCommandIfForRuleCommand(const cJSON *command, bool isSat
         }
         else{
             if (strcmp(conditionType, "else") == 0){
-                printf("***else\n");
+                printf("***else ");
                 ruleCommandsVector = parseActionCommandsList(condition);
 //                for (int i = 0; i < ruleCommandsVector.size(); ++i) {
 //                    printf("IF-Command Json: %s\n", ruleCommandsVector[i]);
@@ -176,7 +176,7 @@ std::vector<char*> parseCommandEveryForRuleCommand(const cJSON *command){
     while (condition){
         char *conditionType = condition->string;
         if (strcmp(conditionType, "actions") == 0){
-            printf("***actions\n");
+            printf("***actions");
             ruleCommandsVector = parseActionCommandsList(condition);
             for (int i = 0; i < ruleCommandsVector.size(); ++i) {
                 printf("Every-Command Json: %s\n", ruleCommandsVector[i]);
@@ -224,7 +224,7 @@ bool parseCommandEveryForRuleEvent(const cJSON *command, RuleEvent *event){
             break;
         }
         else if (strcmp(conditionType, "interval") == 0){
-            printf("***interval\n");
+            printf("***interval");
             event->capability = "interval";
             event->attribute = "Now";
             return parseConditionTimeValue(command, event);
@@ -249,14 +249,14 @@ bool parseCommandSleepForRuleEvent(const cJSON *command, RuleEvent *event) {
 
 
 bool isRuleTypeIFAction(char *rule){
-    printf("#isRuleTypeIFAction\n");
+    printf("#isRuleTypeIFAction ");
     cJSON *rule_json = cJSON_Parse(rule);
     if (rule_json == NULL)
     {
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
         {
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            printf("Error before: %s\n", error_ptr);
         }
         return false;
     }
@@ -277,7 +277,7 @@ bool isRuleTypeIFAction(char *rule){
 }
 
 std::vector<std::string> parseRuleForDeviceID(char *rule){
-    printf("#parseRuleForDeviceID\n");
+    printf("#parseRuleForDeviceID ");
     std::vector<std::string> devicesVector;
     cJSON *rule_json = cJSON_Parse(rule);
     const cJSON *action = NULL;
@@ -307,7 +307,7 @@ std::vector<std::string> parseRuleForDeviceID(char *rule){
                 deviceObj = cJSON_GetObjectItemCaseSensitive(condition, "right");
             }
             else{
-                printf("Unknown conditionType\n");
+                printf("Unknown conditionType ");
             }
 
             if (!cJSON_IsNull(deviceObj)){
@@ -322,14 +322,14 @@ std::vector<std::string> parseRuleForDeviceID(char *rule){
             }
         }
         else{
-            printf("Unknown Command\n");
+            printf("Unknown Command ");
         }
     }
     return devicesVector;
 }
 
 bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
-    printf("#parseDeviceEventData\n");
+    printf("#parseDeviceEventData");
     cJSON *event_json = cJSON_Parse(event);
     bool isSuccess = true;
     if (event_json == NULL)
@@ -337,7 +337,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
         {
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            printf("Error before: %s\n", error_ptr);
         }
         return false;
     }
@@ -389,7 +389,8 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                     //printf("value: \"%d\"\n", value->valueint);
                     std::string valueString = std::to_string(value->valueint);
                     char* val = new char[valueString.length()];
-                    strcpy(val, valueString.c_str());
+                    //strcpy(val, valueString.c_str());
+                    memcpy(val, valueString.c_str(), valueString.length());
                     deviceEvent->value = val;
                     deviceEvent->valueType = valueType;
                 }
@@ -401,7 +402,8 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                     //printf("value: \"%f\"\n", value->valuedouble);
                     std::string valueString = std::to_string(value->valuedouble);
                     char* val = new char[valueString.length()];
-                    strcpy(val, valueString.c_str());
+                    //strcpy(val, valueString.c_str());
+                    memcpy(val, valueString.c_str(), valueString.length());
                     deviceEvent->value = val;
                     deviceEvent->valueType = valueType;
                 }
@@ -430,7 +432,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
  * SLEEP_Command:
  */
 bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
-    printf("#checkRuleSatisfiabilityWithDeviceEvent\n");
+    printf("#checkRuleSatisfiabilityWithDeviceEvent ");
     printf("Rule= %s\n", rule);
     //printf("\n** Device Event: id=%s, cap=%s, attr=%s, val=%s, valType=%s, unit=%s\n", event->deviceId, event->capability, event->attribute, event->value, event->valueType, event->unit);
     cJSON *rule_json = cJSON_Parse(rule);
@@ -439,7 +441,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
         {
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            printf("Error before: %s\n", error_ptr);
         }
         return false;
     }
@@ -463,9 +465,9 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
             command = cJSON_GetObjectItem(action, "if");
             bool isSatisfied = parseCommandIfForRuleEvent(command, event);
             if(isSatisfied){
-                printf("Rule is satisfied\n");
+                printf("Rule is satisfied ");
             } else{
-                printf("Rule not satisfied\n");
+                printf("Rule not satisfied ");
             }
             return isSatisfied;
         }
@@ -477,7 +479,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
 
         }
         else{
-            printf("Unknown Command\n");
+            printf("Unknown Command ");
         }
     }
     return false;
@@ -485,7 +487,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
 
 
 std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisfied){
-    printf("#parseRuleForDeviceCommands\n");
+    printf("#parseRuleForDeviceCommands ");
     std::vector<DeviceCommand*> deviceCommandsVector;
     std::vector<char*> ruleCommandsVector;
     cJSON *rule_json = cJSON_Parse(rule);
@@ -494,7 +496,7 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
         const char *error_ptr = cJSON_GetErrorPtr();
         if (error_ptr != NULL)
         {
-            fprintf(stderr, "Error before: %s\n", error_ptr);
+            printf("Error before: %s\n", error_ptr);
         }
         return deviceCommandsVector;
     }
@@ -521,7 +523,7 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
 
         }
         else{
-            printf("Unknown Command\n");
+            printf("Unknown Command ");
         }
     }
 
@@ -543,15 +545,15 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
                         deviceCommandsVector.push_back(dc);
                     }
                 } else{
-                    printf("No array found for deviceId\n");
+                    printf("No array found for deviceId ");
                 }
             }
             else {
-                printf("json parse error: commandList\n");
+                printf("json parse error: commandList ");
             }
         }
         else{
-            printf("json parse error: ruleCommandsVector\n");
+            printf("json parse error: ruleCommandsVector ");
         }
     }
     return deviceCommandsVector;

@@ -203,29 +203,29 @@ std::vector<std::string> split(std::string s, std::string delimiter){
 }
 
 void RuleManager::didReceiveRule(char *rule){
+    printf("#didReceiveRule ");
     if (isRuleTypeIFAction(rule)){
-        printf("Enclave# isRuleTypeIFAction\n");
         std::vector<std::string> deviceIdVector = parseRuleForDeviceID(rule);
         if (!deviceIdVector.empty()){
             //store Rules in cache
             for (const auto &id : deviceIdVector) {
-                printf("Enclave# device id: %s\n", id.c_str());
+                printf("#Enclave: device id: %s\n", id.c_str());
                 cache->put(id, std::string(rule));
             }
         } else{
-            printf("Enclave# deviceIdVector empty\n");
+            printf("#Enclave: deviceIdVector empty ");
         }
     }
     else{
         //TODO: handle Every/Sleep Actions
-        printf("Enclave# not IFAction\n");
+        printf("#Enclave: not IFAction ");
     }
 }
 
 void RuleManager::didReceiveDeviceEvent(char *event){
+    printf("#didReceiveDeviceEvent ");
     DeviceEvent *deviceEvent = new DeviceEvent();
     if(parseDeviceEventData(event, deviceEvent)){
-        printf("Enclave# parseDeviceEventData successful\n");
         //TODO: fetch Rule for deviceID
         if(cache->isKeyPresent(std::string(deviceEvent->deviceId))){
             //TODO: check rule satisfiability with device event
@@ -237,18 +237,18 @@ void RuleManager::didReceiveDeviceEvent(char *event){
                 std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands((char*)rule.c_str(), isSuccess);
                 if(!deviceCommands.empty()){
                     for (const auto &dc : deviceCommands) {
-                        printf("Enclave# device id: %s\n", dc->deviceId);
-                        printf("Enclave# command: %s\n", dc->command);
+                        printf("#Enclave: device id: %s\n", dc->deviceId);
+                        printf("#Enclave: command: %s\n", dc->command);
                     }
                 } else{
-                    printf("Enclave# deviceCommandsVector empty\n");
+                    printf("#Enclave: deviceCommandsVector empty ");
                 }
             }
             rulesList.clear();
         } else{
-            printf("Enclave# key not present in cache\n");
+            printf("#Enclave: key not present in cache ");
         }
     } else{
-        printf("Enclave# parseDeviceEventData unsuccessful\n");
+        printf("#Enclave: parseDeviceEventData unsuccessful ");
     }
 }

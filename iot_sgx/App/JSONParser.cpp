@@ -48,28 +48,32 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         /*
         using base64 = cppcodec::base64_rfc4648;
         std::vector<uint8_t> decoded = base64::decode(jsonData["ciphertext"].asString().c_str(), jsonData["ciphertext"].asString().length());
-        std::cout << "decoded size: " << decoded.size() << '\n';
-        std::cout << decoded.data() << std::endl;
+        //std::cout << "decoded size: " << decoded.size() << '\n';
+        //std::cout << decoded.data() << std::endl;
 
         std::vector<uint8_t> decoded_tag = base64::decode(jsonData["tag"].asString().c_str(), jsonData["tag"].asString().length());
-        std::cout << "decoded_tag size: " << decoded_tag.size() << '\n';
-        std::cout << decoded_tag.data() << std::endl;
+        //std::cout << "decoded_tag size: " << decoded_tag.size() << '\n';
+        //std::cout << decoded_tag.data() << std::endl;
 
         char *temp = (char *) malloc((decoded.size()+1)*sizeof(char));
         memcpy(temp, decoded.data(), decoded.size());
         temp[decoded.size()] = '\0';
-        std::cout << strlen(temp) << std::endl;
-        std::cout << temp << std::endl;
+        //std::cout << strlen(temp) << std::endl;
+        //std::cout << temp << std::endl;
 
         char *temp_tag = (char *) malloc((decoded_tag.size()+1)*sizeof(char));
         memcpy(temp_tag, decoded_tag.data(), decoded_tag.size());
         temp_tag[decoded_tag.size()] = '\0';
-        std::cout << strlen(temp_tag) << std::endl;
-        std::cout << temp_tag << std::endl;
-         */
+        //std::cout << strlen(temp_tag) << std::endl;
+        //std::cout << temp_tag << std::endl;
+
+        ptr->text = temp;
+        ptr->tag = temp_tag;
+        ptr->textLength = decoded.size();
+        */
 
         /*base64.cpp*/
-        std::string decoded = base64_decode(jsonData["ciphertext"].asString());
+        std::string decoded = base64_decode(jsonData["cp"].asString());
         //std::cout << "Decoding: " << decoded << std::endl;
         //std::cout << decoded.length() << std::endl;
 
@@ -79,7 +83,7 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
 
 
         char *temp = (char *) malloc((decoded.length()+1)*sizeof(char));
-        memcpy(temp, (char*)decoded.c_str(), decoded.length());
+        memcpy(temp, (char *)decoded.c_str(), decoded.length());
         temp[decoded.length()] = '\0';
         //std::cout << strlen(temp) << std::endl;
         //std::cout << temp << std::endl;
@@ -101,7 +105,8 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
         ptr->tag = temp_tag;
         ptr->textLength = decoded.length();
 
-        std::cout << "Done Parsing!" << std::endl;
+
+        //std::cout << "Done Parsing!" << std::endl;
         return 1;
 
     } else{

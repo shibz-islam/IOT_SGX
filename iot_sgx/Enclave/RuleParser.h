@@ -10,7 +10,9 @@
 #include "string"
 #include "vector"
 #include "cJSON.h"
-#include "EnclaveEDL.h"
+#include "Enclave.h"
+#include "Enclave_t.h"
+
 
 bool isRuleTypeIFAction(char *rule);
 std::vector<std::string> parseRuleForDeviceID(char *rule);

@@ -64,7 +64,7 @@ int printf(const char* fmt, ...)
  * Enclave Initialization
  */
 void ecall_initialize_enclave(){
-    ruleManagerObj = new RuleManager();
+    ruleManagerObj = RuleManager();
 }
 
 
@@ -158,8 +158,9 @@ void sendAlertForRuleActionDevice(struct ruleActionProperty *property){
 
 
 void ecall_decrypt_message(struct message *msg){
+
     char *decMessage = (char *) malloc((strlen(msg->text)+1)*sizeof(char));
-    sgx_status_t status = decryptMessageAES(msg->text, strlen(msg->text), decMessage, strlen(msg->text), msg->tag);
+    sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
     //printf("Status = %d\n", status);
     if(status != 0){
         printf("Error! Decryption failed!");
@@ -197,6 +198,7 @@ void ecall_decrypt_message(struct message *msg){
 
 
 void ecall_decrypt_rule(struct message* msg){
+    //printf("ecall_decrypt_rule");
     char *decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
     sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
     if (status != 0){

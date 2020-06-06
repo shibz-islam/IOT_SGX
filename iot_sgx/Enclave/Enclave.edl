@@ -85,7 +85,7 @@ enclave {
         char *value;
         char *valueType;
         char *unit;
-        bool isDevice;
+        int isDevice;
     };
 
     struct DeviceEvent{
