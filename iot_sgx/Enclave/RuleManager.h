@@ -18,15 +18,14 @@ private:
 public:
     RuleManager();
     virtual ~RuleManager();
-    void saveRulesInCache(struct rule* newRule, int count);
-    std::string getRuleFromCache(std::string device_id);
-    bool isRuleExistInCache(std::string device_id);
 
-    bool parseRule(char *msg, struct rule* newRule);
-    void checkRuleSatisfiability(std::string device_id, std::map<std::string,std::string> device_info_map);
-
-    void didReceiveRule(char *rule);
+    void didReceiveRule(struct Rule *myRule);
     void didReceiveDeviceEvent(char *event);
+
+    void saveRuleInCache(Rule newRule);
+    std::string getCacheKeys();
+    std::string getRuleWithKey(std::string key);
+    bool isRuleExistInCache(std::string device_id);
 };
 
 

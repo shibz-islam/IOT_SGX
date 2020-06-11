@@ -67,10 +67,10 @@ sgx_status_t decryptMessageAES(char *encMessageIn, size_t len, char *decMessageO
     if(stat == 0){
         memcpy(decMessageOut, p_dst, lenOut);
         decMessageOut[lenOut] = '\0';
+        //printf("### Decrypted message: %s with length %ld\n", decMessageOut, strlen(decMessageOut));
     }else{
         printf("Error! Decryption failed, with status code %d\n", stat);
     }
-    printf("### Decrypted message: %s with length %ld\n", decMessageOut, strlen(decMessageOut));
     return stat;
 }
 
@@ -93,11 +93,11 @@ sgx_status_t encryptMessageAES(char *decMessageIn, size_t len, char *encMessageO
         memcpy(tagMessageIn, p_dst2, SGX_AESGCM_MAC_SIZE);
         encMessageOut[lenOut] = '\0';
         tagMessageIn[SGX_AESGCM_MAC_SIZE] = '\0';
+        //printf("### Encrypted message: %s with length %ld\n", encMessageOut, strlen(encMessageOut));
+        //printf("### Tag: %s with length %ld\n", tagMessageIn, strlen(tagMessageIn));
     } else{
         printf("Error! Encryption failed, with status code %d\n", stat);
     }
-    //printf("### Encrypted message: %s with length %ld\n", encMessageOut, strlen(encMessageOut));
-    //printf("### Tag: %s with length %ld\n", tagMessageIn, strlen(tagMessageIn));
     return stat;
 }
 

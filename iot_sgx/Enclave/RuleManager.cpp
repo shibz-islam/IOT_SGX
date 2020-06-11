@@ -8,6 +8,7 @@
 #include "Enclave.h"
 #include "Enclave_t.h"
 #include "RuleParser.h"
+#include "analytics_utils.h"
 
 #define CACHE_SIZE 20
 
@@ -26,169 +27,13 @@ RuleManager::RuleManager() {
     cache = new LRUCache(CACHE_SIZE);
 }
 
-
-void RuleManager::saveRulesInCache(struct rule *newRule, int count) {
-    for (int i = 0; i < count; ++i) {
-        //printf("*** deviceID = %s\n", newRule[i].deviceID);
-        //printf("*** rule = %s\n", newRule[i].rule);
-        cache->put(std::string(newRule[i].deviceID), std::string(newRule[i].rule));
-    }
-}
-
-
-std::string RuleManager::getRuleFromCache(std::string device_id) {
-    return cache->get(device_id);
-}
-
-bool RuleManager::isRuleExistInCache(std::string device_id) {
-    return cache->isKeyPresent(device_id);
-}
-
-
-
-/**
- *
- * @param msg
- * @param newRule
- * @return
- */
-bool RuleManager::parseRule(char *msg, struct rule *newRule) {
-    std::map<std::string, std::string>rule_map = parse_decrypted_string(msg);
-
-    auto it = rule_map.find(RULE_DEVICE_ID);
-    if ( it != rule_map.end() ){
-        //printf("%s: %s\n", RULE_DEVICE_ID, it->second.c_str());
-        std::string device_id_str = rule_map[RULE_DEVICE_ID];
-        char* deviceID =  (char *) malloc((device_id_str.length()+1)*sizeof(char));
-        memcpy(deviceID, device_id_str.c_str(), device_id_str.length()+1);
-        deviceID[device_id_str.length()] = '\0';
-
-        std::string value = map_to_string(rule_map);
-
-        newRule->deviceID = deviceID;
-        newRule->rule = (char*)value.c_str();
-        return true;
-    }
-    else
-        printf("Couldn't find %s\n", RULE_DEVICE_ID);
-    return false;
-
-//    printf("Initial size of map = %ld\n", ruleset.size());
-}
-
-
-
-
-/**
- *
- * @param msg
- */
-void RuleManager::checkRuleSatisfiability(std::string device_id, std::map<std::string,std::string> device_info_map) {
-    //printf("*** Device Id = %s\n", device_id.c_str());
-    std::string rule_str = cache->get(device_id);
-    std::map<std::string, std::string>rule_map = parse_decrypted_string((char*)rule_str.c_str());
-
-    //printf("*** Rule string: %s\n", rule_str.c_str());
-
-    int rule_operator = std::stoi(rule_map.at(RULE_OPERATOR));
-    float device_data = std::stof(device_info_map.at(SENSOR_DATA));
-
-    //TODO: think how to return the value of anomaly
-    std::string msg;
-    bool success = true;
-    switch(rule_operator){
-        case OPERATOR_GT:
-        {
-            float threshold = std::stof(rule_map.at(RULE_THRESHOLD));
-            if(device_data > threshold){
-                printf("%f > %f\n", device_data, threshold);
-            }
-            else{
-                printf("GT condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
-                msg = "GT condition does not hold";
-                success = false;
-                //performRuleAction(rule_map, msg);
-            }
-            break;
-        }
-        case OPERATOR_LT:
-        {
-            float threshold = std::stof(rule_map.at(RULE_THRESHOLD));
-            if(device_data < threshold){
-                printf("%f < %f\n", device_data, threshold);
-            }
-            else{
-                printf("LT condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
-                msg = "LT condition does not hold";
-                success = false;
-                //performRuleAction(&rule_map, &msg);
-            }
-            break;
-        }
-        case OPERATOR_EQ:
-        {
-            float threshold = std::stof(rule_map.at(RULE_THRESHOLD));
-            if (device_data == threshold) {
-                printf("%f == %f\n", device_data, threshold);
-            }
-            else{
-                printf("EQ condition does not hold => device data:%f and threshold:%f\n", device_data, threshold);
-                msg = "EQ condition does not hold";
-                success = false;
-                //performRuleAction(rule_map, msg);
-            }
-            break;
-        }
-        default: {
-            printf("Unknown operator for data %f\n", device_data);
-        }
-    }
-
-    if(!success){
-        int rule_action = std::stoi(rule_map.at(RULE_ACTION));
-        struct ruleActionProperty property[1];
-        switch(rule_action){
-            case EMAIL:
-            {
-                property->type = rule_action;
-                if(rule_map.at(RULE_EMAIL).length()>0){
-                    printf("Found email %s\n", rule_map.at(RULE_EMAIL));
-                    property->address = (char*) rule_map.at(RULE_EMAIL).c_str();
-                    property->msg = (char*) msg.c_str();
-                    sendAlertForRuleActionEmail(property);
-                }
-                break;
-            }
-            case TEXT:
-            {
-                property->type = rule_action;
-                property->address = (char*) rule_map.at(RULE_TEXT).c_str();
-                property->msg = (char*) msg.c_str();
-                //TODO: handle alert
-                break;
-            }
-            case DEVICE:
-            {
-                property->type = rule_action;
-                std::string topic_str = rule_map.at(RULE_EMAIL) + device_id;
-                printf("topic: %s\n", topic_str.c_str());
-                property->address = (char*) topic_str.c_str();
-                property->msg = (char*) msg.c_str();
-                sendAlertForRuleActionDevice(property);
-                //TODO: handle alert
-                break;
-            }
-            default: {
-                printf("Unknown action for rule %s\n", rule_map.at(RULE_ID));
-            }
-        }
-    }
-}
-
 RuleManager::~RuleManager() {
 
 }
 
+/***********/
+/* Helper */
+/***********/
 std::vector<std::string> split(std::string s, std::string delimiter){
     std::vector<std::string> list;
     size_t pos = 0;
@@ -202,16 +47,81 @@ std::vector<std::string> split(std::string s, std::string delimiter){
     return list;
 }
 
-void RuleManager::didReceiveRule(char *rule){
+
+/***********/
+/* Cache */
+/***********/
+
+void RuleManager::saveRuleInCache(Rule newRule){
+    cache->put(std::string(newRule.deviceID), std::string(newRule.rule));
+}
+
+std::string RuleManager::getCacheKeys(){
+    return cache->getKeys();
+}
+
+std::string RuleManager::getRuleWithKey(std::string key){
+    return cache->get(key);
+}
+
+
+bool RuleManager::isRuleExistInCache(std::string device_id) {
+    return cache->isKeyPresent(device_id);
+}
+
+
+/******************/
+/******************/
+
+
+
+/**
+ *
+ * @param msg
+ */
+void storeRulesWithDeviceID(std::vector<std::string> deviceIdVector, Rule *myRule){
+    char *encMessage = (char *) malloc(myRule->ruleLength*sizeof(char));
+    char *tag_msg = (char *) malloc((16+1)*sizeof(char));
+    sgx_status_t status = encryptMessageAES(myRule->rule, myRule->ruleLength, encMessage, myRule->ruleLength, tag_msg);
+    if(status != 0){
+        printf("Error! Encryption failed!");
+        free(encMessage);
+        free(tag_msg);
+        delete myRule;
+        return;
+    }
+
+    myRule->rule = encMessage;
+    myRule->tag = tag_msg;
+
+    int numDevices = deviceIdVector.size();
+    Rule *myRuleList = new Rule[numDevices];
+    //Rule myRuleList[numDevices];
+    for (int i = 0; i < numDevices; ++i) {
+        myRuleList[i].deviceID = (char*)deviceIdVector[i].c_str();
+        myRuleList[i].rule = myRule->rule;
+        myRuleList[i].ruleLength = myRule->ruleLength;
+        myRuleList[i].tag = myRule->tag;
+        myRuleList[i].tagLength = 16;
+    }
+    ocall_store_rules(myRuleList, numDevices);
+
+    delete[] myRuleList;
+    free(encMessage);
+    free(tag_msg);
+}
+
+void RuleManager::didReceiveRule(Rule *myRule){
     printf("#didReceiveRule ");
-    if (isRuleTypeIFAction(rule)){
-        std::vector<std::string> deviceIdVector = parseRuleForDeviceID(rule);
+    if (isRuleTypeIFAction(myRule->rule)){
+        std::vector<std::string> deviceIdVector = parseRuleForDeviceID(myRule->rule);
         if (!deviceIdVector.empty()){
             //store Rules in cache
             for (const auto &id : deviceIdVector) {
-                printf("#Enclave: device id: %s\n", id.c_str());
-                cache->put(id, std::string(rule));
+                //printf("#Enclave: device id: %s\n", id.c_str());
+                cache->put(id, std::string(myRule->rule));
             }
+            storeRulesWithDeviceID(deviceIdVector, myRule);
         } else{
             printf("#Enclave: deviceIdVector empty ");
         }
@@ -224,9 +134,13 @@ void RuleManager::didReceiveRule(char *rule){
 
 void RuleManager::didReceiveDeviceEvent(char *event){
     printf("#didReceiveDeviceEvent ");
+    printf("#Enclave: cache keys= %s\n", cache->getKeys().c_str());
     DeviceEvent *deviceEvent = new DeviceEvent();
     if(parseDeviceEventData(event, deviceEvent)){
         //TODO: fetch Rule for deviceID
+        //printf("#Enclave: device id: %s\n", deviceEvent->deviceId);
+        //printf("#Enclave: device attr: %s\n", deviceEvent->attribute);
+        //printf("#Enclave: device val: %s\n", deviceEvent->value);
         if(cache->isKeyPresent(std::string(deviceEvent->deviceId))){
             //TODO: check rule satisfiability with device event
             std::string rule_str = cache->get(std::string(deviceEvent->deviceId));
@@ -252,3 +166,5 @@ void RuleManager::didReceiveDeviceEvent(char *event){
         printf("#Enclave: parseDeviceEventData unsuccessful ");
     }
 }
+
+

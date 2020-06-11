@@ -75,7 +75,7 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
     }
     else if (strcmp(conditionType, "between") == 0) {
         //printf("*** between\n");
-        const cJSON *conditionBetween = cJSON_GetObjectItemCaseSensitive(condition, "left");
+        const cJSON *conditionBetween = cJSON_GetObjectItemCaseSensitive(condition, "value");
         if (parseOperandDevice(conditionBetween->child, event)){
             const cJSON *conditionStart = cJSON_GetObjectItemCaseSensitive(condition, "start");
             std::string valueStart = parseConditionValue(conditionStart);
@@ -267,6 +267,7 @@ bool isRuleTypeIFAction(char *rule){
         char *actionType = action->child->string;
         //printf("action key: \"%s\"\n", actionType);
 
+        //cJSON_Delete(rule_json);
         if (strcmp(actionType, "if") == 0){
             return true;
         }
@@ -325,6 +326,7 @@ std::vector<std::string> parseRuleForDeviceID(char *rule){
             printf("Unknown Command ");
         }
     }
+    //cJSON_Delete(rule_json);
     return devicesVector;
 }
 
@@ -408,9 +410,11 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                     deviceEvent->valueType = valueType;
                 }
             } else{
+                //cJSON_Delete(event_json);
                 isSuccess = false;
             }
         }else{
+            //cJSON_Delete(event_json);
             isSuccess = false;
         }
 
@@ -421,6 +425,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
             deviceEvent->unit = unit->valuestring;
         }
     }
+    //cJSON_Delete(event_json);
     return isSuccess;
 }
 
@@ -433,7 +438,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
  */
 bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
     printf("#checkRuleSatisfiabilityWithDeviceEvent ");
-    printf("Rule= %s\n", rule);
+    printf("\nRule= %s\n", rule);
     //printf("\n** Device Event: id=%s, cap=%s, attr=%s, val=%s, valType=%s, unit=%s\n", event->deviceId, event->capability, event->attribute, event->value, event->valueType, event->unit);
     cJSON *rule_json = cJSON_Parse(rule);
     if (rule_json == NULL)
@@ -482,6 +487,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
             printf("Unknown Command ");
         }
     }
+    //cJSON_Delete(rule_json);
     return false;
 }
 
@@ -556,5 +562,6 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
             printf("json parse error: ruleCommandsVector ");
         }
     }
+    //cJSON_Delete(rule_json);
     return deviceCommandsVector;
 }

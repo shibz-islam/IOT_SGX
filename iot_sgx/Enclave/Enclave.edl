@@ -61,13 +61,17 @@ enclave {
          char* text;
          char* tag;
          size_t textLength;
+         size_t tagLength;
     };
 
-    struct rule {
+    struct Rule {
          char* deviceID;
+         size_t deviceIDLength;
          char* rule;
-         int isEncrypted;
+         size_t ruleLength;
          char* tag;
+         size_t tagLength;
+         int isEncrypted;
          int count;
     };
 
@@ -123,9 +127,10 @@ enclave {
     untrusted {
         void ocall_print_string([in, string] const char *str);
 
-        void ocall_store_rules([user_check] struct rule *rule_str);
-        void ocall_get_rules_by_id([user_check] struct rule* msg, [user_check] struct rule* ruleset, int len);
-        void ocall_get_rule_count_by_id([user_check] struct rule *newRule, [user_check] int *totalRules);
+        void ocall_store_rules([user_check] Rule *rules, size_t numDevices);
+        size_t ocall_get_rule_count([user_check] Rule *property, int isCountAll);
+        size_t ocall_get_rules([user_check] Rule *ruleset, int len, [user_check] Rule *property, int isFetchAll);
+
         void ocall_send_alert_for_rule_action_email([user_check] struct ruleActionProperty *property);
         void ocall_send_alert_for_rule_action_device([user_check] struct ruleActionProperty *property);
     };
