@@ -40,6 +40,7 @@
 #include "Constants.h"
 #include "RuleManager.h"
 #include "cJSON.h"
+#include "RuleParser.h"
 
 
 RuleManager ruleManagerObj;
@@ -107,8 +108,10 @@ void load_previous_rules(){
                     //delete[] msg->text;
                 }
                 else{
-                    ruleset[i].rule = decMessage;
-                    ruleManagerObj.saveRuleInCache(ruleset[i]);
+                    Rule *myRule = new Rule();
+                    myRule->rule = decMessage;
+                    myRule->ruleLength = ruleset[i].ruleLength;
+                    ruleManagerObj.didReceiveRule(myRule, false);
                 }
 
             }
@@ -169,16 +172,16 @@ void ecall_decrypt_rule(struct message* msg){
     Rule *myRule = new Rule();
     myRule->rule = decMessage;
     myRule->ruleLength = msg->textLength;
-    ruleManagerObj.didReceiveRule(myRule);
+    ruleManagerObj.didReceiveRule(myRule, true);
 
     free(decMessage);
     delete  myRule;
 
 }
 
-public void ecall_check_timer_rule(int hour, int min){
+void ecall_check_timer_rule(int hour, int min){
     ruleManagerObj.didReceiveRequestToCheckTimerRule(hour, min);
 }
-public int ecall_check_pending_timer_rule(int hour, int min){
+int ecall_check_pending_timer_rule(int hour, int min){
     return ruleManagerObj.didReceiveRequestToCheckPendingTimerRule(hour, min);
 }

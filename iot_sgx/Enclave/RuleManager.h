@@ -7,6 +7,7 @@
 #include <vector>
 #include <queue>
 #include "LRUCache.h"
+#include "EnclaveHelper.h"
 
 #ifndef IOTENCLAVE_RULEMANAGER_H
 #define IOTENCLAVE_RULEMANAGER_H
@@ -21,7 +22,7 @@ public:
     RuleManager();
     virtual ~RuleManager();
 
-    void didReceiveRule(struct Rule *myRule);
+    void didReceiveRule(struct Rule *myRule, bool isStoreInFile);
     void didReceiveDeviceEvent(char *event);
     void didReceiveRequestToCheckTimerRule(int hour, int min);
     int didReceiveRequestToCheckPendingTimerRule(int hour, int min);
@@ -30,6 +31,9 @@ public:
     std::string getCacheKeys();
     std::string getRuleWithKey(std::string key);
     bool isRuleExistInCache(std::string device_id);
+
+    void saveRuleInQueue(TimeRule timeRule);
+    void saveRuleInPriorityQueue(TimeRule timeRule);
 };
 
 

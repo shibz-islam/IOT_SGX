@@ -479,7 +479,8 @@ void timer_thread_2(){
         ptm = std::localtime(&tt);
         printf("Current time (pending thread): %d:%d\n", ptm->tm_hour, ptm->tm_min);
 
-        int fireTime = ecall_check_pending_timer_rule(global_eid, ptm->tm_hour, ptm->tm_min);
+        int fireTime = 0;
+        ecall_check_pending_timer_rule(global_eid, &fireTime, ptm->tm_hour, ptm->tm_min);
         printf("fireTime: %d\n", fireTime);
         if(fireTime == 0){
             //TODO: send the data;
@@ -524,12 +525,12 @@ int SGX_CDECL main(int argc, char *argv[])
     //get_rules_from_db();
 
     //std::thread t1(open_socket);
-    //std::thread t2(open_socket_for_rules);
+    std::thread t2(open_socket_for_rules);
     std::thread t3(timer_thread);
     std::thread t4(timer_thread_2);
 
     //t1.join();
-    //t2.join();
+    t2.join();
     t3.join();
     t4.join();
 
