@@ -148,28 +148,6 @@ void ecall_decrypt_message(struct message *msg){
         //delete msg;
         return;
     }
-    //TODO: Check memory first
-//    std::map<std::string, std::string>device_info_map = parse_decrypted_string(decMessage);
-//    std::string device_id = device_info_map.at(RULE_DEVICE_ID);
-//    //printf("$$ Device Id = %s\n", device_id.c_str());
-//
-//    if(ruleManagerObj.isRuleExistInCache(device_id))
-//    {
-//        ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
-//    }
-//    else
-//    {
-//        int total_rules = get_rule_count_from_file(device_id);
-//        if(total_rules>0)
-//        {   struct Rule ruleset[total_rules];
-//            get_rule_from_file(device_id, ruleset, total_rules);
-//            ruleManagerObj.saveRulesInCache(ruleset, total_rules);
-//            ruleManagerObj.checkRuleSatisfiability(device_id, device_info_map);
-//        }
-//        else {
-//            printf("No rules found in file for Device ID: %s\n",device_id.c_str());
-//        }
-//    }
 
     ruleManagerObj.didReceiveDeviceEvent(decMessage);
 }
@@ -196,4 +174,11 @@ void ecall_decrypt_rule(struct message* msg){
     free(decMessage);
     delete  myRule;
 
+}
+
+public void ecall_check_timer_rule(int hour, int min){
+    ruleManagerObj.didReceiveRequestToCheckTimerRule(hour, min);
+}
+public int ecall_check_pending_timer_rule(int hour, int min){
+    return ruleManagerObj.didReceiveRequestToCheckPendingTimerRule(hour, min);
 }

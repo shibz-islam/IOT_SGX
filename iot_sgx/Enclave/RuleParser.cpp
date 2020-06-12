@@ -2,6 +2,7 @@
 // Created by shihab on 6/2/20.
 //
 #include "RuleParser.h"
+#include "EnclaveHelper.h"
 
 
 bool parseOperandDevice(cJSON *condition, DeviceEvent *event){
@@ -564,4 +565,145 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
     }
     //cJSON_Delete(rule_json);
     return deviceCommandsVector;
+}
+
+bool isRuleTypeEveryAction(char *rule){
+    printf("#isRuleTypeEveryAction\n");
+    cJSON *rule_json = cJSON_Parse(rule);
+    if (rule_json == NULL)
+    {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL)
+        {
+            fprintf(stderr, "Error before: %s\n", error_ptr);
+        }
+        return false;
+    }
+    const cJSON *action = NULL;
+    const cJSON *actions = cJSON_GetObjectItemCaseSensitive(rule_json, "actions");
+    cJSON_ArrayForEach(action, actions)
+    {
+        char *actionType = action->child->string;
+        //printf("action key: \"%s\"\n", actionType);
+
+        if (strcmp(actionType, "every") == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
+
+bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
+    printf("#parseRuleForTimeInfo\n");
+    cJSON *rule_json = cJSON_Parse(rule);
+
+    const cJSON *ruleID = NULL;
+    ruleID = cJSON_GetObjectItemCaseSensitive(rule_json, "ruleID");
+    if (cJSON_IsString(ruleID) && (ruleID->valuestring != NULL))
+        printf("ruleID: \"%s\"\n", ruleID->valuestring);
+
+    const cJSON *action = NULL;
+    const cJSON *actions = cJSON_GetObjectItemCaseSensitive(rule_json, "actions");
+    cJSON_ArrayForEach(action, actions)
+    {
+        char *actionType = action->child->string;
+        //printf("action key: \"%s\"\n", actionType);
+
+        if (strcmp(actionType, "every") == 0){
+            TimeRule tr;
+            tr.ruleID = ruleID->valuestring;
+            const cJSON *condition = cJSON_GetObjectItem(action, "every")->child;
+
+            char *conditionType = condition->string;
+            //printf("conditionType key: \"%s\"\n", conditionType);
+            if (strcmp(conditionType, "specific") == 0){
+                printf("***specific\n");
+                const cJSON *reference = cJSON_GetObjectItem(condition, "reference");
+                if (cJSON_IsString(reference)){
+                    tr.timeReference = reference->valuestring;
+                    //printf("%s\n", reference->valuestring);
+                }else{
+                    printf("Unknown reference\n");
+                    return false;
+                }
+                const cJSON *offset = cJSON_GetObjectItem(condition, "offset");
+                if (cJSON_IsObject(offset)){
+                    const cJSON *valueObj = cJSON_GetObjectItem(offset, "value");
+                    const cJSON *value = cJSON_GetObjectItem(valueObj, "integer");
+                    if (cJSON_IsNumber(value))
+                        tr.timeOffset = value->valueint;
+                    const cJSON *unitObj = cJSON_GetObjectItem(offset, "unit");
+                    if (cJSON_IsString(unitObj))
+                        tr.unit = unitObj->valuestring;
+                }else{
+                    printf("Unknown offset\n");
+                    return false;
+                }
+            }
+            else if (strcmp(conditionType, "interval") == 0){
+                printf("***interval\n");
+                tr.timeReference = enum_to_string(Now);
+                const cJSON *valueObj = cJSON_GetObjectItem(condition, "value");
+                const cJSON *value = cJSON_GetObjectItem(valueObj, "integer");
+                if (cJSON_IsNumber(value))
+                    tr.timeOffset = value->valueint;
+                const cJSON *unitObj = cJSON_GetObjectItem(condition, "unit");
+                if (cJSON_IsString(unitObj))
+                    tr.unit = unitObj->valuestring;
+            }
+            else{
+                printf("Unknown condition\n");
+                return false;
+            }
+            timeRules.push_back(tr);
+        }
+        else{
+            printf("Unknown Command\n");
+            return false;
+        }
+    }
+    return true;
+}
+
+bool configureTimeString(TimeRule &timeRule){
+    int hour = 0;
+    if (strcmp(timeRule.timeReference, enum_to_string(Now)) == 0){
+        hour = 9; //TODO: get current time SGX
+    }else if (strcmp(timeRule.timeReference, enum_to_string(Midnight)) == 0){
+        hour = 00;
+    }else if (strcmp(timeRule.timeReference, enum_to_string(Sunrise)) == 0){
+        hour = 06;
+    }else if (strcmp(timeRule.timeReference, enum_to_string(Noon)) == 0){
+        hour = 12;
+    }else if (strcmp(timeRule.timeReference, enum_to_string(Sunset)) == 0){
+        hour = 18;
+    }else{
+        printf("Unknown time reference\n");
+        return false;
+    }
+
+    int hourOffset = 0, minOffset = 0;
+    if(strcmp(timeRule.unit, "Minute") == 0){
+        hourOffset = timeRule.timeOffset / 60;
+        minOffset = timeRule.timeOffset % 60;
+        //printf("%d, %d, %d\n", hour, hourOffset, minOffset);
+        hourOffset = minOffset >= 0 ? hourOffset : hourOffset-1;
+        minOffset = minOffset >= 0 ? minOffset : 60+minOffset;
+
+    } else if(strcmp(timeRule.unit, "Hour") == 0){
+        hourOffset = timeRule.timeOffset;
+    } else{
+        printf("Unknown time unit\n");
+        return false;
+    }
+    hour = hour + hourOffset;
+    if (hour < 0)
+        hour = hour + 24;
+    printf("time String: %d:%d\n", hour, minOffset);
+    timeRule.hour = hour;
+    timeRule.min = minOffset;
+
+    return true;
 }

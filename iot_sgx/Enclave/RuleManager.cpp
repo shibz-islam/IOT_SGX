@@ -3,20 +3,14 @@
 //
 
 #include "RuleManager.h"
-#include "MessageParser.h"
 #include "Constants.h"
 #include "Enclave.h"
 #include "Enclave_t.h"
 #include "RuleParser.h"
 #include "analytics_utils.h"
+#include "EnclaveHelper.h"
 
 #define CACHE_SIZE 20
-
-
-/*** HELPER METHODS ***/
-
-
-
 
 
 /*** CLASS METHODS ***/
@@ -25,28 +19,12 @@
 RuleManager::RuleManager() {
     //TODO: initialize the map
     cache = new LRUCache(CACHE_SIZE);
+    vecTimerQueue = std::vector<TimeRule>();
 }
 
 RuleManager::~RuleManager() {
 
 }
-
-/***********/
-/* Helper */
-/***********/
-std::vector<std::string> split(std::string s, std::string delimiter){
-    std::vector<std::string> list;
-    size_t pos = 0;
-    std::string token;
-    while ((pos = s.find(delimiter)) != std::string::npos) {
-        token = s.substr(0, pos);
-        list.push_back(token);
-        s.erase(0, pos + delimiter.length());
-    }
-    list.push_back(s);
-    return list;
-}
-
 
 /***********/
 /* Cache */
@@ -69,11 +47,41 @@ bool RuleManager::isRuleExistInCache(std::string device_id) {
     return cache->isKeyPresent(device_id);
 }
 
+/***********/
+/* Helper */
+/***********/
 
-/******************/
-/******************/
+void loadTimerQueue(char *rule){
+    std::vector<TimeRule> timeRules;
+    if(parseRuleForTimeInfo(rule, timeRules)){
+        for (auto &timeRule : timeRules) {
+            printf("#Enclave: %s %s %d %s\n", timeRule.ruleID, timeRule.timeReference, timeRule.timeOffset, timeRule.unit);
+            if(configureTimeString(timeRule)){
+                char *tempRule = (char *) malloc((strlen(rule)+1)*sizeof(char));
+                memcpy(tempRule, rule, strlen(rule));
+                timeRule.rule = tempRule;
+                vecTimerQueue.push_back(timeRule);
+            }else{
+                printf("Enclave# configureTimeString unsuccessful\n");
+            }
+        }
+    } else{
+        printf("Enclave# parseRuleForTimeInfo unsuccessful\n");
+    }
+}
 
-
+void getTimeRuleEvent(TimeRule &tr){
+    std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands(tr.rule, true);
+    if(!deviceCommands.empty()){
+        for (const auto &dc : deviceCommands) {
+            printf("Enclave# device id: %s\n", dc->deviceId);
+            printf("Enclave# command: %s\n", dc->command);
+            //TODO: send commands
+        }
+    } else{
+        printf("Enclave# deviceCommandsVector empty\n");
+    }
+}
 
 /**
  *
@@ -111,6 +119,9 @@ void storeRulesWithDeviceID(std::vector<std::string> deviceIdVector, Rule *myRul
     free(tag_msg);
 }
 
+/******************/
+/******************/
+
 void RuleManager::didReceiveRule(Rule *myRule){
     printf("#didReceiveRule ");
     if (isRuleTypeIFAction(myRule->rule)){
@@ -125,6 +136,9 @@ void RuleManager::didReceiveRule(Rule *myRule){
         } else{
             printf("#Enclave: deviceIdVector empty ");
         }
+    }else if (isRuleTypeEveryAction(rule)){
+        printf("Enclave# isRuleTypeEveryAction\n");
+        loadTimerQueue(rule);
     }
     else{
         //TODO: handle Every/Sleep Actions
@@ -153,6 +167,7 @@ void RuleManager::didReceiveDeviceEvent(char *event){
                     for (const auto &dc : deviceCommands) {
                         printf("#Enclave: device id: %s\n", dc->deviceId);
                         printf("#Enclave: command: %s\n", dc->command);
+                        //TODO: send commands
                     }
                 } else{
                     printf("#Enclave: deviceCommandsVector empty ");
@@ -167,4 +182,35 @@ void RuleManager::didReceiveDeviceEvent(char *event){
     }
 }
 
+void didReceiveRequestToCheckTimerRule(int hour, int min){
+    if(!vecTimerQueue.empty()){
+        printf("checkTimerRule# vecTimerQueue size: %ld\n", vecTimerQueue.size());
+        TimeRule tr;
+        for (int i = 0; i < vecTimerQueue.size(); ++i) {
+            tr = vecTimerQueue[i];
+            printf("checkTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID, tr.hour, tr.min);
+            int timeDiffMinute = getTimeMinute(tr.hour, tr.min) - getTimeMinute(hour, min);
+            if(timeDiffMinute > 0 && timeDiffMinute <= 60){
+                timerPriorityQueue.push(tr);
+            }
+        }
+    }
+}
 
+int didReceiveRequestToCheckPendingTimerRule(int hour, int min){
+    if(!timerPriorityQueue.empty()){
+        TimeRule tr = timerPriorityQueue.top();
+        printf("checkPendingTimerRule# timerPriorityQueue size: %ld\n", timerPriorityQueue.size());
+        printf("checkPendingTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID, tr.hour, tr.min);
+        int timeDiffMinute = getTimeMinute(tr.hour, tr.min) - getTimeMinute(hour, min);
+        if(timeDiffMinute <= 1){
+            timerPriorityQueue.pop();
+            getTimeRuleEvent(tr);
+            return 0;
+        }
+        else if ( timeDiffMinute > 1 && timeDiffMinute <= 60){
+            return timeDiffMinute-1;
+        }
+    }
+    return -1;
+}

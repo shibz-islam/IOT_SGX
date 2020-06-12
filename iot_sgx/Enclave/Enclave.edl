@@ -75,6 +75,16 @@ enclave {
          int count;
     };
 
+    struct TimeRule{
+        char *ruleID;
+        char *rule;
+        char *timeReference;
+        int timeOffset;
+        char *unit;
+        int hour;
+        int min;
+    };
+
     struct ruleActionProperty{
         char* address;
         int type;
@@ -114,6 +124,8 @@ enclave {
     	public void ecall_decrypt_message([user_check] struct message* msg);
     	public void ecall_decrypt_rule([user_check] struct message* msg);
 
+        public void ecall_check_timer_rule(int hour, int min);
+        public int ecall_check_pending_timer_rule(int hour, int min);
     };
 
 

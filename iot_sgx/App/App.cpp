@@ -63,6 +63,7 @@
 #include "MongoHelper.h"
 #include "EmailManager.h"
 #include "IoTMQTTWrapper.h"
+#include <chrono>
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -376,6 +377,12 @@ void didReceiveMessageFromMQTT(char* payload){
         ecall_decrypt_message(global_eid, msg);
 }
 
+void start_mqtt_service(){
+    MQTTSetup();
+    mqttObj->subscribeTopic(topicForData.c_str());
+    while (true){}
+}
+
 
 int open_socket()
 {
@@ -389,7 +396,7 @@ int open_socket()
         bzero(buffer,LIMIT);
         n = read(socketConnection,buffer,LIMIT);
         if (n < 0)
-            perror("ERROR reading from socket");
+            perror("ERROR reading from socket\n");
 
         if(strlen(buffer) > 0){
             //printf("buffer len: %d\n",strlen(buffer));
@@ -422,7 +429,7 @@ int open_socket_for_rules()
         bzero(buffer,LIMIT);
         n = read(socketConnection2,buffer,LIMIT);
         if (n < 0)
-            perror("ERROR reading from socket");
+            perror("ERROR reading from socket\n");
 
         if(strlen(buffer) > 0){
             //printf("buffer len: %d\n",strlen(buffer));
@@ -442,11 +449,55 @@ int open_socket_for_rules()
     return 0;
 }
 
+int timer_thread(){
+    usleep(10 * 1000000);
+    using std::chrono::system_clock;
+    std::time_t tt;
 
-void start_mqtt_service(){
-    MQTTSetup();
-    mqttObj->subscribeTopic(topicForData.c_str());
-    while (true){}
+    struct std::tm * ptm;
+    while (true){
+        tt = system_clock::to_time_t (system_clock::now());
+        ptm = std::localtime(&tt);
+        printf("Current time: %d:%d\n", ptm->tm_hour, ptm->tm_min);
+
+        ecall_check_timer_rule(global_eid, ptm->tm_hour, ptm->tm_min);
+
+        printf("Waiting for the next hour to begin...\n");
+        ++ptm->tm_hour; ptm->tm_min; ptm->tm_sec=0;
+        std::this_thread::sleep_until (system_clock::from_time_t (mktime(ptm)));
+    }
+}
+
+void timer_thread_2(){
+    usleep(15 * 1000000);
+    using std::chrono::system_clock;
+    std::time_t tt;
+
+    struct std::tm * ptm;
+    while (true){
+        tt = system_clock::to_time_t (system_clock::now());
+        ptm = std::localtime(&tt);
+        printf("Current time (pending thread): %d:%d\n", ptm->tm_hour, ptm->tm_min);
+
+        int fireTime = ecall_check_pending_timer_rule(global_eid, ptm->tm_hour, ptm->tm_min);
+        printf("fireTime: %d\n", fireTime);
+        if(fireTime == 0){
+            //TODO: send the data;
+        }
+        else if(fireTime > 0 && fireTime < 60){
+            ptm->tm_hour; ptm->tm_min+=fireTime; ptm->tm_sec=0;
+            printf("Waiting for the next time to continue...\n");
+            std::this_thread::sleep_until (system_clock::from_time_t (mktime(ptm)));
+        }else if (fireTime == -1){
+            ++ptm->tm_hour; ptm->tm_min; ptm->tm_sec=0;
+            printf("Waiting for the next hour to continue...\n");
+            std::this_thread::sleep_until (system_clock::from_time_t (mktime(ptm)));
+        }else{
+            ptm->tm_hour; ++ptm->tm_min; ptm->tm_sec=0;
+            printf("Unknown value...Waiting for the next Minute to continue...\n");
+            std::this_thread::sleep_until (system_clock::from_time_t (mktime(ptm)));
+        }
+    }
 }
 
 
@@ -472,13 +523,15 @@ int SGX_CDECL main(int argc, char *argv[])
 
     //get_rules_from_db();
 
-    std::thread t1(open_socket);
+    //std::thread t1(open_socket);
     //std::thread t2(open_socket_for_rules);
+    std::thread t3(timer_thread);
+    std::thread t4(timer_thread_2);
 
-    t1.join();
+    //t1.join();
     //t2.join();
-
-//    ocall_manager();
+    t3.join();
+    t4.join();
 
 
     /* Destroy the enclave */
