@@ -248,8 +248,7 @@ bool parseCommandSleepForRuleEvent(const cJSON *command, RuleEvent *event) {
 /***************************************************/
 /***************************************************/
 
-
-bool isRuleTypeIFAction(char *rule){
+RuleType parseRuleTypeAction(char *rule){
     printf("#isRuleTypeIFAction ");
     cJSON *rule_json = cJSON_Parse(rule);
     if (rule_json == NULL)
@@ -267,20 +266,14 @@ bool isRuleTypeIFAction(char *rule){
     {
         char *actionType = action->child->string;
         //printf("action key: \"%s\"\n", actionType);
-
         //cJSON_Delete(rule_json);
-        if (strcmp(actionType, "if") == 0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return getRuleType(actionType);
     }
+    return UNKNOWN;
 }
 
-std::vector<std::string> parseRuleForDeviceID(char *rule){
+bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
     printf("#parseRuleForDeviceID ");
-    std::vector<std::string> devicesVector;
     cJSON *rule_json = cJSON_Parse(rule);
     const cJSON *action = NULL;
     const cJSON *actions = cJSON_GetObjectItemCaseSensitive(rule_json, "actions");
@@ -310,6 +303,7 @@ std::vector<std::string> parseRuleForDeviceID(char *rule){
             }
             else{
                 printf("Unknown conditionType ");
+                return false;
             }
 
             if (!cJSON_IsNull(deviceObj)){
@@ -321,14 +315,18 @@ std::vector<std::string> parseRuleForDeviceID(char *rule){
                         devicesVector.push_back(std::string(cJSON_GetArrayItem(deviceList, i)->valuestring));
                     }
                 }
+            } else{
+                printf("Unknown object ");
+                return false;
             }
         }
         else{
             printf("Unknown Command ");
+            return false;
         }
     }
     //cJSON_Delete(rule_json);
-    return devicesVector;
+    return true;
 }
 
 bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
@@ -565,34 +563,6 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
     }
     //cJSON_Delete(rule_json);
     return deviceCommandsVector;
-}
-
-bool isRuleTypeEveryAction(char *rule){
-    printf("#isRuleTypeEveryAction... ");
-    cJSON *rule_json = cJSON_Parse(rule);
-    if (rule_json == NULL)
-    {
-        const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL)
-        {
-            printf("Error before: %s\n", error_ptr);
-        }
-        return false;
-    }
-    const cJSON *action = NULL;
-    const cJSON *actions = cJSON_GetObjectItemCaseSensitive(rule_json, "actions");
-    cJSON_ArrayForEach(action, actions)
-    {
-        char *actionType = action->child->string;
-        //printf("action key: \"%s\"\n", actionType);
-
-        if (strcmp(actionType, "every") == 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 }
 
 bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){

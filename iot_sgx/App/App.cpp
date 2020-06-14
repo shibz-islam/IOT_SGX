@@ -332,6 +332,10 @@ void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property
     mqttObj->publishMessage(property->address, message.c_str());
 }
 
+void ocall_send_device_action_commands([user_check] struct DeviceCommand *property){
+    
+}
+
 
 /*
 void get_rules_from_db(){

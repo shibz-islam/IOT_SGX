@@ -63,14 +63,19 @@ void RuleManager::saveRuleInPriorityQueue(TimeRule timeRule){
 /* Helper */
 /***********/
 
+void sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands){
+    for (const auto &dc : deviceCommands) {
+        printf("Enclave# device id: %s\n", dc->deviceId);
+        printf("Enclave# command: %s\n", dc->command);
+        //TODO: send commands
+
+    }
+}
+
 void getTimeRuleEvent(TimeRule &tr){
     std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands(tr.rule, true);
     if(!deviceCommands.empty()){
-        for (const auto &dc : deviceCommands) {
-            printf("Enclave# device id: %s\n", dc->deviceId);
-            printf("Enclave# command: %s\n", dc->command);
-            //TODO: send commands
-        }
+        sendDeviceCommands(deviceCommands)
     } else{
         printf("Enclave# deviceCommandsVector empty ");
     }
@@ -150,43 +155,49 @@ void storeTimerRulesWithRuleID(std::vector<TimeRule> &timeRules, Rule *myRule){
 
 void RuleManager::didReceiveRule(Rule *myRule, bool isStoreInFile){
     printf("#didReceiveRule ");
-    if (isRuleTypeIFAction(myRule->rule)){
-        std::vector<std::string> deviceIdVector = parseRuleForDeviceID(myRule->rule);
-        if (!deviceIdVector.empty()){
-            //store Rules in cache
-            for (const auto &id : deviceIdVector) {
-                //printf("#Enclave: device id: %s\n", id.c_str());
-                cache->put(id, std::string(myRule->rule));
-            }
-            if (isStoreInFile)
-                storeRulesWithDeviceID(deviceIdVector, myRule);
-        } else{
-            printf("#Enclave: deviceIdVector empty ");
-        }
-    }else if (isRuleTypeEveryAction(myRule->rule)){
-        printf("Enclave# isRuleTypeEveryAction ");
-        std::vector<TimeRule> timeRules;
-        if(parseRuleForTimeInfo(myRule->rule, timeRules)){
-            for (auto &timeRule : timeRules) {
-                printf("#Enclave: %s %s %d %s\n", timeRule.ruleID, timeRule.timeReference, timeRule.timeOffset, timeRule.unit);
-                if(configureTimeString(timeRule)){
-                    char *tempRule = (char *) malloc((strlen(myRule->rule)+1)*sizeof(char));
-                    memcpy(tempRule, myRule->rule, strlen(myRule->rule));
-                    timeRule.rule = tempRule;
-                    saveRuleInQueue(timeRule);
-                }else{
-                    printf("Enclave# configureTimeString unsuccessful ");
+    RuleType ruleType = parseRuleTypeAction(myRule->rule);
+    switch (ruleType){
+        case IF: {
+            std::vector<std::string> deviceIdVector;
+            if (parseRuleForDeviceID(myRule->rule, deviceIdVector) && !deviceIdVector.empty()){
+                //store Rules in cache
+                for (const auto &id : deviceIdVector) {
+                    //printf("#Enclave: device id: %s\n", id.c_str());
+                    cache->put(id, std::string(myRule->rule));
                 }
+                if (isStoreInFile)
+                    storeRulesWithDeviceID(deviceIdVector, myRule);
+            } else{
+                printf("#Enclave: deviceIdVector empty ");
             }
-            if (isStoreInFile)
-                storeTimerRulesWithRuleID(timeRules, myRule);
-        } else{
-            printf("Enclave# parseRuleForTimeInfo unsuccessful ");
+            break;
         }
-    }
-    else{
-        //TODO: handle Every/Sleep Actions
-        printf("#Enclave: not IFAction ");
+        case EVERY: {
+            std::vector<TimeRule> timeRules;
+            if(parseRuleForTimeInfo(myRule->rule, timeRules) && !timeRules.empty()){
+                for (auto &timeRule : timeRules) {
+                    printf("#Enclave: %s %s %d %s\n", timeRule.ruleID, timeRule.timeReference, timeRule.timeOffset, timeRule.unit);
+                    if(configureTimeString(timeRule)){
+                        char *tempRule = (char *) malloc((strlen(myRule->rule)+1)*sizeof(char));
+                        memcpy(tempRule, myRule->rule, strlen(myRule->rule));
+                        timeRule.rule = tempRule;
+                        saveRuleInQueue(timeRule);
+                    }else{
+                        printf("Enclave# configureTimeString unsuccessful ");
+                    }
+                }
+                if (isStoreInFile)
+                    storeTimerRulesWithRuleID(timeRules, myRule);
+            } else{
+                printf("Enclave# parseRuleForTimeInfo unsuccessful ");
+            }
+            break;
+        }
+        case SLEEP: {
+            break;
+        }
+        default:
+            printf("#Enclave: Unknown Action ");
     }
 }
 
