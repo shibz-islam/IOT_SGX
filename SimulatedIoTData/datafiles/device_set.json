@@ -1,0 +1,1884 @@
+[
+    {
+        "id": "Alarm",
+        "version": 1,
+        "name": "Alarm",
+        "status": "live",
+        "attributes": {
+            "alarm": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "AlertState",
+                            "type": "string",
+                            "enum": [
+                                "both",
+                                "off",
+                                "siren",
+                                "strobe"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "both": {
+                "arguments": [
+
+                ]
+            },
+            "off": {
+                "arguments": [
+
+                ]
+            },
+            "siren": {
+                "arguments": [
+
+                ]
+            },
+            "strobe": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "CarbonDioxideMeasurement",
+        "version": 1,
+        "name": "Carbon Dioxide Measurement",
+        "status": "live",
+        "attributes": {
+            "carbonDioxide": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "ppm"
+                            ],
+                            "default": "ppm"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "ColorControl",
+        "version": 1,
+        "name": "Color Control",
+        "status": "live",
+        "attributes": {
+            "color": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "String",
+                            "type": "string",
+                            "enum": [
+                                "red",
+                                "blue",
+                                "yellow",
+                                "green",
+                                "white"
+                            ]
+                        }
+                    }
+                }
+            },
+            "hue": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "PositiveNumber",
+                            "type": "number",
+                            "minimum": 0
+                        }
+                    }
+                }
+            },
+            "saturation": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "PositiveNumber",
+                            "type": "number",
+                            "minimum": 0
+                        }
+                    }
+                }
+            }
+        },
+        "commands": {
+            "setColor": {
+                "arguments": [
+                    {
+                        "name": "color",
+                        "schema": {
+                            "title": "COLOR_MAP",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "hue": {
+                                    "type": "number"
+                                },
+                                "saturation": {
+                                    "type": "number"
+                                },
+                                "hex": {
+                                    "type": "string",
+                                    "maxLength": 7
+                                },
+                                "level": {
+                                    "type": "integer"
+                                },
+                                "switch": {
+                                    "type": "string",
+                                    "maxLength": 3
+                                }
+                            }
+                        },
+                        "required": true
+                    }
+                ]
+            },
+            "setHue": {
+                "arguments": [
+                    {
+                        "name": "hue",
+                        "schema": {
+                            "title": "PositiveNumber",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "required": true
+                    }
+                ]
+            },
+            "setSaturation": {
+                "arguments": [
+                    {
+                        "name": "saturation",
+                        "schema": {
+                            "title": "PositiveNumber",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DishwasherMode",
+        "version": 1,
+        "name": "Dishwasher Mode",
+        "status": "proposed",
+        "attributes": {
+            "dishwasherMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "DishwasherMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "quick",
+                                "rinse",
+                                "dry"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setDishwasherMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "title": "DishwasherMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "quick",
+                                "rinse",
+                                "dry"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DishwasherOperatingState",
+        "version": 1,
+        "name": "Dishwasher Operating State",
+        "status": "proposed",
+        "attributes": {
+            "machineState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "MachineState",
+                                        "type": "string",
+                                        "enum": [
+                                            "pause",
+                                            "run",
+                                            "stop"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "dishwasherJobState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "DishwasherJobState",
+                            "type": "string",
+                            "enum": [
+                                "airwash",
+                                "cooling",
+                                "drying",
+                                "finish",
+                                "preDrain",
+                                "prewash",
+                                "rinse",
+                                "spin",
+                                "unknown",
+                                "wash",
+                                "wrinklePrevent"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "DishwasherJobState",
+                                        "type": "string",
+                                        "enum": [
+                                            "airwash",
+                                            "cooling",
+                                            "drying",
+                                            "finish",
+                                            "preDrain",
+                                            "prewash",
+                                            "rinse",
+                                            "spin",
+                                            "unknown",
+                                            "wash",
+                                            "wrinklePrevent"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "completionTime": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "Iso8601Date",
+                            "type": "string",
+                            "pattern": "^(?:[1-9]\\d{3}-?(?:(?:0[1-9]|1[0-2])-?(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-?(?:29|30)|(?:0[13578]|1[02])-?31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-?02-?29)T(?:[01]\\d|2[0-3]):?[0-5]\\d:?[0-5]\\d(?:\\.\\d{3})?(?:Z|[+-][01]\\d(?::?[0-5]\\d)?)$"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setMachineState": {
+                "arguments": [
+                    {
+                        "name": "state",
+                        "schema": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DoorControl",
+        "version": 1,
+        "name": "Door Control",
+        "status": "live",
+        "attributes": {
+            "door": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "closed",
+                                "closing",
+                                "open",
+                                "opening",
+                                "unknown"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "closed",
+                                            "closing",
+                                            "open",
+                                            "opening",
+                                            "unknown"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "close": {
+                "arguments": [
+
+                ]
+            },
+            "open": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DryerMode",
+        "version": 1,
+        "name": "Dryer Mode",
+        "status": "proposed",
+        "attributes": {
+            "dryerMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "DryerMode",
+                            "type": "string",
+                            "enum": [
+                                "regular",
+                                "lowHeat",
+                                "highHeat"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "DryerMode",
+                                        "type": "string",
+                                        "enum": [
+                                            "regular",
+                                            "lowHeat",
+                                            "highHeat"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setDryerMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "title": "DryerMode",
+                            "type": "string",
+                            "enum": [
+                                "regular",
+                                "lowHeat",
+                                "highHeat"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DryerOperatingState",
+        "version": 1,
+        "name": "Dryer Operating State",
+        "status": "proposed",
+        "attributes": {
+            "dryerJobState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "DryerJobState",
+                            "type": "string",
+                            "enum": [
+                                "cooling",
+                                "delayWash",
+                                "drying",
+                                "finished",
+                                "none",
+                                "weightSensing",
+                                "wrinklePrevent"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "DryerJobState",
+                                        "type": "string",
+                                        "enum": [
+                                            "cooling",
+                                            "delayWash",
+                                            "drying",
+                                            "finished",
+                                            "none",
+                                            "weightSensing",
+                                            "wrinklePrevent"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "machineState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "MachineState",
+                                        "type": "string",
+                                        "enum": [
+                                            "pause",
+                                            "run",
+                                            "stop"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "completionTime": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "Iso8601Date",
+                            "type": "string",
+                            "pattern": "^(?:[1-9]\\d{3}-?(?:(?:0[1-9]|1[0-2])-?(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-?(?:29|30)|(?:0[13578]|1[02])-?31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-?02-?29)T(?:[01]\\d|2[0-3]):?[0-5]\\d:?[0-5]\\d(?:\\.\\d{3})?(?:Z|[+-][01]\\d(?::?[0-5]\\d)?)$"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setMachineState": {
+                "arguments": [
+                    {
+                        "name": "state",
+                        "schema": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "DustSensor",
+        "version": 1,
+        "name": "Dust Sensor",
+        "status": "live",
+        "attributes": {
+            "dustLevel": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "PositiveInteger",
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "\u03bcg/m^3"
+                            ],
+                            "default": "\u03bcg/m^3"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "EnergyMeter",
+        "version": 1,
+        "name": "Energy Meter",
+        "status": "live",
+        "attributes": {
+            "energy": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "number"
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "kWh"
+                            ],
+                            "default": "kWh"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "Humidifier",
+        "version": 1,
+        "name": "Humidifier",
+        "status": "live",
+        "attributes": {
+            "humidity": {
+                "schema": {
+                    "title": "Percent",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "%"
+                            ],
+                            "default": "%"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "lock": {
+                "arguments": [
+
+                ]
+            },
+            "unlock": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "Lock",
+        "version": 1,
+        "name": "Lock",
+        "status": "live",
+        "attributes": {
+            "lock": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "LockState",
+                            "type": "string",
+                            "enum": [
+                                "locked",
+                                "unknown",
+                                "unlocked",
+                                "unlocked with timeout"
+                            ]
+                        },
+                        "data": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "method": {
+                                    "type": "string",
+                                    "enum": [
+                                        "manual",
+                                        "keypad",
+                                        "auto",
+                                        "command",
+                                        "rfid",
+                                        "fingerprint",
+                                        "bluetooth"
+                                    ]
+                                },
+                                "codeId": {
+                                    "type": "string"
+                                },
+                                "timeout": {
+                                    "title": "Iso8601Date",
+                                    "type": "string",
+                                    "pattern": "^(?:[1-9]\\d{3}-?(?:(?:0[1-9]|1[0-2])-?(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-?(?:29|30)|(?:0[13578]|1[02])-?31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-?02-?29)T(?:[01]\\d|2[0-3]):?[0-5]\\d:?[0-5]\\d(?:\\.\\d{3})?(?:Z|[+-][01]\\d(?::?[0-5]\\d)?)$"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "lock": {
+                "arguments": [
+
+                ]
+            },
+            "unlock": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "MotionSensor",
+        "version": 1,
+        "name": "Motion Sensor",
+        "status": "live",
+        "attributes": {
+            "motion": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "ActivityState",
+                            "type": "string",
+                            "enum": [
+                                "active",
+                                "inactive"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "OvenMode",
+        "version": 1,
+        "name": "Oven Mode",
+        "status": "proposed",
+        "attributes": {
+            "ovenMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "heating",
+                                "grill",
+                                "warming",
+                                "defrosting"
+                            ]
+                        },
+                        "constraints": {
+                            "constraints": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "values": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "enum": [
+                                                "heating",
+                                                "grill",
+                                                "warming",
+                                                "defrosting"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setOvenMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "heating",
+                                "grill",
+                                "warming",
+                                "defrosting"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "OvenOperatingState",
+        "version": 1,
+        "name": "Oven Operating State",
+        "status": "proposed",
+        "attributes": {
+            "machineState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "ready",
+                                "running",
+                                "paused"
+                            ]
+                        }
+                    }
+                }
+            },
+            "ovenJobState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "cleaning",
+                                "cooking",
+                                "cooling",
+                                "draining",
+                                "preheat",
+                                "ready",
+                                "rinsing"
+                            ]
+                        }
+                    }
+                }
+            },
+            "completionTime": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "Iso8601Date",
+                            "type": "string",
+                            "pattern": "^(?:[1-9]\\d{3}-?(?:(?:0[1-9]|1[0-2])-?(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-?(?:29|30)|(?:0[13578]|1[02])-?31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-?02-?29)T(?:[01]\\d|2[0-3]):?[0-5]\\d:?[0-5]\\d(?:\\.\\d{3})?(?:Z|[+-][01]\\d(?::?[0-5]\\d)?)$"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "operationTime": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "PositiveInteger",
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                }
+            },
+            "progress": {
+                "schema": {
+                    "title": "IntegerPercent",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "%"
+                            ],
+                            "default": "%"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setMachineState": {
+                "arguments": [
+                    {
+                        "name": "state",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "stop"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            },
+            "stop": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "PresenceSensor",
+        "version": 1,
+        "name": "Presence Sensor",
+        "status": "live",
+        "attributes": {
+            "presence": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "PresenceState",
+                            "type": "string",
+                            "enum": [
+                                "present",
+                                "not present"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "RefrigerationSetpoint",
+        "version": 1,
+        "name": "Refrigeration Setpoint",
+        "status": "proposed",
+        "attributes": {
+            "refrigerationSetpoint": {
+                "schema": {
+                    "title": "Temperature",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "TemperatureValue",
+                            "type": "number",
+                            "minimum": -460,
+                            "maximum": 10000
+                        },
+                        "unit": {
+                            "title": "TemperatureUnit",
+                            "type": "string",
+                            "enum": [
+                                "F",
+                                "C"
+                            ],
+                            "default": "C"
+                        },
+                        "constraints": {
+                            "title": "NumberConstraint",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "min": {
+                                    "type": "number"
+                                },
+                                "max": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value",
+                        "unit"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setRefrigerationSetpoint": {
+                "arguments": [
+                    {
+                        "name": "setpoint",
+                        "schema": {
+                            "title": "TemperatureValue",
+                            "type": "number",
+                            "minimum": -460,
+                            "maximum": 10000
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "RelativeHumidityMeasurement",
+        "version": 1,
+        "name": "Relative Humidity Measurement",
+        "status": "live",
+        "attributes": {
+            "humidity": {
+                "schema": {
+                    "title": "Percent",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "%"
+                            ],
+                            "default": "%"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "RobotCleanerCleaningMode",
+        "version": 1,
+        "name": "Robot Cleaner Cleaning Mode",
+        "status": "proposed",
+        "attributes": {
+            "robotCleanerCleaningMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "part",
+                                "repeat",
+                                "manual",
+                                "stop",
+                                "map"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setRobotCleanerCleaningMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "part",
+                                "repeat",
+                                "manual",
+                                "stop"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "SmokeDetector",
+        "version": 1,
+        "name": "Smoke Detector",
+        "status": "live",
+        "attributes": {
+            "smoke": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "clear",
+                                "detected",
+                                "tested"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "SoundSensor",
+        "version": 1,
+        "name": "Sound Sensor",
+        "status": "live",
+        "attributes": {
+            "sound": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "detected",
+                                "not detected"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "SwitchLevel",
+        "version": 1,
+        "name": "Switch Level",
+        "status": "live",
+        "attributes": {
+            "level": {
+                "schema": {
+                    "title": "IntegerPercent",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100
+                        },
+                        "unit": {
+                            "type": "string",
+                            "enum": [
+                                "%"
+                            ],
+                            "default": "%"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setLevel": {
+                "arguments": [
+                    {
+                        "name": "level",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "rate",
+                        "schema": {
+                            "title": "PositiveInteger",
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "required": false
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "Switch",
+        "version": 1,
+        "name": "Switch",
+        "status": "live",
+        "attributes": {
+            "switch": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "SwitchState",
+                            "type": "string",
+                            "enum": [
+                                "on",
+                                "off"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "off": {
+                "arguments": [
+
+                ]
+            },
+            "on": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "TemperatureMeasurement",
+        "version": 1,
+        "name": "Temperature Measurement",
+        "status": "live",
+        "attributes": {
+            "temperature": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "TemperatureValue",
+                            "type": "number",
+                            "minimum": -30,
+                            "maximum": 60
+                        },
+                        "unit": {
+                            "title": "TemperatureUnit",
+                            "type": "string",
+                            "enum": [
+                                "F",
+                                "C"
+                            ],
+                            "default": "C"
+                        }
+                    },
+                    "required": [
+                        "value",
+                        "unit"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "ThermostatMode",
+        "version": 1,
+        "name": "Thermostat Mode",
+        "status": "live",
+        "attributes": {
+            "thermostatMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "ThermostatMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "cool",
+                                "eco",
+                                "rush hour",
+                                "emergency heat",
+                                "heat",
+                                "off"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "supportedThermostatModes": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "array",
+                            "items": {
+                                "title": "ThermostatMode",
+                                "type": "string",
+                                "enum": [
+                                    "auto",
+                                    "cool",
+                                    "eco",
+                                    "rush hour",
+                                    "emergency heat",
+                                    "heat",
+                                    "off"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "commands": {
+            "auto": {
+                "arguments": [
+
+                ]
+            },
+            "cool": {
+                "arguments": [
+
+                ]
+            },
+            "emergencyHeat": {
+                "arguments": [
+
+                ]
+            },
+            "heat": {
+                "arguments": [
+
+                ]
+            },
+            "off": {
+                "arguments": [
+
+                ]
+            },
+            "setThermostatMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "title": "ThermostatMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "cool",
+                                "eco",
+                                "rush hour",
+                                "emergency heat",
+                                "heat",
+                                "off"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "TvChannel",
+        "version": 1,
+        "name": "Tv Channel",
+        "status": "proposed",
+        "attributes": {
+            "tvChannel": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "String",
+                            "type": "string",
+                            "maxLength": 255
+                        }
+                    }
+                }
+            }
+        },
+        "commands": {
+            "setTvChannel": {
+                "arguments": [
+                    {
+                        "name": "channel",
+                        "schema": {
+                            "title": "String",
+                            "type": "string",
+                            "maxLength": 255
+                        },
+                        "required": true
+                    }
+                ]
+            },
+            "channelUp": {
+                "arguments": [
+
+                ]
+            },
+            "channelDown": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "Valve",
+        "version": 1,
+        "name": "Valve",
+        "status": "live",
+        "attributes": {
+            "valve": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "closed",
+                                "open"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "close": {
+                "arguments": [
+
+                ]
+            },
+            "open": {
+                "arguments": [
+
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "WasherMode",
+        "version": 1,
+        "name": "Washer Mode",
+        "status": "proposed",
+        "attributes": {
+            "washerMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "WasherMode",
+                            "type": "string",
+                            "enum": [
+                                "regular",
+                                "heavy",
+                                "rinse",
+                                "spinDry"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setWasherMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "title": "WasherMode",
+                            "type": "string",
+                            "enum": [
+                                "regular",
+                                "heavy",
+                                "rinse",
+                                "spinDry"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "WasherOperatingState",
+        "version": 1,
+        "name": "Washer Operating State",
+        "status": "proposed",
+        "attributes": {
+            "washerJobState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string",
+                            "enum": [
+                                "airWash",
+                                "cooling",
+                                "delayWash",
+                                "drying",
+                                "finish",
+                                "none",
+                                "preWash",
+                                "rinse",
+                                "spin",
+                                "wash",
+                                "weightSensing",
+                                "wrinklePrevent"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "airWash",
+                                            "cooling",
+                                            "delayWash",
+                                            "drying",
+                                            "finish",
+                                            "none",
+                                            "preWash",
+                                            "rinse",
+                                            "spin",
+                                            "wash",
+                                            "weightSensing",
+                                            "wrinklePrevent"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "machineState": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            },
+            "completionTime": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "Iso8601Date",
+                            "type": "string",
+                            "pattern": "^(?:[1-9]\\d{3}-?(?:(?:0[1-9]|1[0-2])-?(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-?(?:29|30)|(?:0[13578]|1[02])-?31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-?02-?29)T(?:[01]\\d|2[0-3]):?[0-5]\\d:?[0-5]\\d(?:\\.\\d{3})?(?:Z|[+-][01]\\d(?::?[0-5]\\d)?)$"
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setMachineState": {
+                "arguments": [
+                    {
+                        "name": "state",
+                        "schema": {
+                            "title": "MachineState",
+                            "type": "string",
+                            "enum": [
+                                "pause",
+                                "run",
+                                "stop"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
+        "id": "WaterSensor",
+        "version": 1,
+        "name": "Water Sensor",
+        "status": "live",
+        "attributes": {
+            "water": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "MoistureState",
+                            "type": "string",
+                            "enum": [
+                                "dry",
+                                "wet"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+
+        }
+    },
+
+    {
+        "id": "WindowControl",
+        "version": 1,
+        "name": "Window Shade",
+        "status": "proposed",
+        "attributes": {
+            "window": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "OpenableState",
+                            "type": "string",
+                            "enum": [
+                                "closed",
+                                "closing",
+                                "open",
+                                "opening",
+                                "partially open",
+                                "unknown"
+                            ]
+                        },
+                        "constraints": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "values": {
+                                    "type": "array",
+                                    "items": {
+                                        "title": "OpenableState",
+                                        "type": "string",
+                                        "enum": [
+                                            "closed",
+                                            "closing",
+                                            "open",
+                                            "opening",
+                                            "partially open",
+                                            "unknown"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "close": {
+                "arguments": [
+
+                ]
+            },
+            "open": {
+                "arguments": [
+
+                ]
+            },
+            "presetPosition": {
+                "arguments": [
+
+                ]
+            }
+        }
+    }
+
+]

@@ -1,0 +1,242 @@
+[
+    {
+        "deviceID": "9WZ8iSlgrp3yUllM",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy",
+                "value": {
+                    "number": 110
+                },
+                "unit": "kWh",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "HNN3GOkLnPfWE2Mn",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke",
+                "value": {
+                    "string": "detected"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "9WZ8iSlgrp3yUllM",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy",
+                "value": {
+                    "number": 50
+                },
+                "unit": "kWh",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "NnLuYt9sZ3bgUNyP",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence",
+                "value": {
+                    "string": "present"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "tvVWG4SxjVttwLeX",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door",
+                "value": {
+                    "string": "closing"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "ASH8QZpESZv9sB6h",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "RelativeHumidityMeasurement",
+                "attribute": "humidity",
+                "value": {
+                    "number": 13
+                },
+                "unit": "%",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "mdiqIXWZBt7dpnS3",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide",
+                "value": {
+                    "integer": 2000
+                },
+                "unit": "ppm",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "XowjzrBLG3XEe7Zb",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "WindowControl",
+                "attribute": "window",
+                "value": {
+                    "string": "opening"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "RFXUBklXGCN64Q9P",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature",
+                "value": {
+                    "number": 90
+                },
+                "unit": "F",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "tvVWG4SxjVttwLeX",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door",
+                "value": {
+                    "string": "open"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "ASH8QZpESZv9sB6h",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "RelativeHumidityMeasurement",
+                "attribute": "humidity",
+                "value": {
+                    "number": 70
+                },
+                "unit": "%",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "2Rb3tlZGgnM2otW9",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "ThermostatMode",
+                "attribute": "thermostatMode",
+                "value": {
+                    "string": "rush hour"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "pXfE0Qy4FzCccfze",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "Lock",
+                "attribute": "lock",
+                "value": {
+                    "string": "locked"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "RFXUBklXGCN64Q9P",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature",
+                "value": {
+                    "number": 25
+                },
+                "unit": "C",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "LfwTsHlCMoZGxBrn",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water",
+                "value": {
+                    "string": "wet"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    }
+
+]
