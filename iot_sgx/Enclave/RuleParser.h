@@ -12,6 +12,7 @@
 #include "cJSON.h"
 #include "Enclave.h"
 #include "Enclave_t.h"
+#include "EnclaveHelper.h"
 
 
 RuleType parseRuleTypeAction(char *rule);
@@ -19,7 +20,7 @@ RuleType parseRuleTypeAction(char *rule);
 bool parseRuleForDeviceID(char *rule, std::vector<std::string> &deviceIdVector);
 bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent);
 bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event);
-std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisfied);
+bool parseRuleForDeviceCommands(char *rule, std::vector<DeviceCommand*> &deviceCommandsVector, bool isSatisfied);
 
 bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules);
 bool configureTimeString(TimeRule &timeRule);

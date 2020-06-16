@@ -63,7 +63,7 @@ void IoTMQTTWrapper::on_publish(int mid) {
 void IoTMQTTWrapper::publishMessage(const char *topic, const char *msg) {
     int rc = publish(NULL, topic, strlen(msg), msg);
     if(rc==0){
-
+        printf("Message published with code %d\n", rc);
     }else {
         printf("%s\n",strerror(rc));
     }

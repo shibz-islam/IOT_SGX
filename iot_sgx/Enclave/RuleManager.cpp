@@ -10,7 +10,7 @@
 #include "analytics_utils.h"
 
 
-#define CACHE_SIZE 20
+#define CACHE_SIZE 40
 
 
 /*** CLASS METHODS ***/
@@ -64,18 +64,39 @@ void RuleManager::saveRuleInPriorityQueue(TimeRule timeRule){
 /***********/
 
 void sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands){
+    printf("\nTotal Device Commands: %ld\n", deviceCommands.size());
     for (const auto &dc : deviceCommands) {
         printf("Enclave# device id: %s\n", dc->deviceId);
         printf("Enclave# command: %s\n", dc->command);
         //TODO: send commands
+        char *encMessage = (char *) malloc(strlen(dc->command)*sizeof(char));
+        char *tag_msg = (char *) malloc((16+1)*sizeof(char));
+        sgx_status_t status = encryptMessageAES(dc->command, strlen(dc->command), encMessage, strlen(dc->command), tag_msg);
+        if(status != 0){
+            printf("Error! Encryption failed! ");
+            free(encMessage);
+            free(tag_msg);
+            return;
+        }
+        std::string tempAddr = mqttTopicName() + std::string(dc->deviceId);
 
+        ruleActionProperty *property = new ruleActionProperty();
+        property->msg = encMessage;
+        property->tag = tag_msg;
+        property->address = (char*)tempAddr.c_str();
+        ocall_send_alert_for_rule_action_device(property);
+        free(encMessage);
+        free(tag_msg);
+        tempAddr.clear();
+        delete property;
     }
+    deviceCommands.clear();
 }
 
 void getTimeRuleEvent(TimeRule &tr){
-    std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands(tr.rule, true);
-    if(!deviceCommands.empty()){
-        sendDeviceCommands(deviceCommands)
+    std::vector<DeviceCommand*> deviceCommands;
+    if(parseRuleForDeviceCommands(tr.rule, deviceCommands, true) && !deviceCommands.empty()){
+        sendDeviceCommands(deviceCommands);
     } else{
         printf("Enclave# deviceCommandsVector empty ");
     }
@@ -86,6 +107,7 @@ void getTimeRuleEvent(TimeRule &tr){
  * @param msg
  */
 void storeRulesWithDeviceID(std::vector<std::string> &deviceIdVector, Rule *myRule){
+    //printf("\nTotal Device IDs: %ld\n", deviceIdVector.size());
     char *encMessage = (char *) malloc(myRule->ruleLength*sizeof(char));
     char *tag_msg = (char *) malloc((16+1)*sizeof(char));
     sgx_status_t status = encryptMessageAES(myRule->rule, myRule->ruleLength, encMessage, myRule->ruleLength, tag_msg);
@@ -203,7 +225,7 @@ void RuleManager::didReceiveRule(Rule *myRule, bool isStoreInFile){
 
 void RuleManager::didReceiveDeviceEvent(char *event){
     printf("#didReceiveDeviceEvent ");
-    printf("#Enclave: cache keys= %s\n", cache->getKeys().c_str());
+    //printf("#Enclave: cache keys= %s\n", cache->getKeys().c_str());
     DeviceEvent *deviceEvent = new DeviceEvent();
     if(parseDeviceEventData(event, deviceEvent)){
         //TODO: fetch Rule for deviceID
@@ -213,20 +235,18 @@ void RuleManager::didReceiveDeviceEvent(char *event){
         if(cache->isKeyPresent(std::string(deviceEvent->deviceId))){
             //TODO: check rule satisfiability with device event
             std::string rule_str = cache->get(std::string(deviceEvent->deviceId));
+            printf("\n==> \nrule: %s\n", rule_str.c_str());
             std::vector<std::string> rulesList = split(rule_str, ";");
             for (auto &rule : rulesList) {
                 //printf("rule: %s\n", item.c_str());
                 bool isSuccess = checkRuleSatisfiabilityWithDeviceEvent((char*)rule.c_str(), deviceEvent);
-                std::vector<DeviceCommand*> deviceCommands = parseRuleForDeviceCommands((char*)rule.c_str(), isSuccess);
-                if(!deviceCommands.empty()){
-                    for (const auto &dc : deviceCommands) {
-                        printf("#Enclave: device id: %s\n", dc->deviceId);
-                        printf("#Enclave: command: %s\n", dc->command);
-                        //TODO: send commands
-                    }
+                std::vector<DeviceCommand*> deviceCommands;
+                if(parseRuleForDeviceCommands((char*)rule.c_str(), deviceCommands, isSuccess) && !deviceCommands.empty()){
+                    sendDeviceCommands(deviceCommands);
                 } else{
                     printf("#Enclave: deviceCommandsVector empty ");
                 }
+                deviceCommands.clear();
             }
             rulesList.clear();
         } else{

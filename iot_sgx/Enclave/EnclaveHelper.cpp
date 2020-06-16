@@ -9,6 +9,8 @@
 #include "Enclave.h"
 #include "Enclave_t.h"
 
+std::string mqttTopicForData = "topic/utd/iot/server/data/";
+
 void toLowerCase(char *str){
     int i, s = strlen(str);
     for (i = 0; i < s; i++)
@@ -25,7 +27,7 @@ RuleType getRuleType(char *key){
     else if(strcmp(key, "sleep")==0){
         return SLEEP;
     } else{
-        return UNKNOWN;
+        return RuleType_UNKNOWN;
     }
 }
 
@@ -39,7 +41,7 @@ ValueType getValueType(char *key){
     else if(strcmp(key, "number")==0){
         return NUMBER;
     } else{
-        return UNKNOWN;
+        return ValueType_UNKNOWN;
     }
 }
 
@@ -56,7 +58,7 @@ TimeReference getTimeReference(char *key){
     }else if(strcmp(key, "sunset")==0){
         return SUNSET;
     }else{
-        return UNKNOWN;
+        return TimeReference_UNKNOWN;
     }
 }
 
@@ -77,21 +79,21 @@ TimeUnit getTimeUnit(char *key){
     }else if(strcmp(key, "year")==0){
         return YEAR;
     }else{
-        return UNKNOWN;
+        return TimeUnit_UNKNOWN;
     }
 }
 
 char* enum_to_string(TimeReference type) {
     switch(type) {
-        case Now:
+        case NOW:
             return "Now";
-        case Midnight:
+        case MIDNIGHT:
             return "Midnight";
-        case Sunrise:
+        case SUNRISE:
             return "Sunrise";
-        case Noon:
+        case NOON:
             return "Noon";
-        case Sunset:
+        case SUNSET:
             return "Sunset";
         default:
             return "Invalid";
@@ -113,4 +115,8 @@ std::vector<std::string> split(std::string s, std::string delimiter){
 
 int getTimeMinute(int h, int m){
     return h*60+m;
+}
+
+std::string mqttTopicName(){
+    return mqttTopicForData;
 }

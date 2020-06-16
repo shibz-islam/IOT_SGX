@@ -2,7 +2,7 @@
 // Created by shihab on 6/2/20.
 //
 #include "RuleParser.h"
-#include "EnclaveHelper.h"
+
 
 
 bool parseOperandDevice(cJSON *condition, DeviceEvent *event){
@@ -258,7 +258,7 @@ RuleType parseRuleTypeAction(char *rule){
         {
             printf("Error before: %s\n", error_ptr);
         }
-        return false;
+        return RuleType_UNKNOWN;
     }
     const cJSON *action = NULL;
     const cJSON *actions = cJSON_GetObjectItemCaseSensitive(rule_json, "actions");
@@ -269,7 +269,7 @@ RuleType parseRuleTypeAction(char *rule){
         //cJSON_Delete(rule_json);
         return getRuleType(actionType);
     }
-    return UNKNOWN;
+    return RuleType_UNKNOWN;
 }
 
 bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
@@ -330,7 +330,7 @@ bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
 }
 
 bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
-    printf("#parseDeviceEventData");
+    printf("#parseDeviceEventData ");
     cJSON *event_json = cJSON_Parse(event);
     bool isSuccess = true;
     if (event_json == NULL)
@@ -450,10 +450,10 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
         return false;
     }
 
-    const cJSON *ruleID = NULL;
-    ruleID = cJSON_GetObjectItemCaseSensitive(rule_json, "ruleID");
-    if (cJSON_IsString(ruleID) && (ruleID->valuestring != NULL))
-        printf("ruleID: \"%s\"\n", ruleID->valuestring);
+    //const cJSON *ruleID = NULL;
+    //ruleID = cJSON_GetObjectItemCaseSensitive(rule_json, "ruleID");
+    //if (cJSON_IsString(ruleID) && (ruleID->valuestring != NULL))
+        //printf("ruleID: \"%s\"\n", ruleID->valuestring);
 
     const cJSON *actions = NULL;
     const cJSON *action = NULL;
@@ -491,9 +491,8 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
 }
 
 
-std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisfied){
+bool parseRuleForDeviceCommands(char *rule, std::vector<DeviceCommand*> &deviceCommandsVector, bool isSatisfied){
     printf("#parseRuleForDeviceCommands ");
-    std::vector<DeviceCommand*> deviceCommandsVector;
     std::vector<char*> ruleCommandsVector;
     cJSON *rule_json = cJSON_Parse(rule);
     if (rule_json == NULL)
@@ -503,7 +502,7 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
         {
             printf("Error before: %s\n", error_ptr);
         }
-        return deviceCommandsVector;
+        return false;
     }
     const cJSON *actions = NULL;
     const cJSON *action = NULL;
@@ -532,37 +531,44 @@ std::vector<DeviceCommand*> parseRuleForDeviceCommands(char *rule, bool isSatisf
         }
     }
 
-    for (int i = 0; i < ruleCommandsVector.size(); ++i) {
-        cJSON *deviceCommand = cJSON_Parse(ruleCommandsVector[i]);
-        if(!cJSON_IsNull(deviceCommand)){
-            cJSON *commandList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "commands");
-            if (!cJSON_IsNull(commandList)){
-                char *commandJsonString = cJSON_Print(commandList);
-                //printf("commands list: %s\n", commandJsonString);
+    if(ruleCommandsVector.empty()){
+        return false;
+    }else{
+        for (int i = 0; i < ruleCommandsVector.size(); ++i) {
+            cJSON *deviceCommand = cJSON_Parse(ruleCommandsVector[i]);
+            if(!cJSON_IsNull(deviceCommand)){
+                cJSON *commandList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "commands");
+                if (!cJSON_IsNull(commandList)){
+                    char *commandJsonString = cJSON_Print(commandList);
+                    //printf("commands list: %s\n", commandJsonString);
 
-                cJSON *deviceList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "devices");
-                if(cJSON_IsArray(deviceList)){
-                    for (int j = 0 ; j < cJSON_GetArraySize(deviceList) ; j++){
-                        DeviceCommand *dc = new DeviceCommand();
-                        dc->deviceId = cJSON_GetArrayItem(deviceList, j)->valuestring;
-                        //printf("deviceId: %s\n", dc->deviceId);
-                        dc->command = commandJsonString;
-                        deviceCommandsVector.push_back(dc);
+                    cJSON *deviceList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "devices");
+                    if(cJSON_IsArray(deviceList)){
+                        for (int j = 0 ; j < cJSON_GetArraySize(deviceList) ; j++){
+                            DeviceCommand *dc = new DeviceCommand();
+                            dc->deviceId = cJSON_GetArrayItem(deviceList, j)->valuestring;
+                            //printf("deviceId: %s\n", dc->deviceId);
+                            dc->command = commandJsonString;
+                            deviceCommandsVector.push_back(dc);
+                        }
+                    } else{
+                        printf("No array found for deviceId... ");
                     }
-                } else{
-                    printf("No array found for deviceId... ");
+                }
+                else {
+                    printf("json parse error: commandList... ");
+                    return false;
                 }
             }
-            else {
-                printf("json parse error: commandList... ");
+            else{
+                printf("json parse error: ruleCommandsVector... ");
+                return false;
             }
-        }
-        else{
-            printf("json parse error: ruleCommandsVector... ");
         }
     }
     //cJSON_Delete(rule_json);
-    return deviceCommandsVector;
+    ruleCommandsVector.clear();
+    return true;
 }
 
 bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
@@ -614,7 +620,7 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
             }
             else if (strcmp(conditionType, "interval") == 0){
                 printf("***interval ");
-                tr.timeReference = enum_to_string(Now);
+                tr.timeReference = enum_to_string(NOW);
                 const cJSON *valueObj = cJSON_GetObjectItem(condition, "value");
                 const cJSON *value = cJSON_GetObjectItem(valueObj, "integer");
                 if (cJSON_IsNumber(value))
@@ -639,15 +645,15 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
 
 bool configureTimeString(TimeRule &timeRule){
     int hour = 0;
-    if (strcmp(timeRule.timeReference, enum_to_string(Now)) == 0){
+    if (strcmp(timeRule.timeReference, enum_to_string(NOW)) == 0){
         hour = 9; //TODO: get current time SGX
-    }else if (strcmp(timeRule.timeReference, enum_to_string(Midnight)) == 0){
+    }else if (strcmp(timeRule.timeReference, enum_to_string(MIDNIGHT)) == 0){
         hour = 00;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(Sunrise)) == 0){
+    }else if (strcmp(timeRule.timeReference, enum_to_string(SUNRISE)) == 0){
         hour = 06;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(Noon)) == 0){
+    }else if (strcmp(timeRule.timeReference, enum_to_string(NOON)) == 0){
         hour = 12;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(Sunset)) == 0){
+    }else if (strcmp(timeRule.timeReference, enum_to_string(SUNSET)) == 0){
         hour = 18;
     }else{
         printf("Unknown time reference... ");

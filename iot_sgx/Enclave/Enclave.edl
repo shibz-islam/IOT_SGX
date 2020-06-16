@@ -146,7 +146,7 @@ enclave {
         void ocall_send_alert_for_rule_action_email([user_check] struct ruleActionProperty *property);
         void ocall_send_alert_for_rule_action_device([user_check] struct ruleActionProperty *property);
 
-        void ocall_send_device_action_commands([user_check] struct DeviceCommand *property);
+
     };
 
 };

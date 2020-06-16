@@ -42,7 +42,7 @@ int parse_data_with_tag(char *buffer, struct message *ptr) {
     if (jsonReader.parse(buffer, jsonData)) {
 //        std::cout << "Successfully parsed JSON data" << std::endl;
         std::cout << "\n\n\nJSON data received:" << std::endl;
-        std::cout << jsonData.toStyledString() << std::endl;
+        //std::cout << jsonData.toStyledString() << std::endl;
 
         /*CPPCodec*/
         /*

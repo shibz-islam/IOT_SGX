@@ -10,11 +10,13 @@
 #include "string"
 #include "vector"
 
+
+
 /* Enums */
-enum RuleType {IF, EVERY, SLEEP, UNKNOWN};
-enum ValueType {STRING, INTEGER, NUMBER, UNKNOWN};
-enum TimeReference {NOW, MIDNIGHT, SUNRISE, NOON, SUNSET, UNKNOWN};
-enum TimeUnit {SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR, UNKNOWN};
+enum RuleType {IF, EVERY, SLEEP, RuleType_UNKNOWN};
+enum ValueType {STRING, INTEGER, NUMBER, ValueType_UNKNOWN};
+enum TimeReference {NOW, MIDNIGHT, SUNRISE, NOON, SUNSET, TimeReference_UNKNOWN};
+enum TimeUnit {SECOND, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR, TimeUnit_UNKNOWN};
 
 
 /* Methods*/
@@ -28,7 +30,7 @@ char* enum_to_string(TimeReference type);
 int getTimeMinute(int h, int m);
 std::vector<std::string> split(std::string s, std::string delimiter);
 
-
+std::string mqttTopicName();
 
 
 

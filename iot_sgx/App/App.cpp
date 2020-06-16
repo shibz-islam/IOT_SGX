@@ -71,7 +71,7 @@ sgx_status_t ret = SGX_SUCCESS;
 sgx_launch_token_t token = {0};
 int updated = 0;
 int socketConnection = 0;
-char ruleFilePath[] = "/home/shihab/Desktop/rules.bin"; //TODO: remove hard-coded filepath
+char ruleFilePath[] = "rules.bin"; //TODO: remove hard-coded filepath
 IoTMQTTWrapper *mqttObj;
 std::string topicForData = "topic/utd/iot/server/data";
 
@@ -327,14 +327,12 @@ void ocall_send_alert_for_rule_action_email(struct ruleActionProperty *property)
 
 
 void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property){
-    printf("Sending alert to device...\n");
+    printf("Sending alert to device...%s\n", property->address);
     std::string message = make_json_from_message(property);
     mqttObj->publishMessage(property->address, message.c_str());
 }
 
-void ocall_send_device_action_commands([user_check] struct DeviceCommand *property){
-    
-}
+
 
 
 /*
@@ -524,19 +522,19 @@ int SGX_CDECL main(int argc, char *argv[])
     ecall_initialize_enclave(global_eid);
 
 
-    //MQTTSetup();
+    MQTTSetup();
 
     //get_rules_from_db();
 
-    //std::thread t1(open_socket);
-    std::thread t2(open_socket_for_rules);
-    std::thread t3(timer_thread);
-    std::thread t4(timer_thread_2);
+    std::thread t1(open_socket);
+    //std::thread t2(open_socket_for_rules);
+    //std::thread t3(timer_thread);
+    //std::thread t4(timer_thread_2);
 
-    //t1.join();
-    t2.join();
-    t3.join();
-    t4.join();
+    t1.join();
+    //t2.join();
+    //t3.join();
+    //t4.join();
 
 
     /* Destroy the enclave */
