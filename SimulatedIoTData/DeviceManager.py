@@ -1,6 +1,7 @@
-import Helper, Constants, CryptoHelper, socketClient
+import Helper, Constants, CryptoHelper, socketClient, Properties
 from MQTTClient import MQTTClient
 import json, random, time
+
 
 path = "datafiles/"
 filename = "device_set.json"
@@ -159,6 +160,7 @@ def start_simulation():
         if is_success:
             enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(event)
             #enc_rule = json.dumps(event)
+            Helper.record_start_time()
             socketClient.send_to_server(soc, enc_rule)
             time.sleep(10)
             count += 1

@@ -8,3 +8,6 @@ class Actions(Enum):
     SLEEP = 4
     LOCATION = 5
     NOTIFY = 6
+
+
+START_TIME = 0

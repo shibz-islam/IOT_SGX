@@ -1,7 +1,8 @@
 import json
 import random, secrets
 import string
-
+from timeit import default_timer as timer
+import Properties
 
 def read_json_from_file(filepath):
     with open(filepath, 'r') as openfile:
@@ -31,6 +32,16 @@ def write_data_to_file(filepath, data_list):
         f.write(item)
         f.write("\n")
     f.close()
+
+
+def record_start_time():
+    Properties.START_TIME = timer()
+
+
+def calculate_response_time():
+    end = timer()
+    response_time = end - Properties.START_TIME
+    print("Response Time: ", response_time)
 
 
 def get_random_alphaNumeric_string(stringLength=8):

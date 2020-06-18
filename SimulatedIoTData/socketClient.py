@@ -26,7 +26,6 @@ def send_to_server(s, j):
     :return:
     """
     # s.send(b"random messages")
-    Properties.START_TIME = time.time()
 
     s.send(j.encode())
 

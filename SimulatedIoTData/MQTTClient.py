@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import CryptoHelper
+import CryptoHelper, Helper
 
 
 def print_error_msg(rc):
@@ -39,6 +39,7 @@ class MQTTClient:
     def on_message(self, client, userdata, msg):
         print("#MQTT Topic: ", msg.topic)
         CryptoHelper.aes_gcm_decryption_with_tag(msg.payload.decode())
+        Helper.calculate_response_time()
 
     def set_on_message_callback(self, func):
         self.client.on_message = func
