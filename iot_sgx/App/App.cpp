@@ -74,7 +74,7 @@ int socketConnection = 0;
 char ruleFilePath[] = "rules.bin"; //TODO: remove hard-coded filepath
 IoTMQTTWrapper *mqttObj;
 std::string topicForData = "topic/utd/iot/server/data";
-
+std::chrono::high_resolution_clock::time_point START_TIME;
 
 /*
  *   Initialize the enclave: Call sgx_create_enclave to initialize an enclave instance
@@ -333,6 +333,37 @@ void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property
 }
 
 
+std::string getLocalTime(){
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time (&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M:%S",timeinfo);
+    std::string str(buffer);
+    return str;
+}
+
+
+void ocall_log_execution_time(char *id){
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - START_TIME);
+    printf("\nTime taken by function: %ld microseconds\n", duration.count());
+
+    std::string line = getLocalTime() + ";" + std::string(id) + ";" + std::to_string(duration.count());
+
+    std::ofstream fout;
+    fout.open("execution_time(microseconds).txt", std::ios::app);
+    if(!fout) {
+        printf("Error in creating file!!!\n");
+        return;
+    }
+    fout << line << std::endl;
+    fout.close();
+}
+
 
 
 /*
@@ -404,6 +435,8 @@ int open_socket()
             //printf("buffer len: %d\n",strlen(buffer));
             if(strcmp(buffer, "quit")==0)
                 break;
+
+            START_TIME = std::chrono::high_resolution_clock::now();
 
             struct message msg[1];
             if(parse_data_with_tag(buffer, msg) > 0)

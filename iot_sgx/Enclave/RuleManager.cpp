@@ -247,6 +247,7 @@ void RuleManager::didReceiveDeviceEvent(char *event){
                     printf("#Enclave: deviceCommandsVector empty ");
                 }
                 deviceCommands.clear();
+                ocall_log_execution_time(deviceEvent->deviceId);
             }
             rulesList.clear();
         } else{
