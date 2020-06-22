@@ -33,6 +33,24 @@ std::vector<std::string> split(std::string s, std::string delimiter);
 std::string mqttTopicName();
 
 
+struct DeviceEvent{
+    ~DeviceEvent(){
+        delete[] deviceId;
+        delete[] capability;
+        delete[] attribute;
+        delete[] value;
+        delete[] valueType;
+        delete[] unit;
+    }
+    char *deviceId;
+    char *capability;
+    char *attribute;
+    char *value;
+    char *valueType;
+    char *unit;
+};
+
+
 
 class CompareTime {
 public:

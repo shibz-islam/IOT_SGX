@@ -99,25 +99,28 @@ void load_previous_rules(){
             isSuccess = 0;
             for(int i=0; i < numRules; i++){
                 //printf("\n*** deviceid=%s, ruleLength=%ld, rule=%s\n", ruleset[i].deviceID, ruleset[i].ruleLength, ruleset[i].rule);
+                char *decMessage = NULL;
+                if(ruleManagerObj.isEncryptionEnabled){
+                    decMessage = (char *) malloc(ruleset[i].ruleLength*sizeof(char));
+                    sgx_status_t status = decryptMessageAES(ruleset[i].rule, ruleset[i].ruleLength, decMessage, ruleset[i].ruleLength, ruleset[i].tag);
+                    if(status != 0){
+                        printf("Error! Decryption failed!");
+                        free(decMessage);
+                        //delete[] msg->text;
+                        return;
+                    }
+                } else{
+                    decMessage = ruleset[i].rule;
+                }
 
-                char *decMessage = (char *) malloc(ruleset[i].ruleLength*sizeof(char));
-                sgx_status_t status = decryptMessageAES(ruleset[i].rule, ruleset[i].ruleLength, decMessage, ruleset[i].ruleLength, ruleset[i].tag);
-                if(status != 0){
-                    printf("Error! Decryption failed!");
-                    free(decMessage);
-                    //delete[] msg->text;
-                }
-                else{
-                    Rule *myRule = new Rule();
-                    myRule->rule = decMessage;
-                    myRule->ruleLength = ruleset[i].ruleLength;
-                    ruleManagerObj.didReceiveRule(myRule, false);
-                }
+                Rule *myRule = new Rule();
+                myRule->rule = decMessage;
+                myRule->ruleLength = ruleset[i].ruleLength;
+                ruleManagerObj.didReceiveRule(myRule, false);
 
             }
 
         }
-
     }
 }
 
@@ -131,52 +134,65 @@ void load_previous_rules(){
 /*
  * Enclave Initialization
  */
-void ecall_initialize_enclave(){
+void ecall_initialize_enclave(int isEncryptionEnabled){
     ruleManagerObj = RuleManager();
+    ruleManagerObj.isEncryptionEnabled = isEncryptionEnabled == 1;
     load_previous_rules();
 }
 
 
 
 void ecall_decrypt_message(struct message *msg){
-
-    char *decMessage = (char *) malloc(msg->textLength*sizeof(char));
-    sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
-    //printf("Status = %d\n", status);
-    if(status != 0){
-        printf("Error! Decryption failed!");
-        free(decMessage);
-        //delete[] msg->text;
-        //delete[] msg->tag;
-        //delete msg;
-        return;
+    char *decMessage = NULL;
+    if(ruleManagerObj.isEncryptionEnabled){
+        decMessage = (char *) malloc(msg->textLength*sizeof(char));
+        sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
+        //printf("Status = %d\n", status);
+        if(status != 0){
+            printf("Error! Decryption failed!");
+            free(decMessage);
+            //delete[] msg->text;
+            //delete[] msg->tag;
+            //delete msg;
+            return;
+        }
+    }else{
+        decMessage = msg->text;
     }
-
     ruleManagerObj.didReceiveDeviceEvent(decMessage);
+    free(decMessage);
 }
 
 
 void ecall_decrypt_rule(struct message* msg){
     //printf("ecall_decrypt_rule");
-    char *decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
-    sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
-    if (status != 0){
-        printf("Error! Decryption failed!");
-        free(decMessage);
-        //delete[] msg->text;
-        //delete[] msg->tag;
-        //delete msg;
-        return;
+    char *decMessage = NULL;
+    if(ruleManagerObj.isEncryptionEnabled){
+        decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
+        sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
+        if (status != 0){
+            printf("Error! Decryption failed!");
+            free(decMessage);
+            //delete[] msg->text;
+            //delete[] msg->tag;
+            //delete msg;
+            return;
+        }
+    }else{
+        decMessage = msg->text;
     }
 
     Rule *myRule = new Rule();
     myRule->rule = decMessage;
     myRule->ruleLength = msg->textLength;
+
     ruleManagerObj.didReceiveRule(myRule, true);
 
-    free(decMessage);
-    delete  myRule;
 
+    free(decMessage);
+    //delete[] msg->text;
+    //delete[] msg->tag;
+    delete  myRule;
 }
 
 void ecall_check_timer_rule(int hour, int min){

@@ -13,10 +13,24 @@
   <component name="ChangeListManager">
     <list default="true" id="475cbf6d-f6e1-4415-b1d2-dcb9052363c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/DeviceManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/DeviceManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/Helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/Helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/MQTTClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/MQTTClient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/Properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/Properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/RuleManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/RuleManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/Ruleset.json" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/Ruleset.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/device_ids.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/device_ids.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/device_set.json" beforeDir="false" afterPath="$PROJECT_DIR$/../SimulatedIoTData/datafiles/device_set.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/App/App.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/Enclave.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/Enclave.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Enclave/Enclave.edl" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/Enclave.edl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/EnclaveHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/EnclaveHelper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Enclave/RuleManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/RuleManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enclave/RuleParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Enclave/RuleParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/execution_time(microseconds).txt" beforeDir="false" afterPath="$PROJECT_DIR$/execution_time(microseconds).txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rules.bin" beforeDir="false" afterPath="$PROJECT_DIR$/rules.bin" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,17 +99,18 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="172" />
-          <entry key="cpp" value="22099" />
-          <entry key="edl" value="1080" />
-          <entry key="h" value="1811" />
+          <entry key="cpp" value="24070" />
+          <entry key="edl" value="1114" />
+          <entry key="h" value="1910" />
           <entry key="py" value="67" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Doxygen file" value="15" />
-          <entry key="ObjectiveC" value="23895" />
-          <entry key="PLAIN_TEXT" value="1252" />
+          <entry key="Doxygen file" value="17" />
+          <entry key="ObjectiveC" value="25963" />
+          <entry key="PLAIN_TEXT" value="1287" />
           <entry key="Python" value="67" />
         </counts>
       </usages-collector>
@@ -103,18 +118,18 @@
         <counts>
           <entry key="Makefile" value="21" />
           <entry key="c" value="8" />
-          <entry key="cpp" value="102" />
+          <entry key="cpp" value="104" />
           <entry key="edl" value="8" />
-          <entry key="h" value="148" />
+          <entry key="h" value="152" />
           <entry key="hpp" value="2" />
           <entry key="py" value="3" />
-          <entry key="txt" value="3" />
+          <entry key="txt" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ObjectiveC" value="260" />
-          <entry key="PLAIN_TEXT" value="32" />
+          <entry key="ObjectiveC" value="266" />
+          <entry key="PLAIN_TEXT" value="36" />
           <entry key="Python" value="3" />
         </counts>
       </usages-collector>
@@ -125,11 +140,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/App.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="349" column="29" selection-start-line="349" selection-start-column="29" selection-end-line="349" selection-end-column="29" />
+            <state relative-caret-position="388">
+              <caret line="286" column="64" selection-start-line="286" selection-start-column="64" selection-end-line="286" selection-end-column="64" />
               <folding>
                 <element signature="e#1604#1622#0" expanded="true" />
-                <element signature="e#11987#12775#0" />
               </folding>
             </state>
           </provider>
@@ -138,8 +152,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/IoTMQTTWrapper.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+            <state relative-caret-position="625">
+              <caret line="69" column="1" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
               <folding>
                 <element signature="e#41#68#0" expanded="true" />
               </folding>
@@ -150,8 +164,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/Enclave.edl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="724">
-              <caret line="148" column="37" selection-start-line="148" selection-start-column="13" selection-end-line="148" selection-end-column="37" />
+            <state relative-caret-position="650">
+              <caret line="134" column="30" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Enclave/EnclaveHelper.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="555">
+              <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
+              <folding>
+                <element signature="e#111#131#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -159,20 +185,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/Enclave.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="183" column="1" selection-start-line="183" selection-end-line="183" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="76" selection-start-line="76" selection-end-line="76" />
-              <folding>
-                <element signature="e#40#68#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="663">
+              <caret line="121" selection-start-line="121" selection-end-line="121" />
             </state>
           </provider>
         </entry>
@@ -180,20 +194,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Enclave/RuleManager.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="245" column="23" lean-forward="true" selection-start-line="245" selection-start-column="23" selection-end-line="245" selection-end-column="23" />
+            <state relative-caret-position="953">
+              <caret line="278" column="23" lean-forward="true" selection-start-line="278" selection-start-column="23" selection-end-line="278" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Enclave/RuleManager.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="40" column="53" selection-start-line="40" selection-start-column="40" selection-end-line="40" selection-end-column="53" />
               <folding>
-                <element signature="e#39#63#0" expanded="true" />
+                <element signature="e#39#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/execution_time(microseconds).txt">
+        <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="36" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="36" />
+            <state relative-caret-position="210">
+              <caret line="14" column="23" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -201,20 +224,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="537" column="32" selection-start-line="537" selection-start-column="19" selection-end-line="537" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Enclave/EnclaveHelper.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
-              <folding>
-                <element signature="e#40#66#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="303">
+              <caret line="375" column="52" selection-start-line="375" selection-start-column="46" selection-end-line="375" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -230,15 +241,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>printf</find>
-      <find>npri</find>
-      <find>sscanf</find>
-      <find>encryptMessageAES</find>
-      <find>ecall_encrypt_message</find>
-      <find>ecall_initialize_enclave</find>
-      <find>stderr</find>
-      <find>re</find>
-      <find>print_error_message</find>
       <find>strcpy</find>
       <find>rule</find>
       <find>ocall_get_rules_by_id</find>
@@ -251,15 +253,24 @@
       <find>saveRuleInCache</find>
       <find>parseActionCommandsList</find>
       <find>struct rule</find>
-      <find>parseRuleTypeAction</find>
       <find>enum</find>
       <find>loadTimerQueue</find>
       <find>parseRuleForDeviceID</find>
       <find>checkRuleSatisfiabilityWithDeviceEvent</find>
+      <find>HNN3GOkLnPfWE2Mn</find>
+      <find>RFXUBklXGCN64Q9P</find>
+      <find>9WZ8iSlgrp3yUllM</find>
+      <find>parseRuleTypeAction</find>
+      <find>#parseRuleForDeviceID</find>
+      <find>cjson_</find>
+      <find>check</find>
       <find>ocall_get_rule_count</find>
-      <find>parseRuleForDeviceCommands</find>
+      <find>event value</find>
       <find>ocall_get_rule_count_by_id</find>
+      <find>ocall_get_rules</find>
       <find>topicForData</find>
+      <find>getTimeRuleEvent</find>
+      <find>parseRuleForDeviceCommands</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -305,20 +316,20 @@
         <option value="$PROJECT_DIR$/Enclave/cJSON.cpp" />
         <option value="$PROJECT_DIR$/App/ErrorSupport.cpp" />
         <option value="$PROJECT_DIR$/App/ErrorSupport.h" />
-        <option value="$PROJECT_DIR$/Enclave/RuleManager.h" />
         <option value="$PROJECT_DIR$/Enclave/RuleParser.h" />
         <option value="$PROJECT_DIR$/Enclave/EnclaveHelper.cpp" />
-        <option value="$PROJECT_DIR$/Enclave/EnclaveHelper.h" />
         <option value="$PROJECT_DIR$/Enclave/analytics_utils.cpp" />
-        <option value="$PROJECT_DIR$/Enclave/Enclave.cpp" />
-        <option value="$PROJECT_DIR$/Enclave/RuleParser.cpp" />
         <option value="$PROJECT_DIR$/App/JSONParser.cpp" />
         <option value="$PROJECT_DIR$/App/IoTMQTTWrapper.cpp" />
         <option value="$PROJECT_DIR$/execution_time(milliseconds).txt" />
         <option value="$PROJECT_DIR$/execution_time(microseconds).txt" />
-        <option value="$PROJECT_DIR$/Enclave/Enclave.edl" />
+        <option value="$PROJECT_DIR$/Enclave/RuleManager.h" />
         <option value="$PROJECT_DIR$/App/App.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/Enclave.edl" />
+        <option value="$PROJECT_DIR$/Enclave/EnclaveHelper.h" />
         <option value="$PROJECT_DIR$/Enclave/RuleManager.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/Enclave.cpp" />
+        <option value="$PROJECT_DIR$/Enclave/RuleParser.cpp" />
       </list>
     </option>
   </component>
@@ -330,10 +341,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="143" />
-    <option name="y" value="27" />
+    <option name="x" value="155" />
+    <option name="y" value="35" />
     <option name="width" value="1755" />
-    <option name="height" value="1078" />
+    <option name="height" value="1079" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -466,10 +477,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="562247000" />
+    <option name="totallyTimeSpent" value="613180000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="143" y="27" width="1755" height="1078" extended-state="0" />
+    <frame x="155" y="35" width="1755" height="1079" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15272088" />
@@ -525,7 +536,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/App/App.cpp</url>
-          <line>412</line>
+          <line>442</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -535,20 +546,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Enclave/Enclave.cpp</url>
-          <line>180</line>
+          <line>196</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/App/App.cpp</url>
-          <line>368</line>
+          <line>398</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleManager.cpp</url>
+          <line>205</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleManager.cpp</url>
+          <line>255</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleParser.cpp</url>
+          <line>7</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleParser.cpp</url>
+          <line>454</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleParser.cpp</url>
+          <line>332</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Enclave/RuleParser.cpp</url>
+          <line>62</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/App/Enclave_u.h" />
-    <entry file="file://$PROJECT_DIR$/Enclave/Enclave_t.h" />
     <entry file="file://$PROJECT_DIR$/Enclave/RuleBase.cpp" />
     <entry file="file://$PROJECT_DIR$/App/email.cpp">
       <provider selected="true" editor-type-id="text-editor" />
@@ -706,19 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/cJSON.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1770">
-          <caret line="118" column="1" selection-start-line="118" selection-start-column="1" selection-end-line="118" selection-end-column="1" />
-          <folding>
-            <element signature="e#1274#1306#0" expanded="true" />
-            <element signature="e#1397#1519#0" expanded="true" />
-            <element signature="e#1528#1546#0" expanded="true" />
-            <element signature="e#1589#1606#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/MessageParser.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -785,80 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleManager.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="63" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="63" />
-          <folding>
-            <element signature="e#39#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-          <folding>
-            <element signature="e#98#116#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/EnclaveHelper.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
-          <folding>
-            <element signature="e#111#131#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
-          <folding>
-            <element signature="e#40#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="537" column="32" selection-start-line="537" selection-start-column="19" selection-end-line="537" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/JSONParser.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="4" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
-          <folding>
-            <element signature="e#39#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/IoTMQTTWrapper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
-          <folding>
-            <element signature="e#41#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enclave/Enclave.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="183" column="1" selection-start-line="183" selection-end-line="183" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/EnclaveHelper.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -869,41 +821,132 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/analytics_utils.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="e#40#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/execution_time(milliseconds).txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/execution_time(microseconds).txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="36" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="36" />
+        <state relative-caret-position="-1286">
+          <caret column="36" selection-start-column="20" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/execution_time_unenc(microseconds).txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="40" column="41" lean-forward="true" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/cJSON.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="1882" column="14" selection-start-line="1882" selection-start-column="14" selection-end-line="1882" selection-end-column="14" />
+          <folding>
+            <element signature="e#1274#1306#0" expanded="true" />
+            <element signature="e#1397#1519#0" expanded="true" />
+            <element signature="e#1528#1546#0" expanded="true" />
+            <element signature="e#1589#1606#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/Enclave_t.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="74" column="10" selection-start-line="74" selection-start-column="10" selection-end-line="74" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/IoTMQTTWrapper.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="69" column="1" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
+          <folding>
+            <element signature="e#41#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/JSONParser.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660">
+          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/EnclaveHelper.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
+          <folding>
+            <element signature="e#111#131#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/Enclave.edl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="724">
-          <caret line="148" column="37" selection-start-line="148" selection-start-column="13" selection-end-line="148" selection-end-column="37" />
+        <state relative-caret-position="650">
+          <caret line="134" column="30" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/Enclave.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/App.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="349" column="29" selection-start-line="349" selection-start-column="29" selection-end-line="349" selection-end-column="29" />
+        <state relative-caret-position="388">
+          <caret line="286" column="64" selection-start-line="286" selection-start-column="64" selection-end-line="286" selection-end-column="64" />
           <folding>
             <element signature="e#1604#1622#0" expanded="true" />
-            <element signature="e#11987#12775#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleManager.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="53" selection-start-line="40" selection-start-column="40" selection-end-line="40" selection-end-column="53" />
+          <folding>
+            <element signature="e#39#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enclave/RuleParser.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="375" column="52" selection-start-line="375" selection-start-column="46" selection-end-line="375" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Enclave/RuleManager.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="245" column="23" lean-forward="true" selection-start-line="245" selection-start-column="23" selection-end-line="245" selection-end-column="23" />
-          <folding>
-            <element signature="e#39#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="953">
+          <caret line="278" column="23" lean-forward="true" selection-start-line="278" selection-start-column="23" selection-end-line="278" selection-end-column="23" />
         </state>
       </provider>
     </entry>

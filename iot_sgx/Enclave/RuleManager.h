@@ -22,6 +22,8 @@ public:
     RuleManager();
     virtual ~RuleManager();
 
+    bool isEncryptionEnabled;
+
     void didReceiveRule(struct Rule *myRule, bool isStoreInFile);
     void didReceiveDeviceEvent(char *event);
     void didReceiveRequestToCheckTimerRule(int hour, int min);
@@ -34,6 +36,12 @@ public:
 
     void saveRuleInQueue(TimeRule timeRule);
     void saveRuleInPriorityQueue(TimeRule timeRule);
+
+
+    void sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands);
+    void storeRulesWithDeviceID(std::vector<std::string> &deviceIdVector, Rule *myRule);
+    void storeTimerRulesWithRuleID(std::vector<TimeRule> &timeRules, Rule *myRule);
+
 };
 
 

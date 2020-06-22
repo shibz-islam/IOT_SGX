@@ -19,6 +19,7 @@ bool parseOperandDevice(cJSON *condition, DeviceEvent *event){
                     return true;
                 }
             }
+
         }
     }
     return false;
@@ -311,7 +312,7 @@ bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
                 const cJSON *deviceList = cJSON_GetObjectItem(deviceObj, "device")->child;
                 if (cJSON_IsArray(deviceList)){
                     for (int i = 0 ; i < cJSON_GetArraySize(deviceList) ; i++){
-                        //printf("Device id: %s\n",cJSON_GetArrayItem(deviceList, i)->valuestring);
+                        printf("Device id: %s\n",cJSON_GetArrayItem(deviceList, i)->valuestring);
                         devicesVector.push_back(std::string(cJSON_GetArrayItem(deviceList, i)->valuestring));
                     }
                 }
@@ -346,8 +347,11 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
     const cJSON *deviceId = cJSON_GetObjectItemCaseSensitive(event_json, "deviceID");
     if (cJSON_IsString(deviceId) && (deviceId->valuestring != NULL))
     {
-        //printf("deviceId: \"%s\"\n", deviceId->valuestring);
-        deviceEvent->deviceId = deviceId->valuestring;
+        printf("deviceId: \"%s\", length:%ld\n", deviceId->valuestring, strlen(deviceId->valuestring));
+        //deviceEvent->deviceId = deviceId->valuestring;
+        deviceEvent->deviceId = new char[strlen(deviceId->valuestring)];
+        memcpy(deviceEvent->deviceId, deviceId->valuestring, strlen(deviceId->valuestring));
+        deviceEvent->deviceId[strlen(deviceId->valuestring)] = '\0';
     }
 
     const cJSON *deviceEventObj = NULL;
@@ -358,14 +362,20 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         if (cJSON_IsString(capability) && (capability->valuestring != NULL))
         {
             //printf("capability: \"%s\"\n", capability->valuestring);
-            deviceEvent->capability = capability->valuestring;
+            //deviceEvent->capability = capability->valuestring;
+            deviceEvent->capability = new char[strlen(capability->valuestring)];
+            memcpy(deviceEvent->capability, capability->valuestring, strlen(capability->valuestring));
+            deviceEvent->capability[strlen(capability->valuestring)] = '\0';
         }
 
         const cJSON *attribute = cJSON_GetObjectItemCaseSensitive(deviceEventObj, "attribute");
         if (cJSON_IsString(attribute) && (attribute->valuestring != NULL))
         {
             //printf("attribute: \"%s\"\n", attribute->valuestring);
-            deviceEvent->attribute = attribute->valuestring;
+            //deviceEvent->attribute = attribute->valuestring;
+            deviceEvent->attribute = new char[strlen(attribute->valuestring)];
+            memcpy(deviceEvent->attribute, attribute->valuestring, strlen(attribute->valuestring));
+            deviceEvent->attribute[strlen(attribute->valuestring)] = '\0';
         }
 
         const cJSON *valueObj = cJSON_GetObjectItemCaseSensitive(deviceEventObj, "value");
@@ -373,14 +383,21 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         {
             char *valueType = valueObj->child->string;
             //printf("valueType: \"%s\"\n", valueType);
+            deviceEvent->valueType = new char[strlen(valueType)];
+            memcpy(deviceEvent->valueType, valueType, strlen(valueType));
+            deviceEvent->valueType[strlen(valueType)] = '\0';
+
             const cJSON *value = NULL;
             if (strcmp(valueType, "string") == 0){
                 value = cJSON_GetObjectItemCaseSensitive(valueObj, "string");
                 if (cJSON_IsString(value) && (value->valuestring != NULL))
                 {
                     //printf("value: \"%s\"\n", value->valuestring);
-                    deviceEvent->value = value->valuestring;
-                    deviceEvent->valueType = valueType;
+                    //deviceEvent->value = value->valuestring;
+                    //deviceEvent->valueType = valueType;
+                    deviceEvent->value = new char[strlen(value->valuestring)];
+                    memcpy(deviceEvent->value, value->valuestring, strlen(value->valuestring));
+                    deviceEvent->value[strlen(value->valuestring)] = '\0';
                 }
             }
             else if (strcmp(valueType, "integer") == 0){
@@ -389,11 +406,9 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                 {
                     //printf("value: \"%d\"\n", value->valueint);
                     std::string valueString = std::to_string(value->valueint);
-                    char* val = new char[valueString.length()];
-                    //strcpy(val, valueString.c_str());
-                    memcpy(val, valueString.c_str(), valueString.length());
-                    deviceEvent->value = val;
-                    deviceEvent->valueType = valueType;
+                    deviceEvent->value = new char[valueString.length()];
+                    memcpy(deviceEvent->value, valueString.c_str(), valueString.length());
+                    deviceEvent->value[valueString.length()] = '\0';
                 }
             }
             else if (strcmp(valueType, "number") == 0){
@@ -402,18 +417,17 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                 {
                     //printf("value: \"%f\"\n", value->valuedouble);
                     std::string valueString = std::to_string(value->valuedouble);
-                    char* val = new char[valueString.length()];
-                    //strcpy(val, valueString.c_str());
-                    memcpy(val, valueString.c_str(), valueString.length());
-                    deviceEvent->value = val;
-                    deviceEvent->valueType = valueType;
+                    deviceEvent->value = new char[valueString.length()];
+                    memcpy(deviceEvent->value, valueString.c_str(), valueString.length());
+                    deviceEvent->value[valueString.length()] = '\0';
                 }
             } else{
-                //cJSON_Delete(event_json);
+                cJSON_Delete(event_json);
+                printf("Unknown value type...");
                 isSuccess = false;
             }
         }else{
-            //cJSON_Delete(event_json);
+            cJSON_Delete(event_json);
             isSuccess = false;
         }
 
@@ -421,10 +435,13 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         if (cJSON_IsString(unit) && (unit->valuestring != NULL))
         {
             //printf("unit: \"%s\"\n", unit->valuestring);
-            deviceEvent->unit = unit->valuestring;
+            //deviceEvent->unit = unit->valuestring;
+            deviceEvent->unit = new char[strlen(unit->valuestring)];
+            memcpy(deviceEvent->unit, unit->valuestring, strlen(unit->valuestring));
+            deviceEvent->unit[strlen(unit->valuestring)] = '\0';
         }
     }
-    //cJSON_Delete(event_json);
+    cJSON_Delete(event_json);
     return isSuccess;
 }
 
@@ -447,6 +464,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
         {
             printf("Error before: %s\n", error_ptr);
         }
+        cJSON_Delete(rule_json);
         return false;
     }
 
@@ -473,10 +491,11 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
             } else{
                 printf("Rule not satisfied ");
             }
+            //cJSON_Delete(rule_json);
             return isSatisfied;
         }
         else if (strcmp(actionType, "every") == 0){
-            //printf("***every\n");
+            printf("***every ");
 
         }
         else if (strcmp(actionType, "sleep") == 0){

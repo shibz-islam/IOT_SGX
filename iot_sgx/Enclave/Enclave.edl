@@ -102,15 +102,6 @@ enclave {
         int isDevice;
     };
 
-    struct DeviceEvent{
-        char *deviceId;
-        char *capability;
-        char *attribute;
-        char *value;
-        char *valueType;
-        char *unit;
-    };
-
     struct DeviceCommand{
         char *deviceId;
         char *command;
@@ -119,7 +110,7 @@ enclave {
 
     /* define ECALLs here. */
     trusted {
-    	public void ecall_initialize_enclave();
+    	public void ecall_initialize_enclave(int isEncryptionEnabled);
 
     	public void ecall_decrypt_message([user_check] struct message* msg);
     	public void ecall_decrypt_rule([user_check] struct message* msg);
@@ -139,14 +130,14 @@ enclave {
     untrusted {
         void ocall_print_string([in, string] const char *str);
 
-        void ocall_store_rules([user_check] Rule *rules, size_t numDevices);
+        size_t ocall_store_rules([user_check] Rule *rules, size_t numDevices);
         size_t ocall_get_rule_count([user_check] Rule *property, int isCountAll);
         size_t ocall_get_rules([user_check] Rule *ruleset, int len, [user_check] Rule *property, int isFetchAll);
 
         void ocall_send_alert_for_rule_action_email([user_check] struct ruleActionProperty *property);
         void ocall_send_alert_for_rule_action_device([user_check] struct ruleActionProperty *property);
 
-        void ocall_log_execution_time([user_check] char *id);
+        size_t ocall_log_execution_time([user_check] char *id);
 
     };
 

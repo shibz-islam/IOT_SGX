@@ -72,9 +72,13 @@ sgx_launch_token_t token = {0};
 int updated = 0;
 int socketConnection = 0;
 char ruleFilePath[] = "rules.bin"; //TODO: remove hard-coded filepath
+char ruleUnencFilePath[] = "rules_unenc.bin";
+char resultFile[] = "execution_time(microseconds).txt";
+char resultFileUnenc[] = "execution_time_unenc(microseconds).txt";
 IoTMQTTWrapper *mqttObj;
 std::string topicForData = "topic/utd/iot/server/data";
 std::chrono::high_resolution_clock::time_point START_TIME;
+bool isEncryptionEnabled = true;
 
 /*
  *   Initialize the enclave: Call sgx_create_enclave to initialize an enclave instance
@@ -169,12 +173,16 @@ void ocall_print_string(const char *str)
 }
 
 
-void ocall_store_rules(Rule *rules, size_t numDevices) {
+size_t ocall_store_rules(Rule *rules, size_t numDevices) {
     printf("---------ocall_store_rules----------\n");
     FILE *fptr;
-    if ((fptr = fopen(ruleFilePath, "a")) == NULL) {
+    if(isEncryptionEnabled)
+        fptr = fopen(ruleFilePath, "ab+");
+    else
+        fptr = fopen(ruleUnencFilePath, "ab+");
+    if (fptr == NULL) {
         printf("Error! opening file");
-        return;
+        return 0;
     }
     for (int i = 0; i < numDevices; ++i, rules++) {
         //Device ID
@@ -188,20 +196,27 @@ void ocall_store_rules(Rule *rules, size_t numDevices) {
         fwrite(rules->rule, sizeof(char), sizeOfRule, fptr);
         //printf("Rule from file = %d, %s\n", sizeOfRule, rules->rule);
         //Tag
-        unsigned short sizeOfTag= rules->tagLength;
+        unsigned short sizeOfTag = rules->tagLength;
         fwrite(&sizeOfTag, sizeof(unsigned short), 1, fptr);
         fwrite(rules->tag, sizeof(char), sizeOfTag, fptr);
         //printf("Tag from file = %d, %s\n", sizeOfTag, rules->tag);
 
     }
+    //printf("\ntrying to close file pointer....\n");
     fclose(fptr);
+    printf("\nclosed file pointer....\n");
+    return 1;
     //delete[] rules;
 }
 
 size_t ocall_get_rule_count(Rule *property, int isCountAll){
     printf("---------ocall_get_rule_count----------\n");
     FILE *fptr;
-    if ((fptr = fopen(ruleFilePath, "rb")) == NULL) {
+    if(isEncryptionEnabled)
+        fptr = fopen(ruleFilePath, "rb");
+    else
+        fptr = fopen(ruleUnencFilePath, "rb");
+    if (fptr == NULL) {
         printf("Error! opening file\n");
         return 0;
     }
@@ -247,7 +262,11 @@ size_t ocall_get_rule_count(Rule *property, int isCountAll){
 size_t ocall_get_rules(Rule *ruleset, int len, Rule *property, int isFetchAll){
     printf("---------ocall_get_rules----------\n");
     FILE *fptr;
-    if ((fptr = fopen(ruleFilePath, "rb")) == NULL) {
+    if(isEncryptionEnabled)
+        fptr = fopen(ruleFilePath, "rb");
+    else
+        fptr = fopen(ruleUnencFilePath, "rb");
+    if (fptr == NULL) {
         printf("Error! opening file\n");
         return 0;
     }
@@ -328,8 +347,14 @@ void ocall_send_alert_for_rule_action_email(struct ruleActionProperty *property)
 
 void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property){
     printf("Sending alert to device...%s\n", property->address);
-    std::string message = make_json_from_message(property);
-    mqttObj->publishMessage(property->address, message.c_str());
+    if(isEncryptionEnabled){
+        std::string message = make_json_from_message(property);
+        mqttObj->publishMessage(property->address, message.c_str());
+    }else{
+        mqttObj->publishMessage(property->address, property->msg);
+    }
+    printf("Command send...\n");
+
 }
 
 
@@ -347,7 +372,7 @@ std::string getLocalTime(){
 }
 
 
-void ocall_log_execution_time(char *id){
+size_t ocall_log_execution_time(char *id){
     auto endTime = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - START_TIME);
     printf("\nTime taken by function: %ld microseconds\n", duration.count());
@@ -355,13 +380,18 @@ void ocall_log_execution_time(char *id){
     std::string line = getLocalTime() + ";" + std::string(id) + ";" + std::to_string(duration.count());
 
     std::ofstream fout;
-    fout.open("execution_time(microseconds).txt", std::ios::app);
+    if(isEncryptionEnabled)
+        fout.open(resultFile, std::ios::app);
+    else
+        fout.open(resultFileUnenc, std::ios::app);
     if(!fout) {
         printf("Error in creating file!!!\n");
-        return;
+        return 0;
     }
     fout << line << std::endl;
     fout.close();
+    printf("Closed file pointer\n");
+    return 1;
 }
 
 
@@ -419,7 +449,7 @@ void start_mqtt_service(){
 
 int open_socket()
 {
-    printf("Opening Socket for IoT Data...\n");
+    printf("\nOpening Socket for IoT Data...\n");
     char buffer[LIMIT];
     int n;
     SocketManager socketObj(20004);
@@ -439,10 +469,21 @@ int open_socket()
             START_TIME = std::chrono::high_resolution_clock::now();
 
             struct message msg[1];
-            if(parse_data_with_tag(buffer, msg) > 0)
+            if(isEncryptionEnabled){
+                if(parse_data_with_tag(buffer, msg) > 0)
+                    ecall_decrypt_message(global_eid, msg);
+            }else{
+                char *temp = (char *) malloc((strlen(buffer)+1)*sizeof(char));
+                memcpy(temp, buffer, strlen(buffer));
+                temp[strlen(buffer)] = '\0';
+                msg->text = temp;
+                msg->tag = NULL;
+                msg->textLength = strlen(buffer);
                 ecall_decrypt_message(global_eid, msg);
-
+            }
             count++;
+            delete[] msg->text;
+            delete[] msg->tag;
         }
         if(count==200)
             break;
@@ -454,7 +495,7 @@ int open_socket()
 
 int open_socket_for_rules()
 {
-    printf("Opening Socket for Rules...\n");
+    printf("\nOpening Socket for Rules...\n");
     char buffer[LIMIT];
     int n;
     SocketManager socketObj(20003);
@@ -467,15 +508,27 @@ int open_socket_for_rules()
             perror("ERROR reading from socket\n");
 
         if(strlen(buffer) > 0){
-            //printf("buffer len: %d\n",strlen(buffer));
+            printf("buffer len: %d\n",strlen(buffer));
             if(strcmp(buffer, "quit")==0)
                 break;
 
             struct message msg[1];
-            if(parse_data_with_tag(buffer, msg) > 0)
+            if(isEncryptionEnabled){
+                if(parse_data_with_tag(buffer, msg) > 0)
+                    ecall_decrypt_rule(global_eid, msg);
+            }
+            else{
+                char *temp = (char *) malloc((strlen(buffer)+1)*sizeof(char));
+                memcpy(temp, buffer, strlen(buffer));
+                temp[strlen(buffer)] = '\0';
+                msg->text = temp;
+                msg->tag = NULL;
+                msg->textLength = strlen(buffer);
                 ecall_decrypt_rule(global_eid, msg);
-
+            }
             count++;
+            delete[] msg->text;
+            delete[] msg->tag;
         }
         if(count==100)
             break;
@@ -545,6 +598,18 @@ int SGX_CDECL main(int argc, char *argv[])
     (void)(argc);
     (void)(argv);
 
+    /**
+     * Run command: ./app open_socket_for_rules open_socket timer_thread isEncryptionEnable
+     * True = 1, False = 0
+     */
+
+    if(argc != 5){
+        printf("\nPlease enter valid values to run the program..\n./app open_socket_for_rules open_socket timer_thread isEncryptionEnable ...\n");
+        printf("Enter a character before exit ...\n");
+        getchar();
+        return -1;
+    }
+
     /* Initialize the enclave */
     if(initialize_enclave() < 0){
         printf("Enter a character before exit ...\n");
@@ -552,22 +617,31 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
-    ecall_initialize_enclave(global_eid);
+    isEncryptionEnabled = strcmp(argv[argc - 1], "1") == 0;
+    //printf("isEncryptionEnabled: %d\n", isEncryptionEnabled);
 
-
+    ecall_initialize_enclave(global_eid, isEncryptionEnabled);
     MQTTSetup();
 
+
+    std::thread t1, t2, t3, t4;
+    if(strcmp(argv[1], "1") == 0){
+        t1 = std::thread(open_socket_for_rules);
+        t1.join();
+    }
+    if(strcmp(argv[2], "1") == 0){
+        t2 = std::thread(open_socket);
+        t2.join();
+    }
+    if(strcmp(argv[3], "1") == 0){
+        t3 = std::thread(timer_thread);
+        t4 = std::thread(timer_thread_2);
+        t3.join();
+        t4.join();
+    }
+
+
     //get_rules_from_db();
-
-    std::thread t1(open_socket);
-    //std::thread t2(open_socket_for_rules);
-    //std::thread t3(timer_thread);
-    //std::thread t4(timer_thread_2);
-
-    t1.join();
-    //t2.join();
-    //t3.join();
-    //t4.join();
 
 
     /* Destroy the enclave */
