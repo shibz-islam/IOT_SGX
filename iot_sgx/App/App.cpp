@@ -71,10 +71,17 @@ sgx_status_t ret = SGX_SUCCESS;
 sgx_launch_token_t token = {0};
 int updated = 0;
 int socketConnection = 0;
-char ruleFilePath[] = "rules.bin"; //TODO: remove hard-coded filepath
-char ruleUnencFilePath[] = "rules_unenc.bin";
-char resultFile[] = "execution_time(microseconds).txt";
-char resultFileUnenc[] = "execution_time_unenc(microseconds).txt";
+int socketConnectionTest = 0;
+std::string ruleFilename = "rules"; //TODO: remove hard-coded filepath
+std::string ruleUnencFilename = "rules_unenc";
+std::string ruleFilename_ext = "_r10000.bin";
+
+std::string basepath = "experiments/";
+
+std::string resultFilename = "execution_time(microseconds)";
+std::string resultFilenameUnenc = "execution_time_unenc(microseconds)";
+std::string filename_ext = "_june28_r400_c100_d10000.txt";
+
 IoTMQTTWrapper *mqttObj;
 std::string topicForData = "topic/utd/iot/server/data";
 std::chrono::high_resolution_clock::time_point START_TIME;
@@ -174,12 +181,13 @@ void ocall_print_string(const char *str)
 
 
 size_t ocall_store_rules(Rule *rules, size_t numDevices) {
-    printf("---------ocall_store_rules----------\n");
-    FILE *fptr;
+    printf("\n---------ocall_store_rules----------\n");
+    std::string filepath = "";
     if(isEncryptionEnabled)
-        fptr = fopen(ruleFilePath, "ab+");
+        filepath = basepath + ruleFilename + ruleFilename_ext;
     else
-        fptr = fopen(ruleUnencFilePath, "ab+");
+        filepath = basepath + ruleUnencFilename + ruleFilename_ext;
+    FILE *fptr = fopen(filepath.c_str(), "ab+");
     if (fptr == NULL) {
         printf("Error! opening file");
         return 0;
@@ -210,12 +218,13 @@ size_t ocall_store_rules(Rule *rules, size_t numDevices) {
 }
 
 size_t ocall_get_rule_count(Rule *property, int isCountAll){
-    printf("---------ocall_get_rule_count----------\n");
-    FILE *fptr;
+    printf("\n---------ocall_get_rule_count----------\n");
+    std::string filepath = "";
     if(isEncryptionEnabled)
-        fptr = fopen(ruleFilePath, "rb");
+        filepath = basepath + ruleFilename + ruleFilename_ext;
     else
-        fptr = fopen(ruleUnencFilePath, "rb");
+        filepath = basepath + ruleUnencFilename + ruleFilename_ext;
+    FILE *fptr = fopen(filepath.c_str(), "rb");
     if (fptr == NULL) {
         printf("Error! opening file\n");
         return 0;
@@ -260,12 +269,13 @@ size_t ocall_get_rule_count(Rule *property, int isCountAll){
 }
 
 size_t ocall_get_rules(Rule *ruleset, int len, Rule *property, int isFetchAll){
-    printf("---------ocall_get_rules----------\n");
-    FILE *fptr;
+    printf("\n---------ocall_get_rules----------\n");
+    std::string filepath = "";
     if(isEncryptionEnabled)
-        fptr = fopen(ruleFilePath, "rb");
+        filepath = basepath + ruleFilename + ruleFilename_ext;
     else
-        fptr = fopen(ruleUnencFilePath, "rb");
+        filepath = basepath + ruleUnencFilename + ruleFilename_ext;
+    FILE *fptr = fopen(filepath.c_str(), "rb");
     if (fptr == NULL) {
         printf("Error! opening file\n");
         return 0;
@@ -346,15 +356,16 @@ void ocall_send_alert_for_rule_action_email(struct ruleActionProperty *property)
 
 
 void ocall_send_alert_for_rule_action_device(struct ruleActionProperty *property){
+    printf("\n---------ocall_send_alert----------\n");
     printf("Sending alert to device...%s\n", property->address);
     if(isEncryptionEnabled){
         std::string message = make_json_from_message(property);
         mqttObj->publishMessage(property->address, message.c_str());
-    }else{
+    }
+    else{
         mqttObj->publishMessage(property->address, property->msg);
     }
-    printf("Command send...\n");
-
+    //printf("Command send...\n");
 }
 
 
@@ -380,10 +391,14 @@ size_t ocall_log_execution_time(char *id){
     std::string line = getLocalTime() + ";" + std::string(id) + ";" + std::to_string(duration.count());
 
     std::ofstream fout;
-    if(isEncryptionEnabled)
-        fout.open(resultFile, std::ios::app);
-    else
-        fout.open(resultFileUnenc, std::ios::app);
+    std::string filename;
+    if(isEncryptionEnabled){
+        filename = basepath + resultFilename + filename_ext;
+    }
+    else{
+        filename = basepath + resultFilenameUnenc + filename_ext;
+    }
+    fout.open(filename.c_str(), std::ios::app);
     if(!fout) {
         printf("Error in creating file!!!\n");
         return 0;
@@ -452,7 +467,7 @@ int open_socket()
     printf("\nOpening Socket for IoT Data...\n");
     char buffer[LIMIT];
     int n;
-    SocketManager socketObj(20004);
+    SocketManager socketObj(20007);
     socketConnection = socketObj.establish_connection();
     int count = 0;
     while(1){
@@ -480,12 +495,13 @@ int open_socket()
                 msg->tag = NULL;
                 msg->textLength = strlen(buffer);
                 ecall_decrypt_message(global_eid, msg);
+                //printf("\n####### Done #######\n");
             }
             count++;
             delete[] msg->text;
             delete[] msg->tag;
         }
-        if(count==200)
+        if(count==10000)
             break;
     }
     socketObj.close_connection();
@@ -498,7 +514,7 @@ int open_socket_for_rules()
     printf("\nOpening Socket for Rules...\n");
     char buffer[LIMIT];
     int n;
-    SocketManager socketObj(20003);
+    SocketManager socketObj(20005);
     int socketConnection2 = socketObj.establish_connection();
     int count = 0;
     while(1){
@@ -530,7 +546,40 @@ int open_socket_for_rules()
             delete[] msg->text;
             delete[] msg->tag;
         }
-        if(count==100)
+        if(count==10000)
+            break;
+    }
+    socketObj.close_connection();
+    return 0;
+}
+
+void ocall_send_test_data(){
+    std::string temp = "got data";
+    send(socketConnectionTest , temp.c_str() , temp.length() , 0 );
+    //write(socketConnectionTest, temp.c_str(), temp.length());
+}
+
+int open_socket_for_test()
+{
+    printf("\nOpening Socket for test...\n");
+    char buffer[LIMIT];
+    int n;
+    SocketManager socketObj(20009);
+    socketConnectionTest = socketObj.establish_connection();
+    int count = 0;
+    while(1){
+        bzero(buffer,LIMIT);
+        n = read(socketConnectionTest,buffer,LIMIT);
+        if (n < 0)
+            perror("ERROR reading from socket\n");
+
+        if(strlen(buffer) > 0){
+            printf("buffer: %s\n len: %d\n", buffer, strlen(buffer));
+            if(strcmp(buffer, "quit")==0)
+                break;
+            ocall_send_test_data();
+        }
+        if(count==2)
             break;
     }
     socketObj.close_connection();
@@ -618,7 +667,7 @@ int SGX_CDECL main(int argc, char *argv[])
     }
 
     isEncryptionEnabled = strcmp(argv[argc - 1], "1") == 0;
-    //printf("isEncryptionEnabled: %d\n", isEncryptionEnabled);
+    printf("isEncryptionEnabled: %d\n", isEncryptionEnabled);
 
     ecall_initialize_enclave(global_eid, isEncryptionEnabled);
     MQTTSetup();
@@ -626,7 +675,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     std::thread t1, t2, t3, t4;
     if(strcmp(argv[1], "1") == 0){
-        t1 = std::thread(open_socket_for_rules);
+        t1 = std::thread(open_socket_for_test);
         t1.join();
     }
     if(strcmp(argv[2], "1") == 0){

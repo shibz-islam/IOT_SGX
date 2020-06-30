@@ -1,0 +1,5927 @@
+[
+  {
+    "name": "If my door is open, then turn on my lights",
+    "ruleID": "HGVhitf8zGOG",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "S0NmNsY8x5I7ETu7"
+                ],
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "qlyPJFwaRRzOpNJl"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If my door is open, then turn on my lights",
+    "ruleID": "2vJ6JpMKrB7H",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "5cSToHcYLmPgydK7"
+                ],
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "FbUnXpjAloMu9Tj6"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If my door is open, then turn on my lights",
+    "ruleID": "oq3csVgzcAvb",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "vhSarz38mwaiSEQ9"
+                ],
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "M6EAhB9cufqFtbzr"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is greater than 80, then open the window",
+    "ruleID": "mIilHsmbW67G",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "Ncg88am9QDv65br9"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "hrBT8irLp3MrB5X1"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is greater than 80, then open the window",
+    "ruleID": "hs3DsbUbXayZ",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "CpxmvvCskeRzF6LP"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "21VEA2mCIhmJnOEC"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is greater than 80, then open the window",
+    "ruleID": "6UKBNajtT9Q6",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "BVaCEfxv2wFUORKR"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "l1kobQXdQzWERR6n"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the thermostate mode to cool and turn on the light",
+    "ruleID": "BbwSOOGo6TMO",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "VMlE48FQVbrrEWgD"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "EZwbboBU0d3cBrDc"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "UURL3wCe2R4a7p2I"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the thermostate mode to cool and turn on the light",
+    "ruleID": "uPO0Muixo2RY",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "a1uJh5FiaQyvDAhs"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "6QPMsYRbto9iT0AB"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "5ZtvyFSEPPvcgIXA"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the thermostate mode to cool and turn on the light",
+    "ruleID": "eUmvmr8kxzgV",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "NVDuagK3VdAs4kEX"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "rJcP5GlnrSfxrAUQ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "YprrCCdmwbYAAMk5"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on a light at 8:45 am",
+    "ruleID": "mLKvUZH3E0FE",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Noon",
+            "offset": {
+              "value": {
+                "integer": -195
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "Gsf8MpZtTycQLseS"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on a light at 8:45 am",
+    "ruleID": "WG97JpPXZpiP",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Noon",
+            "offset": {
+              "value": {
+                "integer": -195
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "dfiAwljmvYWRImcm"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on a light at 8:45 am",
+    "ruleID": "1PJ1cCoUKXtL",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Noon",
+            "offset": {
+              "value": {
+                "integer": -195
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "0HqXiahHLAP9qi4d"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "If sound is sensed, turn on the hall light",
+    "ruleID": "p7sPSDhGXdeF",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "ipTbC50DaEZt4ys7"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "0knyJXQzjomEtNfc"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If sound is sensed, turn on the hall light",
+    "ruleID": "evuZZbPq3MFn",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "jtOGeCItr0AklScA"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "i2YTgEEUcTnv1Bug"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If sound is sensed, turn on the hall light",
+    "ruleID": "49jaF1EpBqtA",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "GK3pUkiQlHAACM4x"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "0JPVwX4muDB9OaO4"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the oven mode to warm",
+    "ruleID": "tzWLsws1SWYW",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "FnHXQGQY8sufhsqi"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "6IKDpfeN1lGa4p2M"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenMode",
+                    "command": "setOvenMode",
+                    "arguments": [
+                      {
+                        "mode": "warming"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the oven mode to warm",
+    "ruleID": "F0SaV38s9Y3Z",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "NYUDjx6fFJ5vm4ku"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "RIkHjF3R8yTKKROn"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenMode",
+                    "command": "setOvenMode",
+                    "arguments": [
+                      {
+                        "mode": "warming"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is home, set the oven mode to warm",
+    "ruleID": "paQzzsOCm28Y",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "NYUDjx6fFJ5vm4ku"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "mRqPhRFvwA7ywzuj"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenMode",
+                    "command": "setOvenMode",
+                    "arguments": [
+                      {
+                        "mode": "warming"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is not home, start the robot cleaner",
+    "ruleID": "2sAXlUefVwa7",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "wH658GbsphOOb6Zz"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "aO4zFwZylHZtR1PZ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is not home, start the robot cleaner",
+    "ruleID": "psMi5dV8722P",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "0bPURXa7gvZdzwIk"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "UbcC49lxVIUFozd3"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If user is not home, start the robot cleaner",
+    "ruleID": "1W6QJ6sUSXzB",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "uLEE8U3v3tmRbe3r"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "SnZjsKVFLrCIzRpV"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Automatically turn off thermostat when windows open",
+    "ruleID": "8G6k2dnYgAbP",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "WfBDcayScGJKd2YN"
+                ],
+                "component": "main",
+                "capability": "WindowControl",
+                "attribute": "window"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "wMf0LMkE3X8lh8Nv"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Automatically turn off thermostat when windows open",
+    "ruleID": "oLV5uTYRJd9F",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "AHwbgSBVLmjLJ3NC"
+                ],
+                "component": "main",
+                "capability": "WindowControl",
+                "attribute": "window"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "G6Z1sagmJlX35ALE"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Automatically turn off thermostat when windows open",
+    "ruleID": "tsEna4RAJpTf",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "smPb7KouPRHBssI0"
+                ],
+                "component": "main",
+                "capability": "WindowControl",
+                "attribute": "window"
+              }
+            },
+            "right": {
+              "string": "open"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "GoSpX667ijOlE0sR"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 20 PM10, start the robot cleaner",
+    "ruleID": "9Zi2rKFDevk6",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "v2qlg2RmNVifWbpa"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "W8mdIWiHpDFpXUmo"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 20 PM10, start the robot cleaner",
+    "ruleID": "bdZPurLOoTSb",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "Qfmm6X25uFpM3O3r"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "lv8AwlhycQvsRb2o"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 20 PM10, start the robot cleaner",
+    "ruleID": "OaQ2XnmIjSM3",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "OqWOFaMzzsJ7bmPg"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "xYh8dUAUVi5KCYe6"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "auto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the hall light if someone comes home (presence), otherwise keep it turned off",
+    "ruleID": "gdJ7sZd2a4jo",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "JmmJpp3zbeAzhZkM"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "OUAbGn8Px9AGBR95"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "2L64MRcersfrvv3C"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the hall light if someone comes home (presence), otherwise keep it turned off",
+    "ruleID": "J3TYQlS5r0v0",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "R600vbsx4qzCS46R"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "JwSZTxw6wYAkuD26"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "TndKFpU61BdxLSkK"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the hall light if someone comes home (presence), otherwise keep it turned off",
+    "ruleID": "4Fr89F3rlCgH",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "dOGZuH1r1me4KXTW"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "03GY10Im5kTroh3U"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "38k4OzHSiXuZRBoF"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, open the water valve",
+    "ruleID": "9hiIvWQOXUvu",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "5NP5Z8MDlMAfQD3j"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "9ujP2ZeHmGpmvlqa"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "wTlrl02O1yifMpg8"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "close",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, open the water valve",
+    "ruleID": "zHSLYgSGWmRA",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "lKJkzX7bzrKRtg5y"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "zhBXz50ikyGHW3ox"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "aQsuSuX4v6KbFJoH"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "close",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, open the water valve",
+    "ruleID": "KOlHPvsH2MJT",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "egZoaRIWoRsgyzGk"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "nWSA56kE219bla0I"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "zhBXz50ikyGHW3ox"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Valve",
+                    "command": "close",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on humidifier if relative humidity is greater than 50%",
+    "ruleID": "TOzpSKvWIMGi",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 50
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "H7RlOTBefu2nkARR"
+                ],
+                "component": "main",
+                "capability": "RelativeHumidityMeasurement",
+                "attribute": "humidity"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "pLRVoJvKYqDtmWcy"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Humidifier",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on humidifier if relative humidity is greater than 50%",
+    "ruleID": "6HVVAp1dhgNu",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 50
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "DERwbgHENggbHJvM"
+                ],
+                "component": "main",
+                "capability": "RelativeHumidityMeasurement",
+                "attribute": "humidity"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "iwVsZ8R98ul1SWlr"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Humidifier",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on humidifier if relative humidity is greater than 50%",
+    "ruleID": "t2W3mTpLTWr8",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 50
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "aFcKRfw3KQUTuKpD"
+                ],
+                "component": "main",
+                "capability": "RelativeHumidityMeasurement",
+                "attribute": "humidity"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "8C2Kg3oUffH0fFo1"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Humidifier",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the fan Switch if temperature is more than 80 F",
+    "ruleID": "R86kiSYJ9mWy",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "kwyy89BVI7ZBw7Aj"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "Jr1lDcdrpO9VhJpd"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the fan Switch if temperature is more than 80 F",
+    "ruleID": "vTCE43gKSBly",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "cDAOgljuqac7tr4i"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "OUAbGn8Px9AGBR95"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn on the fan Switch if temperature is more than 80 F",
+    "ruleID": "Z6xzrgwWZnre",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 80
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "mX4hZLVTZOSP1EUP"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "m0HOFrtfpPDYzi0y"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set Refrigeration temperature to -10C if room temperature is more than 40C, else set it to -1C",
+    "ruleID": "XmVYNHLgrFcb",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 40
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "cSEhprQJ9lAck0x9"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "AQ62hRRIjEXruCT3"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -10
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "m1dGQ7kDfxocg2VI"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set Refrigeration temperature to -10C if room temperature is more than 40C, else set it to -1C",
+    "ruleID": "W21l7KL6puwu",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 40
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "pZoPBQBp5mWe5ceu"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "UTdWi9OazdHQfujy"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -10
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "SW6ecPkOMEYsbnPt"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set Refrigeration temperature to -10C if room temperature is more than 40C, else set it to -1C",
+    "ruleID": "m17rJwpvCoJH",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 40
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "TodLDSTOSjHxkirM"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "U4ChRkZcBt0MjrM3"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -10
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "80QM3Mt2nBaObJ0n"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RefrigerationSetpoint",
+                    "command": "setRefrigerationSetpoint",
+                    "arguments": [
+                      {
+                        "setpoint": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "open the window if co2 level is too high",
+    "ruleID": "mrysshwmrSOe",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "EOqbhhPaO9lxcqtq"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "Rfyp5WX3rSojwPnZ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "open the window if co2 level is too high",
+    "ruleID": "QT2kFyTYZfcY",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "EKZwqUWBvldBhnoV"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "xYlNFG0VQ8RK3iHu"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "open the window if co2 level is too high",
+    "ruleID": "FJ8WGgNDsDH2",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "s5n8woNgdZjwS2QQ"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "uaB2NFAC9rdWoqTJ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is more than 70, then set the thermostate mode to cool",
+    "ruleID": "U3zFCC5t4dh6",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than_or_equals": {
+            "left": {
+              "integer": 70
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "BFpijOoP79dmChAq"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "br1Y4J2hhyF3xAMq"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is more than 70, then set the thermostate mode to cool",
+    "ruleID": "zXLhmv4uV9oG",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than_or_equals": {
+            "left": {
+              "integer": 70
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "HR7NMTqknrpp1HGa"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "nCcjnQzUXizgauIu"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is more than 70, then set the thermostate mode to cool",
+    "ruleID": "MwwYVTxjJCg0",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than_or_equals": {
+            "left": {
+              "integer": 70
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "V8FlR6ltPeb2nhgS"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "D11aOIT40e9AUocQ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is 20 C or below 20 C, then set the thermostate mode to heat",
+    "ruleID": "bPzsFpHUPC3L",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than_or_equals": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "o19eS7w3XPNXFkmF"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "mRXbN1Dj3AX73mrz"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "heat",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "0eG2cqTLhfw8iPvJ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is 20 C or below 20 C, then set the thermostate mode to heat",
+    "ruleID": "LnfDniz1zObD",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than_or_equals": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "zP7ewnQuijywq0MQ"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "wRsT1t7epRfcxZKV"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "heat",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "g5jwVDl4DJbSqTYE"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "If Temperature is 20 C or below 20 C, then set the thermostate mode to heat",
+    "ruleID": "Iburt6IcYtko",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than_or_equals": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "CpxmvvCskeRzF6LP"
+                ],
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "ddqbJZpsviZbA9zg"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "heat",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "vhukvooe7tKZoVBN"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "cool",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the lights and lock the main door when nobody's at home.",
+    "ruleID": "s7X9APlqZbh3",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "0BMbuJAYoU49Jd3G"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "FvjPnkWRAHzMImoq"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "Ddldo0H5T5JHlUYP"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the lights and lock the main door when nobody's at home.",
+    "ruleID": "GkmuzsFIF0Cb",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "1b1hwXKd3cHZBgvl"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "J5elVrRelA9k2Y04"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "3ZVSBWdqODio2o8c"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the lights and lock the main door when nobody's at home.",
+    "ruleID": "3HrCYwgLjwAm",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "tvbb0iwWYbUEHRNe"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "not-present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "sgwzFMjqteyPrsEH"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "3ZVSBWdqODio2o8c"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn lights off and notify me if using too much energy",
+    "ruleID": "iQhD6GIKsykL",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "9BdMUMgU4xYH6wWh"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "yaTWVF9hzNkkDJuy"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn lights off and notify me if using too much energy",
+    "ruleID": "HfrsuDV8s4Rp",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "0V4UG2dLGhLRc8S2"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "U1mv7gNFB90CPbam"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn lights off and notify me if using too much energy",
+    "ruleID": "t1PjJkBIZQgZ",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "XnC23sC8e1empEe8"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "i7TXySYDf0rfc57N"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the robot cleaner and thermostat if using too much energy",
+    "ruleID": "UtBN2tp5TRhd",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "jAHN90ejdrCxA4O5"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "hhMET40bbsPha1oY"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "stop"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "H3T1ii7f7AxMyDZj"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the robot cleaner and thermostat if using too much energy",
+    "ruleID": "tOAEQewo0HnQ",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "NXEEfetbPaCdiucj"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "aXRRyMnnn2i4HKa4"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "stop"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "iDH6JoP9beKLDaxx"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Turn off the robot cleaner and thermostat if using too much energy",
+    "ruleID": "lRL8T5i5CUvm",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "WTtTujEPrFjJs2EL"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "FAChUbyOipfXUCtZ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "RobotCleanerCleaningMode",
+                    "command": "setRobotCleanerCleaningMode",
+                    "arguments": [
+                      {
+                        "mode": "stop"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "MI9eSVkloJH2bI43"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ThermostatMode",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Notify me when moisture is detected",
+    "ruleID": "0EHLoiJosn9H",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "XRQIyOPLfoPBKgzS"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Notify me when moisture is detected",
+    "ruleID": "P3QnDSgMzWoC",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "0TzFUFaV4obGBTnx"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Notify me when moisture is detected",
+    "ruleID": "QWUY6w4zrCel",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "b6C2LJG8EEmuO1dk"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "notify": [
+                {
+                  "email": {
+                    "address": "email_address",
+                    "message": "Warning! High energy consumption!"
+                  }
+                }
+              ]
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If switch is turned on then turn light red.",
+    "ruleID": "YP82KiXCIHht",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "mWcc1o4HOIIncQ3n"
+                ],
+                "component": "main",
+                "capability": "Switch",
+                "attribute": "switch"
+              }
+            },
+            "right": {
+              "string": "on"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "FA4NgRpvaERSgsRG"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ColorControl",
+                    "command": "setColor",
+                    "arguments": [
+                      {
+                        "map": {
+                          "saturation": {
+                            "integer": 240
+                          },
+                          "hue": {
+                            "integer": 100
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If switch is turned on then turn light red.",
+    "ruleID": "vRzEsxNDOlyR",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "Gsf8MpZtTycQLseS"
+                ],
+                "component": "main",
+                "capability": "Switch",
+                "attribute": "switch"
+              }
+            },
+            "right": {
+              "string": "on"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "z0i4loaiXKBSf8ME"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ColorControl",
+                    "command": "setColor",
+                    "arguments": [
+                      {
+                        "map": {
+                          "saturation": {
+                            "integer": 240
+                          },
+                          "hue": {
+                            "integer": 100
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If switch is turned on then turn light red.",
+    "ruleID": "xIX3CjKXTf7T",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "ttRmO8iKSaIt7WAC"
+                ],
+                "component": "main",
+                "capability": "Switch",
+                "attribute": "switch"
+              }
+            },
+            "right": {
+              "string": "on"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "AdUk731InXSN3bc5"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "ColorControl",
+                    "command": "setColor",
+                    "arguments": [
+                      {
+                        "map": {
+                          "saturation": {
+                            "integer": 240
+                          },
+                          "hue": {
+                            "integer": 100
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 when user is home",
+    "ruleID": "QCSIWHS8UKs5",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "njoLogGZHgjj1O4O"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "CxTrqqbbcBR8MMTG"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 when user is home",
+    "ruleID": "zomDYERt59Pj",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "ujdxSsXPiWsQEuKe"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "WdvomE0PUt0Uld3j"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 when user is home",
+    "ruleID": "hql9G3nUO43z",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "cG3o8PmWDE5L3jbS"
+                ],
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence"
+              }
+            },
+            "right": {
+              "string": "present"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "DZfyLMybue0HiVfE"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Dim the lights after 9:00 pm",
+    "ruleID": "W8gXjhrMko2Z",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "PlnAxiqa2KprQPND"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "SwitchLevel",
+                    "command": "setLevel",
+                    "arguments": [
+                      {
+                        "level": 25
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Dim the lights after 9:00 pm",
+    "ruleID": "iF82AgyuUHy8",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "Xna5VM7Lm9IhHOrX"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "SwitchLevel",
+                    "command": "setLevel",
+                    "arguments": [
+                      {
+                        "level": 25
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Dim the lights after 9:00 pm",
+    "ruleID": "giwaj4joRJ1G",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "pN3VIZMn7jcIlafK"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "SwitchLevel",
+                    "command": "setLevel",
+                    "arguments": [
+                      {
+                        "level": 25
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Sound the alarm at 1:00 am",
+    "ruleID": "x9ZQTAs8koAy",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": 90
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "NG7Hpuxy9NKMdlyB"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Sound the alarm at 1:00 am",
+    "ruleID": "ArklhyWwXGXK",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": 90
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "H2wIyGqciCvrtMTu"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Sound the alarm at 1:00 am",
+    "ruleID": "WWe6MxjRZ64t",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": 90
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "jFghqQHrz7A3Kk2Z"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Lock the door after 9:00 pm",
+    "ruleID": "MkhNjDcTIu98",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "BMbO5e0tKF2aN9w6"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Lock the door after 9:00 pm",
+    "ruleID": "KqmkAeHPOJAc",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "AOCkjS5QA5ou59MD"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Lock the door after 9:00 pm",
+    "ruleID": "AnFt0YRAR1T1",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Midnight",
+            "offset": {
+              "value": {
+                "integer": -180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "ZeqrxdrSY0vNfJVY"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Lock",
+                    "command": "lock"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 at 6:00 pm",
+    "ruleID": "PVIqEpKdLdb0",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 0
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "iyVQRFjED3tNfg0U"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 at 6:00 pm",
+    "ruleID": "roVrgaubDGbX",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 0
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "frEyDcCsFZMLwtbk"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Set TV channel to 13 at 6:00 pm",
+    "ruleID": "H0otBllZWytv",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 0
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "rpEaGBiYf0BBQUQA"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "setTvChannel",
+                    "arguments": [
+                      {
+                        "channel": "13"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the washer with regular mode at 9:00 pm",
+    "ruleID": "F20ZK2xJ6hUE",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "Ae6m8y8GRd1jdCdq"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherMode",
+                    "command": "setWasherMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "LTd60SSMzLjamdvZ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the washer with regular mode at 9:00 pm",
+    "ruleID": "VSfRLxaPCZ6n",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "2RtNdylAbp2GhJcZ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherMode",
+                    "command": "setWasherMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "ivQlvQfMx7wdxAw1"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the washer with regular mode at 9:00 pm",
+    "ruleID": "RHYMltEEoTKh",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 180
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "uqqVScxfA5CkEPPN"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherMode",
+                    "command": "setWasherMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "rte2aMkGSTNEwtoN"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the dishwasher with rinse mode at 10:00 pm",
+    "ruleID": "mRMd8CU7JtWG",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 240
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "Ba94W8tMrFDEOO9A"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherMode",
+                    "command": "setDishwasherMode",
+                    "arguments": [
+                      {
+                        "mode": "rinse"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "ir2GhaJpi8J2KOz7"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the dishwasher with rinse mode at 10:00 pm",
+    "ruleID": "zsGBeTl7xuxJ",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 240
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "xjcY3DuyzKuB08VA"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherMode",
+                    "command": "setDishwasherMode",
+                    "arguments": [
+                      {
+                        "mode": "rinse"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "uiP2YCuhLU4jEwMb"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Start the dishwasher with rinse mode at 10:00 pm",
+    "ruleID": "TBdaAlaG5TpI",
+    "userID": "",
+    "actions": [
+      {
+        "every": {
+          "specific": {
+            "reference": "Sunset",
+            "offset": {
+              "value": {
+                "integer": 240
+              },
+              "unit": "Minute"
+            }
+          },
+          "actions": [
+            {
+              "command": {
+                "devices": [
+                  "Rc2yyP4g6K53iFJJ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherMode",
+                    "command": "setDishwasherMode",
+                    "arguments": [
+                      {
+                        "mode": "rinse"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "vnophyYzeYEvykQK"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DishwasherOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When the washing is finished, start the dryer in regular mode",
+    "ruleID": "ySTgQJXVI7Lt",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "f0a7P2HxAXvfBKKu"
+                ],
+                "component": "main",
+                "capability": "WasherOperatingState",
+                "attribute": "washerJobState"
+              }
+            },
+            "right": {
+              "string": "finish"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "P1ca8PlzPh2XzqPk"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerMode",
+                    "command": "setDryerMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "7O2aWXhzqkYJYGGc"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When the washing is finished, start the dryer in regular mode",
+    "ruleID": "ysqZlMapjoDp",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "wzLBUxxiC7oatElL"
+                ],
+                "component": "main",
+                "capability": "WasherOperatingState",
+                "attribute": "washerJobState"
+              }
+            },
+            "right": {
+              "string": "finish"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "M9LA4ReqW3o5aZh9"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerMode",
+                    "command": "setDryerMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "Z1ugJlOGAiBdzgrA"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When the washing is finished, start the dryer in regular mode",
+    "ruleID": "aSLZ1Wiv2kUa",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "SPMC8KuxZIpHmKDW"
+                ],
+                "component": "main",
+                "capability": "WasherOperatingState",
+                "attribute": "washerJobState"
+              }
+            },
+            "right": {
+              "string": "finish"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "HpXMIuQ6k0Qqh24f"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerMode",
+                    "command": "setDryerMode",
+                    "arguments": [
+                      {
+                        "mode": "regular"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "027pczYGqu4izw05"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "setMachineState",
+                    "arguments": [
+                      {
+                        "state": "run"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, sound the alarm",
+    "ruleID": "GOUDzh7VHm8E",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "Gr2voKRwxPkO82Kk"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "EygBmKth5TEzXmrg"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, sound the alarm",
+    "ruleID": "xmbM7T8afkUP",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "kLZUNBOomzG2CJNS"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "eKAyFeXY1q6xKYYS"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, sound the alarm",
+    "ruleID": "G2InasSPuazi",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "C1p0XRLmmAWYv4d7"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "shBSTaBIbu5kFj7G"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion not-detected, trun off the lights",
+    "ruleID": "9Zjxkco0BMqq",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "nBA3uMl2s44iNPF0"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "inactive"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "yaTWVF9hzNkkDJuy"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion not-detected, trun off the lights",
+    "ruleID": "Ua0gKaFTapAT",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "TP8DpEK50YnuQEQ4"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "inactive"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "ADsPWwTfSxpYYeJ9"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion not-detected, trun off the lights",
+    "ruleID": "NGqtUrBv8I9v",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "0BT0tYvdwy3x6rYW"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "inactive"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "NxrvXBFdmlzI9NvK"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, open the door",
+    "ruleID": "GWhBE5BXNdng",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "0jZSBLWeJmm9wOQu"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "1CR65HDofsu3JJUV"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DoorControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, open the door",
+    "ruleID": "vWXheGbdTrvF",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "IQueBNuuP921HAW5"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "CN7oPMyOTUok5ai9"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DoorControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If motion detected, open the door",
+    "ruleID": "99GE9ijVPX8d",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "pVsEGcx2vjZGuniW"
+                ],
+                "component": "main",
+                "capability": "MotionSensor",
+                "attribute": "motion"
+              }
+            },
+            "right": {
+              "string": "active"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "E0DDGE3fjXYeiLjh"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DoorControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Keep lights on if energy usage is less than 100kwh",
+    "ruleID": "iA7ahfxjgL32",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "ftEpXFC0Ym9a3Qsi"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "cQ5Rn4cBmaLEyFGN"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Keep lights on if energy usage is less than 100kwh",
+    "ruleID": "XNSm7R4PogC7",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "SSBgRXMrD8fjXicF"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "03GY10Im5kTroh3U"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "Keep lights on if energy usage is less than 100kwh",
+    "ruleID": "RoXpKDS8J2ck",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "less_than": {
+            "left": {
+              "integer": 100
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "k9Fg6gGYlbSfuWdV"
+                ],
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "RMkqXKtOUNZ6X3SJ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Switch",
+                    "command": "on",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When Sound is detected, trun down the volume of tv",
+    "ruleID": "Zd3EiUxC2FHo",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "hRSmIzsMUvShxkNw"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "A2PaeJlEwpWVKJei"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "channelDown",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When Sound is detected, trun down the volume of tv",
+    "ruleID": "NaicRNoVkesv",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "K0BDNqWUbrdW3PSv"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "MOSnZdnXus8aFtmp"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "channelDown",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When Sound is detected, trun down the volume of tv",
+    "ruleID": "qRW3cM6Jtqk1",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "EA3JDPUwIon1tkLe"
+                ],
+                "component": "main",
+                "capability": "SoundSensor",
+                "attribute": "sound"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "9mR1z6c8C5Y6bJVV"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "TvChannel",
+                    "command": "channelDown",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, sound the alarm",
+    "ruleID": "rH74lw5rtgzE",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "S7SpTFZFNlD4KkYE"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "CCcsY9D0LQBmBWxA"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "fehSXjQyTwkIn3iE"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, sound the alarm",
+    "ruleID": "aLurqDQSF376",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "Dhdm5fi4mcjTiskr"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "fehSXjQyTwkIn3iE"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "R3QDq01UMiHrmojU"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, sound the alarm",
+    "ruleID": "8zJWAfHHzQTU",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "S7SpTFZFNlD4KkYE"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "skz4bijS17wSYO2J"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "siren",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": [
+            {
+              "command": {
+                "devices": [
+                  "AhDt4HGWUI3VAtWw"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "Alarm",
+                    "command": "off",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, turn off the oven",
+    "ruleID": "nunN6jhpkIux",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "5NP5Z8MDlMAfQD3j"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "ye5eeOvEi6BwXEbr"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, turn off the oven",
+    "ruleID": "ivWmwVy3swzv",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "4Jyb3YZxWyvz0172"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "gjRWm0jTDtKyLzdS"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "When smoke is detected, turn off the oven",
+    "ruleID": "gBb1LrJKVFMs",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "yyjQyTZ0Mbe0Nc1P"
+                ],
+                "component": "main",
+                "capability": "SmokeDetector",
+                "attribute": "smoke"
+              }
+            },
+            "right": {
+              "string": "detected"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "57LIuODwvO0YqUOq"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "OvenOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If moisture is detected, turn off the dish washer and washing machine",
+    "ruleID": "GC03htk89fOu",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "RNYgnWk7wj6zl6HB"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "BBt9UWGqS3PlfW1O"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "96qASBokBkq6HP8g"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If moisture is detected, turn off the dish washer and washing machine",
+    "ruleID": "1i3ufvlAZGcw",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "FFZYzMubJYuKaMU9"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "2xChQVoiYOvqvaU6"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "wDmPzibroDfEm2US"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If moisture is detected, turn off the dish washer and washing machine",
+    "ruleID": "52yJlaaK25ua",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "equals": {
+            "left": {
+              "device": {
+                "devices": [
+                  "6Co05MBD9Dn7ruNK"
+                ],
+                "component": "main",
+                "capability": "WaterSensor",
+                "attribute": "water"
+              }
+            },
+            "right": {
+              "string": "wet"
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "Z0MpfamjGZ7FFYde"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "DryerOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            },
+            {
+              "command": {
+                "devices": [
+                  "0e60oT9FPslznrXb"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WasherOperatingState",
+                    "command": "stop",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 25 PM10, open the window",
+    "ruleID": "DVwaaG3AperO",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "jIw2tIN0CDsqTL9Z"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "i8cghZ9Ifek0ITcQ"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 25 PM10, open the window",
+    "ruleID": "7dlUC2hpGIhu",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "jIw2tIN0CDsqTL9Z"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "yxlGEkI58h2fpbqT"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If dust level is greater than 25 PM10, open the window",
+    "ruleID": "KwNm80sYlKSz",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 20
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "Q0QNcOqEcRIxAT1Q"
+                ],
+                "component": "main",
+                "capability": "DustSensor",
+                "attribute": "dustLevel"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "smPb7KouPRHBssI0"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "WindowControl",
+                    "command": "open",
+                    "arguments": []
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If co2 level is too high, set the AirConditionerMode to fan",
+    "ruleID": "U1ZCyih29Y8b",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "8EjX3R5ACd5CW243"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "CXJRvCKmLXT4gZh8"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "AirConditionerMode",
+                    "command": "setAirConditionerMode",
+                    "arguments": [
+                      {
+                        "mode": "fanOnly"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If co2 level is too high, set the AirConditionerMode to fan",
+    "ruleID": "Yn7iv2Gdur1u",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "Oan7sEBaSoEAFCqp"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "41DZSV7VDLt4qzFB"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "AirConditionerMode",
+                    "command": "setAirConditionerMode",
+                    "arguments": [
+                      {
+                        "mode": "fanOnly"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "If co2 level is too high, set the AirConditionerMode to fan",
+    "ruleID": "mlvQG0VaReIf",
+    "userID": "",
+    "actions": [
+      {
+        "if": {
+          "greater_than": {
+            "left": {
+              "integer": 1000
+            },
+            "right": {
+              "device": {
+                "devices": [
+                  "N76UO8PSf6k5DKz9"
+                ],
+                "component": "main",
+                "capability": "CarbonDioxideMeasurement",
+                "attribute": "carbonDioxide"
+              }
+            }
+          },
+          "then": [
+            {
+              "command": {
+                "devices": [
+                  "temKPPOqdUtKzSqc"
+                ],
+                "commands": [
+                  {
+                    "component": "main",
+                    "capability": "AirConditionerMode",
+                    "command": "setAirConditionerMode",
+                    "arguments": [
+                      {
+                        "mode": "fanOnly"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "else": []
+        }
+      }
+    ]
+  }
+]

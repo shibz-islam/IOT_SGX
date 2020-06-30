@@ -41,6 +41,8 @@ public:
     void sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands);
     void storeRulesWithDeviceID(std::vector<std::string> &deviceIdVector, Rule *myRule);
     void storeTimerRulesWithRuleID(std::vector<TimeRule> &timeRules, Rule *myRule);
+    void processDeviceEventWithRules(DeviceEvent *deviceEvent, std::string rule);
+    bool fetchRulesFromFile(DeviceEvent *deviceEvent, std::vector<std::string> &rules);
 
 };
 

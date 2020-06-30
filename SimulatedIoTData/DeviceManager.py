@@ -3,16 +3,13 @@ from MQTTClient import MQTTClient
 import json, random, time
 
 
-path = "datafiles/"
-filename = "device_set.json"
 device_id_filename = "device_ids.txt"
-mqtt_topic_name = "topic/utd/iot/server/data/"
+mqtt_topic_name = "iot/utd/data/"
 ID_LENGTH = 16
-
-valid_event_receiving_devices = ["Alarm", "ColorControl",  "DishwasherMode", "DishwasherOperatingState", "DryerMode",
+valid_event_receiving_devices = ["Alarm", "ColorControl", "DishwasherMode", "DishwasherOperatingState", "DryerMode",
                                  "DryerOperatingState", "Humidifier", "Lock", "OvenMode", "OvenOperatingState",
-                                 "RefrigerationSetpoint", "RobotCleanerCleaningMode", "Switch", "SwitchLevel",
-                                 "ThermostatMode", "TvChannel", "Valve", "WasherMode", "WasherOperatingState", "WindowControl"]
+                                 "RefrigerationSetpoint", "RobotCleanerCleaningMode", "SwitchLevel", "ThermostatMode",
+                                 "TvChannel", "Valve", "WasherMode"]
 valid_event_sending_devices = ["CarbonDioxideMeasurement",
                                "DoorControl",
                                "DustSensor",
@@ -30,8 +27,7 @@ valid_event_sending_devices = ["CarbonDioxideMeasurement",
 
 
 def generate_device_ids():
-    json_objects = Helper.read_json_from_file(path + filename)
-
+    json_objects = Helper.read_json_from_file(Properties.datapath + Properties.device_properties_filename)
     list = []
     for device in json_objects:
         id = Helper.get_random_alphaNumeric_string(ID_LENGTH)
@@ -39,12 +35,28 @@ def generate_device_ids():
         value = id + "," + capability
         list.append(value)
     # print(list)
-    Helper.write_data_to_file(path + device_id_filename, list)
+    Helper.write_data_to_file(Properties.datapath + device_id_filename, list)
+
+
+def simulate_new_device_ids():
+    device_list = Helper.read_data_from_file(Properties.datapath + device_id_filename)
+    limit = 100
+    id_list = []
+    for device in device_list:
+        items = device.rstrip().split(",")
+        capability = items[1]
+        device_id = items[0]
+        id_str = capability
+        for i in range(limit):
+            id = Helper.get_random_alphaNumeric_string(stringLength=16)
+            id_str = id_str + "," + id
+        id_list.append(id_str)
+    Helper.write_data_to_file(filepath=Properties.datapath+Properties.base_device_id_list_filename, data_list=id_list)
 
 
 def get_device_profiles():
-    json_objects = Helper.read_json_from_file(path + filename)
-    device_ids = Helper.read_data_from_file(path + device_id_filename)
+    json_objects = Helper.read_json_from_file(Properties.datapath + Properties.device_properties_filename)
+    device_ids = Helper.read_data_from_file(Properties.datapath + device_id_filename)
     for device in json_objects:
         capability = device['id']
         for device_id in device_ids:
@@ -66,11 +78,12 @@ def start_mqtt_service_for_devices(device_list):
     mqtt_client = MQTTClient(host="localhost", port=1883, keepalive=60)
     mqtt_client.run(forever=False)
     for device in device_list:
-        items = device.rstrip().split(",")
-        capability = items[1]
-        device_id = items[0]
+        items = device.rstrip().split(",", 1)
+        capability = items[0]
         if capability in valid_event_receiving_devices:
-            mqtt_client.subscribe(topic_name=mqtt_topic_name+device_id)
+            device_ids = items[1].split(",")
+            for dev_id in device_ids:
+                mqtt_client.subscribe(topic_name=mqtt_topic_name+dev_id)
 
 
 def simulate_values(property_list):
@@ -109,9 +122,10 @@ def simulate_data(device_profile, device_list):
 
     device_id = ""
     for info in device_list:
-        items = info.rstrip().split(",")
-        if capability == items[1]:
-            device_id = items[0]
+        items = info.rstrip().split(",", 1)
+        if capability == items[0]:
+            id_list = items[1].split(",")
+            device_id = random.choice(id_list)
             break
 
     """ Attribute """
@@ -144,47 +158,55 @@ def simulate_data(device_profile, device_list):
 
 
 def start_simulation():
-    soc = socketClient.connect_to_server(port=20004)
+    soc = socketClient.connect_to_server(port=20007)
 
-    device_profiles = Helper.read_json_from_file(path + filename)
-    device_list = Helper.read_data_from_file(path + device_id_filename)
+    device_profiles = Helper.read_json_from_file(Properties.datapath + Properties.device_properties_filename)
+    device_list = Helper.read_data_from_file(Properties.datapath + str(Properties.RULE_COUNT) + Properties.tracked_device_id_list_filename)
 
     start_mqtt_service_for_devices(device_list)
 
     count = 0
     while True:
         device_profile = random.choice(device_profiles)
-        #device_profile = device_profiles[count]
-
         event, is_success = simulate_data(device_profile, device_list)
         if is_success:
-            enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(event)
-            #enc_rule = json.dumps(event)
-            Helper.record_start_time()
+            Properties.PENDING_ID = event["deviceID"]
+            if Properties.IS_ENCRYPTION_ENABLED:
+                enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(event)
+            else:
+                enc_rule = json.dumps(event)
             socketClient.send_to_server(soc, enc_rule)
-            time.sleep(10)
+            time.sleep(1)
             count += 1
             print("Count=", count)
-            if count == len(device_profiles):
-                break
-
+        if count == 10000:
+            break
 
     socketClient.send_to_server(soc, "quit")
     soc.close()
 
 
 def send_sample_data_events():
-    device_events = Helper.read_json_from_file(path + "SampleDeviceEvents.json")
-    # soc = socketClient.connect_to_server(port=20005)
+    device_events = Helper.read_json_from_file(Properties.datapath + "SampleDeviceEvents.json")
+    soc = socketClient.connect_to_server(port=20006)
+    count = 0
     for event in device_events:
-        # enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(event)
-        # enc_rule = json.dumps(event)
-        # socketClient.send_to_server(soc, enc_rule)
-        time.sleep(1)
-    # socketClient.send_to_server(soc, "quit")
-    # soc.close()
+        print("**********")
+        print(json.dumps(event))
+        if Properties.IS_ENCRYPTION_ENABLED:
+            enc_rule = CryptoHelper.aes_gcm_encryption_with_tag(event)
+        else:
+            enc_rule = json.dumps(event)
+        socketClient.send_to_server(soc, enc_rule)
+        time.sleep(2)
+        count += 1
+        if count == 1:
+            break
+    socketClient.send_to_server(soc, "quit")
+    soc.close()
 
 
 if __name__ == '__main__':
     start_simulation()
-    # send_sample_data_events()
+    #send_sample_data_events()
+    #simulate_new_device_ids()

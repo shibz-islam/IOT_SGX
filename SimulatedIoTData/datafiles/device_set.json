@@ -52,6 +52,66 @@
     },
 
     {
+        "id": "AirConditionerMode",
+        "version": 1,
+        "name": "Air Conditioner Mode",
+        "status": "proposed",
+        "attributes": {
+            "airConditionerMode": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "title": "HvacMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "cool",
+                                "dry",
+                                "coolClean",
+                                "dryClean",
+                                "fanOnly",
+                                "heat",
+                                "heatClean",
+                                "notSupported"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ]
+                }
+            }
+        },
+        "commands": {
+            "setAirConditionerMode": {
+                "arguments": [
+                    {
+                        "name": "mode",
+                        "schema": {
+                            "title": "HvacMode",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "cool",
+                                "dry",
+                                "coolClean",
+                                "dryClean",
+                                "fanOnly",
+                                "heat",
+                                "heatClean",
+                                "notSupported"
+                            ]
+                        },
+                        "required": true
+                    }
+                ]
+            }
+        }
+    },
+
+    {
         "id": "CarbonDioxideMeasurement",
         "version": 1,
         "name": "Carbon Dioxide Measurement",

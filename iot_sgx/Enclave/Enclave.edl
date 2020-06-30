@@ -75,16 +75,6 @@ enclave {
          int count;
     };
 
-    struct TimeRule{
-        char *ruleID;
-        char *rule;
-        char *timeReference;
-        int timeOffset;
-        char *unit;
-        int hour;
-        int min;
-    };
-
     struct ruleActionProperty{
         char* address;
         int type;
@@ -100,11 +90,6 @@ enclave {
         char *valueType;
         char *unit;
         int isDevice;
-    };
-
-    struct DeviceCommand{
-        char *deviceId;
-        char *command;
     };
 
 

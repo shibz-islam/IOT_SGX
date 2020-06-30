@@ -54,7 +54,7 @@ def aes_gcm_decryption_with_tag(data):
     b64 = json.loads(data)
     json_k = ['ciphertext', 'tag']
     jv = {k: b64decode(b64[k]) for k in json_k}
-    print("@Msg: ", jv)
+    #print("@Msg: ", jv)
 
     cipher = AES.new(key_bytearray, AES.MODE_GCM, nonce=iv_bytearray)
     cipher.update(aad_bytearray)

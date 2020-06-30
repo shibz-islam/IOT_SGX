@@ -2,18 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdf24a39-9dd2-499b-b6d5-d74d6577936b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_Code/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoHelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DeviceManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/DeviceManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTTClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties.py" beforeDir="false" afterPath="$PROJECT_DIR$/Properties.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RuleManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/RuleManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datafiles/Ruleset.json" beforeDir="false" afterPath="$PROJECT_DIR$/datafiles/Ruleset.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datafiles/SampleDeviceEvents.json" beforeDir="false" afterPath="$PROJECT_DIR$/datafiles/SampleDeviceEvents.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datafiles/device_ids.txt" beforeDir="false" afterPath="$PROJECT_DIR$/datafiles/device_ids.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datafiles/device_set.json" beforeDir="false" afterPath="$PROJECT_DIR$/datafiles/device_set.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datafiles/records.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/App.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/App/JSONParser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/Enclave.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/Enclave.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/Enclave.edl" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/Enclave.edl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/EnclaveHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/EnclaveHelper.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/EnclaveHelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/EnclaveHelper.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleParser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleParser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleParser.h" beforeDir="false" afterPath="$PROJECT_DIR$/../iot_sgx/Enclave/RuleParser.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../iot_sgx/rules.bin" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +34,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/SimulatedIoTData$DeviceManager.coverage" NAME="DeviceManager Coverage Results" MODIFIED="1592293011457" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SimulatedIoTData$RuleManager.coverage" NAME="RuleManager Coverage Results" MODIFIED="1592280497376" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SimulatedIoTData$DeviceManager.coverage" NAME="DeviceManager Coverage Results" MODIFIED="1593405153356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SimulatedIoTData$Evaluation.coverage" NAME="Evaluation Coverage Results" MODIFIED="1593424043562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SimulatedIoTData$RuleManager.coverage" NAME="RuleManager Coverage Results" MODIFIED="1593467115422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -83,55 +96,50 @@
     <session id="1461622355">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="64" />
-          <entry key="py" value="239" />
+          <entry key="json" value="118" />
+          <entry key="py" value="3226" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="64" />
-          <entry key="Python" value="239" />
+          <entry key="JSON" value="118" />
+          <entry key="Python" value="3226" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="3" />
+          <entry key="json" value="8" />
+          <entry key="py" value="12" />
+          <entry key="txt" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="3" />
+          <entry key="JSON" value="8" />
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Python" value="12" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
-              <folding>
-                <element signature="e#0#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RuleManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+            <state relative-caret-position="929">
+              <caret line="185" column="30" lean-forward="true" selection-start-line="185" selection-start-column="30" selection-end-line="185" selection-end-column="30" />
               <folding>
-                <element signature="e#0#67#0" expanded="true" />
+                <element signature="e#0#79#0" expanded="true" />
+                <marker date="1593467115376" expanded="true" signature="1086:1280" ph="..." />
+                <marker date="1593467115376" expanded="true" signature="6873:7574" ph="..." />
+                <marker date="1593467115376" expanded="true" signature="6873:7577" ph="..." />
               </folding>
             </state>
           </provider>
@@ -140,59 +148,51 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DeviceManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="11" column="67" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="67" />
+            <state relative-caret-position="670">
+              <caret line="169" column="55" selection-start-line="169" selection-start-column="55" selection-end-line="169" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#64#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/datafiles/SampleDeviceEvents.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datafiles/Ruleset.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-331">
-              <caret line="505" column="61" selection-start-line="505" selection-start-column="45" selection-end-line="505" selection-end-column="61" />
+            <state relative-caret-position="154">
+              <caret line="888" column="81" selection-start-line="888" selection-start-column="77" selection-end-line="888" selection-end-column="81" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/datafiles/device_ids.txt">
+        <entry file="file://$PROJECT_DIR$/Properties.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="16" selection-start-line="10" selection-end-line="10" selection-end-column="16" />
+            <state relative-caret-position="322">
+              <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MQTTClient.py">
+        <entry file="file://$PROJECT_DIR$/Evaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
+            <state relative-caret-position="195">
+              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
               <folding>
-                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#0#22#0" expanded="true" />
+                <marker date="1593424043512" expanded="true" signature="287:1492" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CryptoHelper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="73" column="26" lean-forward="true" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/datafiles/device_set.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12495">
-              <caret line="833" column="27" selection-start-line="833" selection-start-column="27" selection-end-line="833" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -208,24 +208,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tzj1SpsnCfNW</find>
-      <find>unit</find>
-      <find>y6BB3cId</find>
-      <find>RFXUBklXGCN64Q9P</find>
-      <find>UFJDztYghPLB8hAe</find>
-      <find>2Rb3tlZGgnM2otW9</find>
-      <find>Tempera</find>
-      <find>P8gBL2837sXg</find>
-      <find>generate_device_ids</find>
-      <find>&quot;id&quot;:</find>
-      <find>filename</find>
-      <find>device_id_filename</find>
-      <find>get_device_profiles</find>
-      <find>sleep</find>
-      <find>humidi</find>
-      <find>Refr</find>
       <find>;</find>
       <find>e9qTK4uJjMu8hRay</find>
+      <find>HNN3GOkLnPfWE2Mn</find>
+      <find>valid_event_receiving_devices</find>
+      <find>between</find>
+      <find>70</find>
+      <find>8:</find>
+      <find>turn off</find>
+      <find>RobotCleanerCleaningMode</find>
+      <find>RFXUBklXGCN64Q9P</find>
+      <find>1R9DoUmr9WZm7Kqd</find>
+      <find>&quot;name</find>
+      <find>device_id_list_filename</find>
+      <find>Proper</find>
+      <find>device_id_filename</find>
+      <find>Properties.RULE_COUNT</find>
+      <find>RobotCleanerCleaningMode</find>
+      <find>Properties.path</find>
+      <find>Properties.filename</find>
+      <find>door</find>
+      <find>tempe</find>
+      <find>9WZ8iSlgrp3yUllM</find>
+      <find>sound</find>
+      <find>&quot;name&quot;</find>
+      <find>PresenceSensor</find>
+      <find>ener</find>
+      <find>june27</find>
+      <find>5000</find>
+      <find>read</find>
+      <find>Properties.device_id_list_filename</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -238,17 +250,19 @@
         <option value="$PROJECT_DIR$/Constants.py" />
         <option value="$PROJECT_DIR$/rachio.py" />
         <option value="$PROJECT_DIR$/SimulatedRule.py" />
-        <option value="$PROJECT_DIR$/Properties.py" />
         <option value="$PROJECT_DIR$/datafiles/device_set.json" />
-        <option value="$PROJECT_DIR$/Helper.py" />
-        <option value="$PROJECT_DIR$/datafiles/SampleDeviceEvents.json" />
         <option value="$PROJECT_DIR$/DeviceEvents.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/RuleManager.py" />
-        <option value="$PROJECT_DIR$/DeviceManager.py" />
+        <option value="$PROJECT_DIR$/record_response_time.txt" />
         <option value="$PROJECT_DIR$/MQTTClient.py" />
         <option value="$PROJECT_DIR$/CryptoHelper.py" />
+        <option value="$PROJECT_DIR$/Helper.py" />
         <option value="$PROJECT_DIR$/datafiles/Ruleset.json" />
+        <option value="$PROJECT_DIR$/datafiles/SampleDeviceEvents.json" />
+        <option value="$PROJECT_DIR$/DeviceManager.py" />
+        <option value="$PROJECT_DIR$/Evaluation.py" />
+        <option value="$PROJECT_DIR$/Properties.py" />
+        <option value="$PROJECT_DIR$/RuleManager.py" />
       </list>
     </option>
   </component>
@@ -258,9 +272,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="97" />
-    <option name="y" value="89" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="91" />
+    <option name="y" value="53" />
     <option name="width" value="1449" />
     <option name="height" value="1111" />
   </component>
@@ -270,6 +284,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -286,10 +301,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="(&#9;ACTION&#9;ConvertToMacLineSeparators" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -314,7 +329,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DeviceManager">
+  <component name="RunManager" selected="Python.RuleManager">
     <configuration name="DeviceManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="SimulatedIoTData" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -329,6 +344,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DeviceManager.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="SimulatedIoTData" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Evaluation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -403,42 +440,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="rachio" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="SimulatedIoTData" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rachio.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.rachio" />
       <item itemvalue="Python.SimulatedRule" />
       <item itemvalue="Python.RuleManager" />
       <item itemvalue="Python.DeviceManager" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.Evaluation" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.DeviceManager" />
         <item itemvalue="Python.RuleManager" />
+        <item itemvalue="Python.Evaluation" />
+        <item itemvalue="Python.DeviceManager" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.SimulatedRule" />
-        <item itemvalue="Python.rachio" />
       </list>
     </recent_temporary>
   </component>
@@ -456,31 +471,32 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="97" y="89" width="1449" height="1111" extended-state="0" />
+    <frame x="91" y="53" width="1449" height="1111" extended-state="1" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2516037" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49842766" visible="true" weight="0.25445473" />
+      <window_info id="Structure" order="1" sideWeight="0.5015723" side_tool="true" weight="0.25445473" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32961783" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4108053" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49964362" visible="true" weight="0.4933741" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3994452" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5003564" side_tool="true" weight="0.35168195" />
       <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="R Packages" />
-      <window_info anchor="right" id="R Graphics" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" weight="0.3292683" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="R Graphics" order="3" weight="0.32929438" />
+      <window_info anchor="right" id="R Packages" order="4" weight="0.32929438" />
+      <window_info anchor="right" id="Database" order="5" weight="0.3292683" />
+      <window_info anchor="right" id="SciView" order="6" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,20 +513,6 @@
     <entry file="file://$PROJECT_DIR$/filepath" />
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/Cryptodome/Cipher/AES.py" />
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/Cryptodome/__init__.pyi" />
-    <entry file="file://$PROJECT_DIR$/datafiles/records.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Properties.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Constants.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -519,31 +521,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DeviceEvents.py" />
-    <entry file="file://$PROJECT_DIR$/datafiles/SampleDeviceEvents.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="230" column="42" selection-start-line="230" selection-start-column="31" selection-end-line="230" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rachio.py" />
-    <entry file="file://$PROJECT_DIR$/datafiles/device_set.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12495">
-          <caret line="833" column="27" selection-start-line="833" selection-start-column="27" selection-end-line="833" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/socketClient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -553,7 +531,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
+        <state relative-caret-position="461">
           <caret line="33" column="63" selection-start-line="33" selection-start-column="63" selection-end-line="33" selection-end-column="63" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
@@ -561,33 +539,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MQTTClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CryptoHelper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="73" column="26" lean-forward="true" selection-start-line="73" selection-start-column="26" selection-end-line="73" selection-end-column="26" />
+        <state relative-caret-position="301">
+          <caret line="56" column="5" selection-start-line="56" selection-start-column="5" selection-end-line="56" selection-end-column="5" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RuleManager.py">
+    <entry file="file://$PROJECT_DIR$/datafiles/device_set.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+        <state relative-caret-position="442">
+          <caret line="833" column="27" selection-start-line="833" selection-start-column="27" selection-end-line="833" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/record_response_time.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="62" column="36" selection-start-line="62" selection-start-column="20" selection-end-line="62" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datafiles/records.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="9" column="18" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datafiles/ruleset_large.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-29" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MQTTClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="43" column="32" selection-start-line="43" selection-start-column="15" selection-end-line="43" selection-end-column="32" />
           <folding>
-            <element signature="e#0#67#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datafiles/tracked_device_id_list.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datafiles/device_id_list.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="175" selection-start-line="31" selection-start-column="175" selection-end-line="31" selection-end-column="175" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/record_response_time_unenc.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-399">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -598,17 +609,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DeviceManager.py">
+    <entry file="file://$PROJECT_DIR$/Helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="11" column="67" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="67" />
+        <state relative-caret-position="-372">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datafiles/SampleDeviceEvents.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/datafiles/Ruleset.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-331">
-          <caret line="505" column="61" selection-start-line="505" selection-start-column="45" selection-end-line="505" selection-end-column="61" />
+        <state relative-caret-position="154">
+          <caret line="888" column="81" selection-start-line="888" selection-start-column="77" selection-end-line="888" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DeviceManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="670">
+          <caret line="169" column="55" selection-start-line="169" selection-start-column="55" selection-end-line="169" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <marker date="1593424043512" expanded="true" signature="287:1492" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Properties.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RuleManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="929">
+          <caret line="185" column="30" lean-forward="true" selection-start-line="185" selection-start-column="30" selection-end-line="185" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#79#0" expanded="true" />
+            <marker date="1593467115376" expanded="true" signature="1086:1280" ph="..." />
+            <marker date="1593467115376" expanded="true" signature="6873:7574" ph="..." />
+            <marker date="1593467115376" expanded="true" signature="6873:7577" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

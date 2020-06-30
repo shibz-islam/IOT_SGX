@@ -3,6 +3,8 @@ import random, secrets
 import string
 from timeit import default_timer as timer
 import Properties
+from datetime import datetime
+
 
 def read_json_from_file(filepath):
     with open(filepath, 'r') as openfile:
@@ -34,16 +36,6 @@ def write_data_to_file(filepath, data_list):
     f.close()
 
 
-def record_start_time():
-    Properties.START_TIME = timer()
-
-
-def calculate_response_time():
-    end = timer()
-    response_time = end - Properties.START_TIME
-    print("Response Time: ", response_time)
-
-
 def get_random_alphaNumeric_string(stringLength=8):
     lettersAndDigits = string.ascii_letters + string.digits
     str = ''.join((secrets.choice(lettersAndDigits) for i in range(stringLength)))
@@ -55,6 +47,18 @@ def get_json_data(data):
     dataTemp = json.dumps(data)
     data_json = json.loads(dataTemp)
     return data_json
+
+
+def log_response_time():
+    end = timer()
+    response_time = end - Properties.START_TIME
+    line = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "," + Properties.PENDING_ID + "," + response_time
+    print("Response Time: ", line)
+    if Properties.IS_ENCRYPTION_ENABLED:
+        filepath = Properties.EXP_PATH + Properties.FILENAME_RECORD_RESPONSE_TIME + Properties.FILENAME_EXT
+    else:
+        filepath = Properties.EXP_PATH + Properties.FILENAME_RECORD_RESPONSE_TIME_UNENC + Properties.FILENAME_EXT
+    write_data_to_file(filepath=filepath, data_list=[line])
 
 
 def extract_values_from_json(obj, key):

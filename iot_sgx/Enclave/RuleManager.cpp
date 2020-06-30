@@ -10,7 +10,7 @@
 #include "analytics_utils.h"
 
 
-#define CACHE_SIZE 40
+#define CACHE_SIZE 100
 
 
 /*** CLASS METHODS ***/
@@ -66,15 +66,15 @@ void RuleManager::saveRuleInPriorityQueue(TimeRule timeRule){
 void RuleManager::sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands){
     printf("\nTotal Device Commands: %ld\n", deviceCommands.size());
     for (const auto &dc : deviceCommands) {
-        printf("Enclave# device id: %s\n", dc->deviceId);
-        printf("Enclave# command: %s\n", dc->command);
+        printf("Enclave# device id: %s\n", dc->deviceId.c_str());
+        printf("Enclave# command: %s\n", dc->command.c_str());
         //TODO: send commands
         char *encMessage = NULL;
         char *tag_msg = NULL;
         if(isEncryptionEnabled){
-            encMessage = (char *) malloc(strlen(dc->command)*sizeof(char));
+            encMessage = (char *) malloc((dc->command.length()+1)*sizeof(char));
             tag_msg = (char *) malloc((16+1)*sizeof(char));
-            sgx_status_t status = encryptMessageAES(dc->command, strlen(dc->command), encMessage, strlen(dc->command), tag_msg);
+            sgx_status_t status = encryptMessageAES((char*)dc->command.c_str(), dc->command.length(), encMessage, dc->command.length(), tag_msg);
             if(status != 0){
                 printf("Error! Encryption failed! ");
                 free(encMessage);
@@ -82,23 +82,24 @@ void RuleManager::sendDeviceCommands(std::vector<DeviceCommand*> &deviceCommands
                 return;
             }
         }else{
-            encMessage = dc->command;
-            tag_msg = dc->deviceId;
+            encMessage = (char *) malloc((dc->command.length())*sizeof(char));
+            memcpy(encMessage, dc->command.c_str(), dc->command.length());
         }
 
-        std::string tempAddr = mqttTopicName() + std::string(dc->deviceId);
+        std::string tempAddr = mqttTopicName() + dc->deviceId;
 
         ruleActionProperty *property = new ruleActionProperty();
         property->msg = encMessage;
         property->tag = tag_msg;
         property->address = (char*)tempAddr.c_str();
 
-        //ocall_send_alert_for_rule_action_device(property);
+        ocall_send_alert_for_rule_action_device(property);
 
         free(encMessage);
         free(tag_msg);
         tempAddr.clear();
         delete property;
+        delete dc;
     }
 }
 
@@ -181,7 +182,7 @@ void RuleManager::storeTimerRulesWithRuleID(std::vector<TimeRule> &timeRules, Ru
     Rule *myRuleList = new Rule[numDevices];
     //Rule myRuleList[numDevices];
     for (int i = 0; i < numDevices; ++i) {
-        myRuleList[i].deviceID = timeRules[i].ruleID;
+        myRuleList[i].deviceID = (char*)timeRules[i].ruleID.c_str();
         myRuleList[i].rule = myRule->rule;
         myRuleList[i].ruleLength = myRule->ruleLength;
         myRuleList[i].tag = myRule->tag;
@@ -198,6 +199,60 @@ void RuleManager::storeTimerRulesWithRuleID(std::vector<TimeRule> &timeRules, Ru
     delete[] myRuleList;
     free(encMessage);
     free(tag_msg);
+}
+
+
+bool RuleManager::fetchRulesFromFile(DeviceEvent *deviceEvent, std::vector<std::string> &rules){
+    size_t numRules = 0;
+    Rule *myRule = new Rule();
+    myRule->deviceID = (char*)deviceEvent->deviceId.c_str();
+    ocall_get_rule_count(&numRules, myRule, 0);
+    if(numRules > 0){
+        Rule ruleset[numRules];
+        size_t isSuccess = 0;
+        ocall_get_rules(&isSuccess, ruleset, numRules, myRule, 0);
+        if(isSuccess == 1){
+            for(int i=0; i < numRules; i++){
+                //printf("\n*** deviceid=%s, ruleLength=%ld, rule=%s\n", ruleset[i].deviceID, ruleset[i].ruleLength, ruleset[i].rule);
+                char *decMessage = NULL;
+                if(isEncryptionEnabled){
+                    decMessage = (char *) malloc(ruleset[i].ruleLength*sizeof(char));
+                    sgx_status_t status = decryptMessageAES(ruleset[i].rule, ruleset[i].ruleLength, decMessage, ruleset[i].ruleLength, ruleset[i].tag);
+                    if(status != 0){
+                        printf("Error! Decryption failed!");
+                        free(decMessage);
+                        delete myRule;
+                        return false;
+                    }
+                } else{
+                    decMessage = (char *) malloc((ruleset[i].ruleLength+1)*sizeof(char));
+                    memcpy(decMessage, ruleset[i].rule, ruleset[i].ruleLength);
+                    decMessage[ruleset[i].ruleLength] = '\0';
+                }
+                rules.push_back(std::string(decMessage));
+            }
+            delete myRule;
+            return true;
+        }
+    }
+    delete myRule;
+    return false;
+}
+
+void RuleManager::processDeviceEventWithRules(DeviceEvent *deviceEvent, std::string rule){
+    //printf("rule: %s\n", item.c_str());
+    bool isSuccess = checkRuleSatisfiabilityWithDeviceEvent((char*)rule.c_str(), deviceEvent);
+    //printf("#Enclave: done rule check...");
+    std::vector<DeviceCommand*> deviceCommands;
+    if(parseRuleForDeviceCommands((char*)rule.c_str(), deviceCommands, isSuccess) && !deviceCommands.empty()){
+        sendDeviceCommands(deviceCommands);
+        printf("#Enclave: sendDeviceCommands func ");
+    } else{
+        printf("#Enclave: deviceCommandsVector empty ");
+    }
+    deviceCommands.clear();
+    size_t isLogged = 0;
+    ocall_log_execution_time( &isLogged, (char*)deviceEvent->deviceId.c_str());
 }
 
 /******************/
@@ -228,7 +283,7 @@ void RuleManager::didReceiveRule(Rule *myRule, bool isStoreInFile){
             std::vector<TimeRule> timeRules;
             if(parseRuleForTimeInfo(myRule->rule, timeRules) && !timeRules.empty()){
                 for (auto &timeRule : timeRules) {
-                    printf("#Enclave: %s %s %d %s\n", timeRule.ruleID, timeRule.timeReference, timeRule.timeOffset, timeRule.unit);
+                    printf("#Enclave: %s %s %d %s\n", timeRule.ruleID.c_str(), timeRule.timeReference.c_str(), timeRule.timeOffset, timeRule.unit.c_str());
                     if(configureTimeString(timeRule)){
                         char *tempRule = (char *) malloc((strlen(myRule->rule)+1)*sizeof(char));
                         memcpy(tempRule, myRule->rule, strlen(myRule->rule));
@@ -259,41 +314,36 @@ void RuleManager::didReceiveDeviceEvent(char *event){
     DeviceEvent *deviceEvent = new DeviceEvent();
     if(parseDeviceEventData(event, deviceEvent)){
         //TODO: fetch Rule for deviceID
-        printf("#Enclave: device id: %s\n", deviceEvent->deviceId);
-        printf("#Enclave: device attr: %s\n", deviceEvent->attribute);
-        printf("#Enclave: device val: %s\n", deviceEvent->value);
-        if(cache->isKeyPresent(std::string(deviceEvent->deviceId))){
+        //printf("#Enclave: device id: %s\n", deviceEvent->deviceId.c_str());
+        //printf("#Enclave: device attr: %s\n", deviceEvent->attribute.c_str());
+        //printf("#Enclave: device val: %s\n", deviceEvent->value.c_str());
+        if(cache->isKeyPresent(deviceEvent->deviceId)){
             //TODO: check rule satisfiability with device event
-            std::string rule_str = cache->get(std::string(deviceEvent->deviceId));
+            std::string rule_str = cache->get(deviceEvent->deviceId);
             printf("\n==> \nrule: %s\n", rule_str.c_str());
             std::vector<std::string> rulesList = split(rule_str, ";");
             for (auto &rule : rulesList) {
-                //printf("rule: %s\n", item.c_str());
-                bool isSuccess = checkRuleSatisfiabilityWithDeviceEvent((char*)rule.c_str(), deviceEvent);
-                printf("#Enclave: done rule check...");
-                std::vector<DeviceCommand*> deviceCommands;
-                if(parseRuleForDeviceCommands((char*)rule.c_str(), deviceCommands, isSuccess) && !deviceCommands.empty()){
-                    printf("#Enclave: done parseRuleForDeviceCommands...");
-                    //sendDeviceCommands(deviceCommands);
-                    printf("#Enclave: sendDeviceCommands func ");
-                } else{
-                    printf("#Enclave: deviceCommandsVector empty ");
-                }
-                deviceCommands.clear();
-                size_t isLogged = 0;
-                //ocall_log_execution_time( &isLogged, deviceEvent->deviceId);
+                processDeviceEventWithRules(deviceEvent, rule);
             }
             rulesList.clear();
-            printf("---> clear vector...");
         } else{
-            printf("#Enclave: key not present in cache ");
-
+            printf("#Enclave: key not present in cache... ");
+            //TODO: fetch rule from file
+            std::vector<std::string> rules;
+            if(fetchRulesFromFile(deviceEvent, rules)){
+                for (auto &ruleStr : rules) {
+                    cache->put(deviceEvent->deviceId, ruleStr);
+                    processDeviceEventWithRules(deviceEvent, ruleStr);
+                }
+            } else{
+                printf("#Enclave: could not fetch data from file... ");
+            }
         }
 
     } else{
-        printf("#Enclave: parseDeviceEventData unsuccessful ");
+        printf("#Enclave: parseDeviceEventData unsuccessful... ");
     }
-    //delete deviceEvent;
+    delete deviceEvent;
 }
 
 void RuleManager::didReceiveRequestToCheckTimerRule(int hour, int min){
@@ -302,7 +352,7 @@ void RuleManager::didReceiveRequestToCheckTimerRule(int hour, int min){
         TimeRule tr;
         for (int i = 0; i < vecTimerQueue.size(); ++i) {
             tr = vecTimerQueue[i];
-            printf("checkTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID, tr.hour, tr.min);
+            printf("checkTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID.c_str(), tr.hour, tr.min);
             int timeDiffMinute = getTimeMinute(tr.hour, tr.min) - getTimeMinute(hour, min);
             if(timeDiffMinute > 0 && timeDiffMinute <= 60){
                 saveRuleInPriorityQueue(tr);
@@ -315,12 +365,12 @@ int RuleManager::didReceiveRequestToCheckPendingTimerRule(int hour, int min){
     if(!timerPriorityQueue.empty()){
         TimeRule tr = timerPriorityQueue.top();
         printf("checkPendingTimerRule# timerPriorityQueue size: %ld\n", timerPriorityQueue.size());
-        printf("checkPendingTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID, tr.hour, tr.min);
+        printf("checkPendingTimerRule# TimeRule: id=%s, h=%d, m=%d\n", tr.ruleID.c_str(), tr.hour, tr.min);
         int timeDiffMinute = getTimeMinute(tr.hour, tr.min) - getTimeMinute(hour, min);
         if(timeDiffMinute <= 1){
             timerPriorityQueue.pop();
             std::vector<DeviceCommand*> deviceCommands;
-            if(parseRuleForDeviceCommands(tr.rule, deviceCommands, true) && !deviceCommands.empty()){
+            if(parseRuleForDeviceCommands((char*)tr.rule.c_str(), deviceCommands, true) && !deviceCommands.empty()){
                 sendDeviceCommands(deviceCommands);
             } else{
                 printf("Enclave# deviceCommandsVector empty ");

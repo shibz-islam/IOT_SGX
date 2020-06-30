@@ -83,7 +83,7 @@ TimeUnit getTimeUnit(char *key){
     }
 }
 
-char* enum_to_string(TimeReference type) {
+std::string enum_to_string(TimeReference type) {
     switch(type) {
         case NOW:
             return "Now";

@@ -10,12 +10,12 @@ bool parseOperandDevice(cJSON *condition, DeviceEvent *event){
     if (cJSON_IsString(capability) && (capability->valuestring != NULL))
     {
         //printf("capability: \"%s\"\n", capability->valuestring);
-        if (strcmp(capability->valuestring, event->capability) == 0){
+        if (strcmp(capability->valuestring, event->capability.c_str()) == 0){
             const cJSON *attribute = cJSON_GetObjectItem(condition, "attribute");
             if (cJSON_IsString(attribute) && (attribute->valuestring != NULL))
             {
                 printf("attribute: \"%s\"\n", attribute->valuestring);
-                if(strcmp(attribute->valuestring, event->attribute) == 0){
+                if(strcmp(attribute->valuestring, event->attribute.c_str()) == 0){
                     return true;
                 }
             }
@@ -70,8 +70,8 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
         if (parseOperandDevice(conditionLeft->child, event)){
             const cJSON *conditionRight = cJSON_GetObjectItemCaseSensitive(condition, "right");
             std::string value = parseConditionValue(conditionRight);
-            printf("Event value=%s, Rule value=%s\n", event->value, value.c_str());
-            if (strcmp(value.c_str(), event->value) == 0)
+            printf("Event value=%s, Rule value=%s\n", event->value.c_str(), value.c_str());
+            if (strcmp(value.c_str(), event->value.c_str()) == 0)
                 return true;
         }
     }
@@ -83,7 +83,7 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
             std::string valueStart = parseConditionValue(conditionStart);
             const cJSON *conditionEnd = cJSON_GetObjectItemCaseSensitive(condition, "end");
             std::string valueEnd = parseConditionValue(conditionEnd);
-            if ((std::stod(event->value) > std::stod(valueStart.c_str())) && (std::stod(event->value) < std::stod(valueEnd.c_str())))
+            if ((std::stod(event->value.c_str()) > std::stod(valueStart.c_str())) && (std::stod(event->value.c_str()) < std::stod(valueEnd.c_str())))
                 return true;
         }
     }
@@ -96,16 +96,16 @@ bool parseCommandIfForRuleEvent(const cJSON *command, DeviceEvent *event){
                 const cJSON *conditionLeft = cJSON_GetObjectItemCaseSensitive(condition, "left");
                 std::string value = parseConditionValue(conditionLeft);
                 if (strcmp(conditionType, "greater_than") == 0){
-                    return (std::stod(event->value) >= std::stod(value.c_str()));;
+                    return (std::stod(event->value.c_str()) >= std::stod(value.c_str()));;
                 }
                 else if (strcmp(conditionType, "greater_than_or_equals") == 0){
-                    return (std::stod(event->value) >= std::stod(value.c_str()));
+                    return (std::stod(event->value.c_str()) >= std::stod(value.c_str()));
                 }
                 else if (strcmp(conditionType, "less_than") == 0){
-                    return (std::stod(event->value) < std::stod(value.c_str()));
+                    return (std::stod(event->value.c_str()) < std::stod(value.c_str()));
                 }
                 else if (strcmp(conditionType, "less_than_or_equals") == 0){
-                    return (std::stod(event->value) <= std::stod(value.c_str()));
+                    return (std::stod(event->value.c_str()) <= std::stod(value.c_str()));
                 }
             } else{
                 printf("failed parseOperandDevice ");
@@ -259,6 +259,7 @@ RuleType parseRuleTypeAction(char *rule){
         {
             printf("Error before: %s\n", error_ptr);
         }
+        cJSON_Delete(rule_json);
         return RuleType_UNKNOWN;
     }
     const cJSON *action = NULL;
@@ -267,9 +268,11 @@ RuleType parseRuleTypeAction(char *rule){
     {
         char *actionType = action->child->string;
         //printf("action key: \"%s\"\n", actionType);
-        //cJSON_Delete(rule_json);
-        return getRuleType(actionType);
+        RuleType rt = getRuleType(actionType);
+        cJSON_Delete(rule_json);
+        return rt;
     }
+    cJSON_Delete(rule_json);
     return RuleType_UNKNOWN;
 }
 
@@ -304,6 +307,7 @@ bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
             }
             else{
                 printf("Unknown conditionType ");
+                cJSON_Delete(rule_json);
                 return false;
             }
 
@@ -318,15 +322,17 @@ bool parseRuleForDeviceID(char *rule, std::vector<std::string> &devicesVector){
                 }
             } else{
                 printf("Unknown object ");
+                cJSON_Delete(rule_json);
                 return false;
             }
         }
         else{
             printf("Unknown Command ");
+            cJSON_Delete(rule_json);
             return false;
         }
     }
-    //cJSON_Delete(rule_json);
+    cJSON_Delete(rule_json);
     return true;
 }
 
@@ -347,11 +353,8 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
     const cJSON *deviceId = cJSON_GetObjectItemCaseSensitive(event_json, "deviceID");
     if (cJSON_IsString(deviceId) && (deviceId->valuestring != NULL))
     {
-        printf("deviceId: \"%s\", length:%ld\n", deviceId->valuestring, strlen(deviceId->valuestring));
-        //deviceEvent->deviceId = deviceId->valuestring;
-        deviceEvent->deviceId = new char[strlen(deviceId->valuestring)];
-        memcpy(deviceEvent->deviceId, deviceId->valuestring, strlen(deviceId->valuestring));
-        deviceEvent->deviceId[strlen(deviceId->valuestring)] = '\0';
+        //printf("deviceId: \"%s\", length:%ld\n", deviceId->valuestring, strlen(deviceId->valuestring));
+        deviceEvent->deviceId = std::string(deviceId->valuestring);
     }
 
     const cJSON *deviceEventObj = NULL;
@@ -362,20 +365,14 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         if (cJSON_IsString(capability) && (capability->valuestring != NULL))
         {
             //printf("capability: \"%s\"\n", capability->valuestring);
-            //deviceEvent->capability = capability->valuestring;
-            deviceEvent->capability = new char[strlen(capability->valuestring)];
-            memcpy(deviceEvent->capability, capability->valuestring, strlen(capability->valuestring));
-            deviceEvent->capability[strlen(capability->valuestring)] = '\0';
+            deviceEvent->capability = std::string(capability->valuestring);
         }
 
         const cJSON *attribute = cJSON_GetObjectItemCaseSensitive(deviceEventObj, "attribute");
         if (cJSON_IsString(attribute) && (attribute->valuestring != NULL))
         {
             //printf("attribute: \"%s\"\n", attribute->valuestring);
-            //deviceEvent->attribute = attribute->valuestring;
-            deviceEvent->attribute = new char[strlen(attribute->valuestring)];
-            memcpy(deviceEvent->attribute, attribute->valuestring, strlen(attribute->valuestring));
-            deviceEvent->attribute[strlen(attribute->valuestring)] = '\0';
+            deviceEvent->attribute = std::string(attribute->valuestring);
         }
 
         const cJSON *valueObj = cJSON_GetObjectItemCaseSensitive(deviceEventObj, "value");
@@ -383,9 +380,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         {
             char *valueType = valueObj->child->string;
             //printf("valueType: \"%s\"\n", valueType);
-            deviceEvent->valueType = new char[strlen(valueType)];
-            memcpy(deviceEvent->valueType, valueType, strlen(valueType));
-            deviceEvent->valueType[strlen(valueType)] = '\0';
+            deviceEvent->valueType = std::string(valueType);
 
             const cJSON *value = NULL;
             if (strcmp(valueType, "string") == 0){
@@ -393,11 +388,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                 if (cJSON_IsString(value) && (value->valuestring != NULL))
                 {
                     //printf("value: \"%s\"\n", value->valuestring);
-                    //deviceEvent->value = value->valuestring;
-                    //deviceEvent->valueType = valueType;
-                    deviceEvent->value = new char[strlen(value->valuestring)];
-                    memcpy(deviceEvent->value, value->valuestring, strlen(value->valuestring));
-                    deviceEvent->value[strlen(value->valuestring)] = '\0';
+                    deviceEvent->value = std::string(value->valuestring);
                 }
             }
             else if (strcmp(valueType, "integer") == 0){
@@ -405,10 +396,8 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                 if (cJSON_IsNumber(value))
                 {
                     //printf("value: \"%d\"\n", value->valueint);
-                    std::string valueString = std::to_string(value->valueint);
-                    deviceEvent->value = new char[valueString.length()];
-                    memcpy(deviceEvent->value, valueString.c_str(), valueString.length());
-                    deviceEvent->value[valueString.length()] = '\0';
+                    deviceEvent->value = std::to_string(value->valueint);
+
                 }
             }
             else if (strcmp(valueType, "number") == 0){
@@ -416,10 +405,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
                 if (cJSON_IsNumber(value))
                 {
                     //printf("value: \"%f\"\n", value->valuedouble);
-                    std::string valueString = std::to_string(value->valuedouble);
-                    deviceEvent->value = new char[valueString.length()];
-                    memcpy(deviceEvent->value, valueString.c_str(), valueString.length());
-                    deviceEvent->value[valueString.length()] = '\0';
+                    deviceEvent->value = std::to_string(value->valuedouble);
                 }
             } else{
                 cJSON_Delete(event_json);
@@ -435,10 +421,7 @@ bool parseDeviceEventData(char *event, DeviceEvent *deviceEvent){
         if (cJSON_IsString(unit) && (unit->valuestring != NULL))
         {
             //printf("unit: \"%s\"\n", unit->valuestring);
-            //deviceEvent->unit = unit->valuestring;
-            deviceEvent->unit = new char[strlen(unit->valuestring)];
-            memcpy(deviceEvent->unit, unit->valuestring, strlen(unit->valuestring));
-            deviceEvent->unit[strlen(unit->valuestring)] = '\0';
+            deviceEvent->unit = std::string(unit->valuestring);
         }
     }
     cJSON_Delete(event_json);
@@ -485,13 +468,14 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
         if (strcmp(actionType, "if") == 0){
             //printf("***if\n");
             command = cJSON_GetObjectItem(action, "if");
+            //std::string temp(cJSON_Print(command));
             bool isSatisfied = parseCommandIfForRuleEvent(command, event);
             if(isSatisfied){
                 printf("Rule is satisfied ");
             } else{
                 printf("Rule not satisfied ");
             }
-            //cJSON_Delete(rule_json);
+            cJSON_Delete(rule_json);
             return isSatisfied;
         }
         else if (strcmp(actionType, "every") == 0){
@@ -505,7 +489,7 @@ bool checkRuleSatisfiabilityWithDeviceEvent(char *rule, DeviceEvent *event){
             printf("Unknown Command ");
         }
     }
-    //cJSON_Delete(rule_json);
+    cJSON_Delete(rule_json);
     return false;
 }
 
@@ -558,16 +542,16 @@ bool parseRuleForDeviceCommands(char *rule, std::vector<DeviceCommand*> &deviceC
             if(!cJSON_IsNull(deviceCommand)){
                 cJSON *commandList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "commands");
                 if (!cJSON_IsNull(commandList)){
-                    char *commandJsonString = cJSON_Print(commandList);
+                    char *commandJsonString = cJSON_PrintUnformatted(commandList);
                     //printf("commands list: %s\n", commandJsonString);
 
                     cJSON *deviceList = cJSON_GetObjectItemCaseSensitive(deviceCommand, "devices");
                     if(cJSON_IsArray(deviceList)){
                         for (int j = 0 ; j < cJSON_GetArraySize(deviceList) ; j++){
                             DeviceCommand *dc = new DeviceCommand();
-                            dc->deviceId = cJSON_GetArrayItem(deviceList, j)->valuestring;
+                            dc->deviceId = std::string(cJSON_GetArrayItem(deviceList, j)->valuestring);
                             //printf("deviceId: %s\n", dc->deviceId);
-                            dc->command = commandJsonString;
+                            dc->command = std::string(commandJsonString);
                             deviceCommandsVector.push_back(dc);
                         }
                     } else{
@@ -576,16 +560,18 @@ bool parseRuleForDeviceCommands(char *rule, std::vector<DeviceCommand*> &deviceC
                 }
                 else {
                     printf("json parse error: commandList... ");
+                    cJSON_Delete(rule_json);
                     return false;
                 }
             }
             else{
                 printf("json parse error: ruleCommandsVector... ");
+                cJSON_Delete(rule_json);
                 return false;
             }
         }
     }
-    //cJSON_Delete(rule_json);
+    cJSON_Delete(rule_json);
     ruleCommandsVector.clear();
     return true;
 }
@@ -608,7 +594,7 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
 
         if (strcmp(actionType, "every") == 0){
             TimeRule tr;
-            tr.ruleID = ruleID->valuestring;
+            tr.ruleID = std::string(ruleID->valuestring);
             const cJSON *condition = cJSON_GetObjectItem(action, "every")->child;
 
             char *conditionType = condition->string;
@@ -617,10 +603,11 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
                 printf("***specific ");
                 const cJSON *reference = cJSON_GetObjectItem(condition, "reference");
                 if (cJSON_IsString(reference)){
-                    tr.timeReference = reference->valuestring;
+                    tr.timeReference = std::string(reference->valuestring);
                     //printf("%s\n", reference->valuestring);
                 }else{
                     printf("Unknown reference... ");
+                    cJSON_Delete(rule_json);
                     return false;
                 }
                 const cJSON *offset = cJSON_GetObjectItem(condition, "offset");
@@ -631,9 +618,10 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
                         tr.timeOffset = value->valueint;
                     const cJSON *unitObj = cJSON_GetObjectItem(offset, "unit");
                     if (cJSON_IsString(unitObj))
-                        tr.unit = unitObj->valuestring;
+                        tr.unit = std::string(unitObj->valuestring);
                 }else{
                     printf("Unknown offset... ");
+                    cJSON_Delete(rule_json);
                     return false;
                 }
             }
@@ -646,33 +634,36 @@ bool parseRuleForTimeInfo(char *rule, std::vector<TimeRule> &timeRules){
                     tr.timeOffset = value->valueint;
                 const cJSON *unitObj = cJSON_GetObjectItem(condition, "unit");
                 if (cJSON_IsString(unitObj))
-                    tr.unit = unitObj->valuestring;
+                    tr.unit = std::string(unitObj->valuestring);
             }
             else{
                 printf("Unknown condition... ");
+                cJSON_Delete(rule_json);
                 return false;
             }
             timeRules.push_back(tr);
         }
         else{
             printf("Unknown Command... ");
+            cJSON_Delete(rule_json);
             return false;
         }
     }
+    cJSON_Delete(rule_json);
     return true;
 }
 
 bool configureTimeString(TimeRule &timeRule){
     int hour = 0;
-    if (strcmp(timeRule.timeReference, enum_to_string(NOW)) == 0){
+    if ((timeRule.timeReference.compare(enum_to_string(NOW))) == 0){
         hour = 9; //TODO: get current time SGX
-    }else if (strcmp(timeRule.timeReference, enum_to_string(MIDNIGHT)) == 0){
+    }else if ((timeRule.timeReference.compare(enum_to_string(MIDNIGHT))) == 0){
         hour = 00;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(SUNRISE)) == 0){
+    }else if ((timeRule.timeReference.compare(enum_to_string(SUNRISE))) == 0){
         hour = 06;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(NOON)) == 0){
+    }else if ((timeRule.timeReference.compare(enum_to_string(NOON))) == 0){
         hour = 12;
-    }else if (strcmp(timeRule.timeReference, enum_to_string(SUNSET)) == 0){
+    }else if ((timeRule.timeReference.compare(enum_to_string(SUNSET))) == 0){
         hour = 18;
     }else{
         printf("Unknown time reference... ");
@@ -680,14 +671,14 @@ bool configureTimeString(TimeRule &timeRule){
     }
 
     int hourOffset = 0, minOffset = 0;
-    if(strcmp(timeRule.unit, "Minute") == 0){
+    if(strcmp(timeRule.unit.c_str(), "Minute") == 0){
         hourOffset = timeRule.timeOffset / 60;
         minOffset = timeRule.timeOffset % 60;
         //printf("%d, %d, %d\n", hour, hourOffset, minOffset);
         hourOffset = minOffset >= 0 ? hourOffset : hourOffset-1;
         minOffset = minOffset >= 0 ? minOffset : 60+minOffset;
 
-    } else if(strcmp(timeRule.unit, "Hour") == 0){
+    } else if(strcmp(timeRule.unit.c_str(), "Hour") == 0){
         hourOffset = timeRule.timeOffset;
     } else{
         printf("Unknown time unit...");

@@ -1,4 +1,5 @@
 LM5l3NNVtE3bOvEG,Alarm
+efn2MAhGd1ywAG6s,AirConditionerMode
 mdiqIXWZBt7dpnS3,CarbonDioxideMeasurement
 UFJDztYghPLB8hAe,ColorControl
 A8VRvAZOPUOE85Zh,DishwasherMode

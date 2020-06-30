@@ -16,6 +16,70 @@
     },
 
     {
+        "deviceID": "NnLuYt9sZ3bgUNyP",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "PresenceSensor",
+                "attribute": "presence",
+                "value": {
+                    "string": "present"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "RFXUBklXGCN64Q9P",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature",
+                "value": {
+                    "number": 75
+                },
+                "unit": "C",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "tvVWG4SxjVttwLeX",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "DoorControl",
+                "attribute": "door",
+                "value": {
+                    "string": "close"
+                },
+                "unit": "",
+                "data": []
+            }
+        ]
+    },
+
+    {
+        "deviceID": "9WZ8iSlgrp3yUllM",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "EnergyMeter",
+                "attribute": "energy",
+                "value": {
+                    "number": 110
+                },
+                "unit": "kWh",
+                "data": []
+            }
+        ]
+    },
+
+    {
         "deviceID": "HNN3GOkLnPfWE2Mn",
         "deviceEvents": [
             {
@@ -42,22 +106,6 @@
                     "number": 50
                 },
                 "unit": "kWh",
-                "data": []
-            }
-        ]
-    },
-
-    {
-        "deviceID": "NnLuYt9sZ3bgUNyP",
-        "deviceEvents": [
-            {
-                "component": "main",
-                "capability": "PresenceSensor",
-                "attribute": "presence",
-                "value": {
-                    "string": "present"
-                },
-                "unit": "",
                 "data": []
             }
         ]
@@ -144,22 +192,6 @@
     },
 
     {
-        "deviceID": "tvVWG4SxjVttwLeX",
-        "deviceEvents": [
-            {
-                "component": "main",
-                "capability": "DoorControl",
-                "attribute": "door",
-                "value": {
-                    "string": "open"
-                },
-                "unit": "",
-                "data": []
-            }
-        ]
-    },
-
-    {
         "deviceID": "ASH8QZpESZv9sB6h",
         "deviceEvents": [
             {
@@ -202,22 +234,6 @@
                     "string": "locked"
                 },
                 "unit": "",
-                "data": []
-            }
-        ]
-    },
-
-    {
-        "deviceID": "RFXUBklXGCN64Q9P",
-        "deviceEvents": [
-            {
-                "component": "main",
-                "capability": "TemperatureMeasurement",
-                "attribute": "temperature",
-                "value": {
-                    "number": 25
-                },
-                "unit": "C",
                 "data": []
             }
         ]

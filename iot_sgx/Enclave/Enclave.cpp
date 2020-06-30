@@ -92,6 +92,8 @@ void load_previous_rules(){
     ocall_get_rule_count(&numRules, NULL, 1);
 
     if(numRules > 0){
+        if(numRules > 100)
+            numRules = 100;
         Rule ruleset[numRules];
         size_t isSuccess = 0;
         ocall_get_rules(&isSuccess, ruleset, numRules, NULL, 1);
@@ -110,7 +112,9 @@ void load_previous_rules(){
                         return;
                     }
                 } else{
-                    decMessage = ruleset[i].rule;
+                    decMessage = (char *) malloc((ruleset[i].ruleLength+1)*sizeof(char));
+                    memcpy(decMessage, ruleset[i].rule, ruleset[i].ruleLength);
+                    decMessage[ruleset[i].ruleLength] = '\0';
                 }
 
                 Rule *myRule = new Rule();
@@ -118,6 +122,7 @@ void load_previous_rules(){
                 myRule->ruleLength = ruleset[i].ruleLength;
                 ruleManagerObj.didReceiveRule(myRule, false);
 
+                //TODO: free memory
             }
 
         }
@@ -137,7 +142,7 @@ void load_previous_rules(){
 void ecall_initialize_enclave(int isEncryptionEnabled){
     ruleManagerObj = RuleManager();
     ruleManagerObj.isEncryptionEnabled = isEncryptionEnabled == 1;
-    load_previous_rules();
+    //load_previous_rules();
 }
 
 
@@ -157,8 +162,14 @@ void ecall_decrypt_message(struct message *msg){
             return;
         }
     }else{
-        decMessage = msg->text;
+        decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
+        memcpy(decMessage, msg->text, msg->textLength);
+        decMessage[msg->textLength] = '\0';
     }
+    //free(msg->text);
+    //free(msg->tag);
+    //TODO: free memory
+
     ruleManagerObj.didReceiveDeviceEvent(decMessage);
     free(decMessage);
 }
@@ -179,15 +190,18 @@ void ecall_decrypt_rule(struct message* msg){
             return;
         }
     }else{
-        decMessage = msg->text;
+        decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
+        memcpy(decMessage, msg->text, msg->textLength);
+        decMessage[msg->textLength] = '\0';
+        //delete[] msg->text;
     }
+
 
     Rule *myRule = new Rule();
     myRule->rule = decMessage;
     myRule->ruleLength = msg->textLength;
 
     ruleManagerObj.didReceiveRule(myRule, true);
-
 
     free(decMessage);
     //delete[] msg->text;

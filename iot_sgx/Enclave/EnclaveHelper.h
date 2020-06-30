@@ -25,7 +25,7 @@ ValueType getValueType(char *key);
 TimeReference getTimeReference(char *key);
 TimeUnit getTimeUnit(char *key);
 
-char* enum_to_string(TimeReference type);
+std::string enum_to_string(TimeReference type);
 
 int getTimeMinute(int h, int m);
 std::vector<std::string> split(std::string s, std::string delimiter);
@@ -34,22 +34,28 @@ std::string mqttTopicName();
 
 
 struct DeviceEvent{
-    ~DeviceEvent(){
-        delete[] deviceId;
-        delete[] capability;
-        delete[] attribute;
-        delete[] value;
-        delete[] valueType;
-        delete[] unit;
-    }
-    char *deviceId;
-    char *capability;
-    char *attribute;
-    char *value;
-    char *valueType;
-    char *unit;
+    std::string deviceId;
+    std::string capability;
+    std::string attribute;
+    std::string value;
+    std::string valueType;
+    std::string unit;
 };
 
+struct TimeRule{
+    std::string ruleID;
+    std::string rule;
+    std::string timeReference;
+    int timeOffset;
+    std::string unit;
+    int hour;
+    int min;
+};
+
+struct DeviceCommand{
+    std::string deviceId;
+    std::string command;
+};
 
 
 class CompareTime {

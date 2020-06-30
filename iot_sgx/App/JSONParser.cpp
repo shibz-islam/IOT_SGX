@@ -29,7 +29,7 @@ std::string make_json_from_message(struct ruleActionProperty *ptr)
 
     Json::FastWriter fastwriter;
     std::string message = fastwriter.write(root);
-    std::cout<< "json doc: " << message<<std::endl;
+    //std::cout<< "json doc: " << message<<std::endl;
 
     return message;
 }
