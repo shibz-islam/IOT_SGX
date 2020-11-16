@@ -1,0 +1,10 @@
+#name,device_id,capability,attribute
+SmartThings Presence Sensor,2f1403d7-06bb-4b5d-8e49-d4b809f3d599,presenceSensor,presence
+Light,41595006-d1fb-41d3-b28a-5131b65b3835,light,switch
+Smart Plug,bcd666aa-7f85-149e-f475-b1bb3085e19a,switch,switch
+Multipurpose Sensor,f0c55b0b-e6fe-4fb4-b80b-9209703e3352,temperatureMeasurement,temperature
+Ecolink Tilt Sensor,49838db0-e60a-402c-9c12-44a76f564059,contactSensor,contact
+Water Leak Sensor,f2b4f276-c350-4b33-ade5-a2eb7ed71dda,waterSensor,water
+Motion Sensor,f3cf86d6-db17-4c2d-930a-a6929dfdbbaf,motionSensor,motion
+Button,e0922478-c63d-47b6-9b7d-99be0d0fb111,button,button
+Ecolink Open/Closed Sensor,3d2680bb-76b7-4ea3-8211-d843d0c92256,contactSensor,contact
