@@ -21,10 +21,12 @@ tracked_device_id_list_filename = "_tracked_device_id_list.txt"
 EXP_PATH = "experiments/"
 FILENAME_RECORD_RESPONSE_TIME = "record_response_time"
 FILENAME_RECORD_RESPONSE_TIME_UNENC = "record_response_time_unenc"
-FILENAME_EXT = "_June22.txt"
+FILENAME_EXT = "_june29.txt"
 
 RULE_COUNT = 10000
 
 IS_ENCRYPTION_ENABLED = False
 START_TIME = 0
 PENDING_ID = ""
+
+MQTT_TOPIC_NAME = "iot/utd/data/"

@@ -29,7 +29,7 @@ def read_data_from_file(filepath):
 
 
 def write_data_to_file(filepath, data_list):
-    f = open(filepath, "w")
+    f = open(filepath, "a+")
     for item in data_list:
         f.write(item)
         f.write("\n")
@@ -52,7 +52,7 @@ def get_json_data(data):
 def log_response_time():
     end = timer()
     response_time = end - Properties.START_TIME
-    line = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "," + Properties.PENDING_ID + "," + response_time
+    line = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "," + Properties.PENDING_ID + "," + str(response_time)
     print("Response Time: ", line)
     if Properties.IS_ENCRYPTION_ENABLED:
         filepath = Properties.EXP_PATH + Properties.FILENAME_RECORD_RESPONSE_TIME + Properties.FILENAME_EXT

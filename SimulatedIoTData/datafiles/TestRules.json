@@ -1,0 +1,83 @@
+[
+	{
+		"name": "Turn off the light Switch if temperature is more than 25 C",
+		"ruleID": "xDFfC7QETZp2",
+		"userID": "",
+		"actions": [
+			{
+				"if":{
+					"greater_than": {
+	                    "left": {
+	                        "integer": 25
+	                    },
+	                    "right": {
+	                        "device": {
+	                            "devices": ["RFXUBklXGCN64Q9P"],
+	                            "component": "main",
+	                            "capability": "TemperatureMeasurement",
+	                            "attribute": "temperature"
+	                        }
+	                    }
+	                },
+					"then": [
+						{
+							"command": {
+								"devices": ["EGBlV8ZgZzHoXtGv"],
+								"commands": [
+									{
+										"component": "main",
+										"capability": "Switch",
+										"command": "off",
+										"arguments": []
+									}
+								]
+							}
+						}
+					],
+					"else": []
+				}
+			}
+		]
+	},
+
+	{
+		"name": "Turn on the light Switch if temperature is less than 25 C",
+		"ruleID": "xDFfC7QETZp1",
+		"userID": "",
+		"actions": [
+			{
+				"if":{
+					"less_than": {
+	                    "left": {
+	                        "integer": 20
+	                    },
+	                    "right": {
+	                        "device": {
+	                            "devices": ["RFXUBklXGCN64Q9P"],
+	                            "component": "main",
+	                            "capability": "TemperatureMeasurement",
+	                            "attribute": "temperature"
+	                        }
+	                    }
+	                },
+					"then": [
+						{
+							"command": {
+								"devices": ["EGBlV8ZgZzHoXtGv"],
+								"commands": [
+									{
+										"component": "main",
+										"capability": "Switch",
+										"command": "on",
+										"arguments": []
+									}
+								]
+							}
+						}
+					],
+					"else": []
+				}
+			}
+		]
+	}
+]

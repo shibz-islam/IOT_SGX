@@ -1,0 +1,17 @@
+[
+    {
+        "deviceID": "RFXUBklXGCN64Q9P",
+        "deviceEvents": [
+            {
+                "component": "main",
+                "capability": "TemperatureMeasurement",
+                "attribute": "temperature",
+                "value": {
+                    "number": 75
+                },
+                "unit": "C",
+                "data": []
+            }
+        ]
+    }
+]
