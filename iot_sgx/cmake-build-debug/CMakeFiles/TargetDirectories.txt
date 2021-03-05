@@ -1,3 +1,0 @@
-/home/shihab/sgx_projects/iot_sgx/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/shihab/sgx_projects/iot_sgx/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/shihab/sgx_projects/iot_sgx/cmake-build-debug/CMakeFiles/IoTEnclave.dir
