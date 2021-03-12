@@ -36,7 +36,6 @@
 #include <stdio.h> /* vsnprintf */
 #include <string.h>
 #include "analytics_utils.h"
-#include "Constants.h"
 #include "RuleManager.h"
 #include "cJSON.h"
 #include "RuleParser.h"

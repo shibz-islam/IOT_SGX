@@ -57,18 +57,18 @@
 #include <thread>
 #include <vector>
 #include <map>
-
-#include "SocketManager.h"
-#include "JSONParser.h"
-#include "MongoManager.h"
-#include "aes_gcm.h"
-#include "EmailManager.h"
-#include "IoTMQTTWrapper.h"
 #include <chrono>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+
+#include "SocketManager.h"
+#include "JSONParser.h"
+#include "MongoManager.h"
+#include "aes_gcm.h"
+#include "IoTMQTTWrapper.h"
+
 
 using std::chrono::system_clock;
 

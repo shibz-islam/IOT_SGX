@@ -3,7 +3,6 @@
 //
 
 #include "RuleManager.h"
-#include "Constants.h"
 #include "Enclave.h"
 #include "Enclave_t.h"
 #include "RuleParser.h"
