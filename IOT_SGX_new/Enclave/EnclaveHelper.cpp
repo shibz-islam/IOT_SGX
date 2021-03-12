@@ -17,6 +17,10 @@ void toLowerCase(char *str){
         str[i] = tolower(str[i]);
 }
 
+std::string mqttTopicName(){
+    return mqttTopicForData;
+}
+
 RuleType getRuleType(char *key){
     toLowerCase(key);
     if(strcmp(key, "if")==0){
@@ -63,6 +67,11 @@ OperatorType getOperatorType (char *key){
     }
 }
 
+
+/****************************************************
+ * Timer Helpers
+ ****************************************************/
+
 TimeReferenceType getTimeReferenceType (char *key){
     toLowerCase(key);
     if(strcmp(key, "now")==0){
@@ -101,6 +110,10 @@ TimeUnitType getTimeUnitType (char *key){
     }
 }
 
+/*
+ * constructs a time string in hh:mm:ss format from time reference, time offset, and time unit
+ * returns: time string in hh:mm:ss format
+ */
 std::string getTimeString(TimeReferenceType timeReferenceType, int timeOffset, TimeUnitType timeUnitType){
     int h = 0;
     switch (timeReferenceType){
@@ -160,10 +173,15 @@ int getTimeSecond(int h, int m){
     return (h*60+m)*60;
 }
 
-std::string mqttTopicName(){
-    return mqttTopicForData;
-}
 
+
+/****************************************************
+ * Init and Delete Structs
+ ****************************************************/
+
+/*
+ * Initialize struct Rule and its trigger & Action component
+ */
 bool initRule(Rule **myrule){
     *myrule = (Rule*) malloc( sizeof( struct Rule ));
     if (*myrule == NULL) {
@@ -183,6 +201,9 @@ bool initRule(Rule **myrule){
     return true;
 }
 
+/*
+ * Delete struct Rule and its properties
+ */
 bool deleteRule(Rule **myrule){
     if (*myrule == NULL) {
         printf("EnclaveHelper:: Rule NULL!");
@@ -219,6 +240,9 @@ bool deleteRule(Rule **myrule){
     return true;
 }
 
+/*
+ * Delete struct DeviceEvent and its properties
+ */
 bool deleteDeviceEvent(DeviceEvent **myEvent){
     if (*myEvent == NULL) {
         printf("EnclaveHelper:: Device Event NULL!");
@@ -241,6 +265,9 @@ bool deleteDeviceEvent(DeviceEvent **myEvent){
     return true;
 }
 
+/*
+ * Delete struct Message and its properties
+ */
 bool deleteMessage(Message **msg){
     if((*msg)->isEncrypted){
 
@@ -261,10 +288,13 @@ bool deleteMessage(Message **msg){
 }
 
 
-/*
+/****************************************************
  * Printing
- */
+ ****************************************************/
 
+/*
+ * Print Rule information
+ */
 void printRuleInfo(Rule *myRule){
     if(myRule->ruleType == IF){
         if(myRule->trigger->valueType == STRING && myRule->action->valueType == STRING){
@@ -300,6 +330,9 @@ void printRuleInfo(Rule *myRule){
 
 }
 
+/*
+ * Print device event information
+ */
 void printDeviceEventInfo(DeviceEvent *myEvent){
     if(myEvent->valueType == STRING){
         printf("DeviceEvent:: Event: deviceID=%s, capability=%s, attribute=%s, value=%s", myEvent->deviceID, myEvent->capability, myEvent->attribute, myEvent->valueString);
@@ -308,6 +341,9 @@ void printDeviceEventInfo(DeviceEvent *myEvent){
     }
 }
 
+/*
+ * Print the Rule conflict name
+ */
 void printConflictType(ConflictType conflict){
     switch (conflict){
         case SHADOW:{
@@ -339,6 +375,10 @@ void printConflictType(ConflictType conflict){
     }
 }
 
+/*
+ * Print the type of sgx error and its code
+ * @params: sgx status of a process
+ */
 void check_error_code(sgx_status_t stat){
     //printf("STATUS: %d",stat);
     /* More Error Codes in SDK Developer Reference */

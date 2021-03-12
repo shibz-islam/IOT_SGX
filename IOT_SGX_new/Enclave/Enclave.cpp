@@ -48,8 +48,6 @@
 #include "sgx_tae_service.h"
 
 
-//bool isEncryptionEnabled = true;
-
 /*
  * printf:
  *   Invokes OCALL to display the enclave buffer to the terminal.
@@ -133,10 +131,14 @@ void ecall_initialize_enclave(int isEncryption){
     setupEnclave();
 }
 
-
+/*
+ * The main entry point in the Enclave to receive the device events
+ * Tasks: Receive a device event from outside of enclave, decrypt the event, perform rule automation
+ */
 int ecall_did_receive_event(struct Message *msg){
     char *decMessage = NULL;
     if(isEncryptionEnabled){
+        /* decrypt event */
         decMessage = (char *) malloc((msg->textLength+1) * sizeof(char));
         sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
         if(status != 0){
@@ -168,10 +170,14 @@ int ecall_did_receive_event(struct Message *msg){
     return 0;
 }
 
-
+/*
+ * The main entry point in the Enclave to receive the rules
+ *  Tasks: Receive a rule from outside of enclave, decrypt the rule, check for any conflict with existing rules, store the rule in db if no conflict
+ */
 int ecall_did_receive_rule(struct Message* msg){
     char *decMessage = NULL;
     if(isEncryptionEnabled){
+        /* decrypt rule */
         decMessage = (char *) malloc((msg->textLength+1)*sizeof(char));
         sgx_status_t status = decryptMessageAES(msg->text, msg->textLength, decMessage, msg->textLength, msg->tag);
         if (status != 0){
@@ -188,12 +194,13 @@ int ecall_did_receive_rule(struct Message* msg){
 
     struct Rule *myrule;
     if(initRule(&myrule)){
+        /* parse rule */
         if(startParsingRule(decMessage, myrule)){
             printRuleInfo(myrule);
-            /*conflict detection*/
+            /* conflict detection */
             if(!startRuleConflictDetection(myrule)){
                 //updateGraph(myrule);
-                /*store in db*/
+                /* store in db */
                 if(storeRuleInDB(decMessage, myrule)){
                     printf("Enclave:: Rule stored in DB.");
                 }
@@ -208,16 +215,25 @@ int ecall_did_receive_rule(struct Message* msg){
     return 0;
 }
 
+/*
+ * Get the earliest timer from the priority queue
+ */
 int ecall_get_latest_timer(struct TimerRule *msg){
     bool isSuccess = getNextTimer(msg);
     return isSuccess? 1: 0;
 }
 
+/*
+ * A call to fire the action event after the corresponding timer has set
+ */
 int ecall_fire_timer(char *ruleID){
     bool isSuccess = startTimerRuleHandler(ruleID);
     return isSuccess? 1: 0;
 }
 
+/*
+ * A call to reset all the timers in the priority queue
+ */
 int ecall_reset_timers(){
     bool isSuccess = resetQueue();
     return isSuccess? 1: 0;

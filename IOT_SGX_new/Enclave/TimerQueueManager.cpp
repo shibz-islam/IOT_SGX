@@ -16,16 +16,19 @@ struct CompareTime {
 std::priority_queue<TimerRule, std::vector<TimerRule>, CompareTime> timerQueue;
 
 
-/******************/
+/*********************************************************************/
 /* Clock */
-/******************/
+/*********************************************************************/
 
+/*
+ * Calculate the duration from current time to a specific time
+ */
 int getUpdatedTime(int hour, int minute, int second){
     size_t desiredTime = getTimeSecond(hour, minute);
 
     size_t currentTime = -1;
     int timer_duration = -1;
-    ocall_get_current_time(&currentTime);
+    ocall_get_current_time(&currentTime); /* get the current time from the REE via ocall */
     if(currentTime != -1){
         printf("TimerQueueManager:: current time=%d; desired time=%d", currentTime, desiredTime);
         if((desiredTime - currentTime) > 0 ){
@@ -35,7 +38,9 @@ int getUpdatedTime(int hour, int minute, int second){
     return timer_duration;
 }
 
-
+/*
+ * Initializes a TimerRule object and get the duration of timer from time reference, time offset, and time unit.
+ */
 bool initTime(TimeReferenceType timeReferenceType, int timeOffset, TimeUnitType timeUnitType, TimerRule &tr){
     int h = 0;
     switch (timeReferenceType){
@@ -86,7 +91,7 @@ bool initTime(TimeReferenceType timeReferenceType, int timeOffset, TimeUnitType 
     tr.minute = minOffset;
     tr.second = 0;
 
-    int timer_duration = getUpdatedTime(tr.hour, tr.minute, tr.second);
+    int timer_duration = getUpdatedTime(tr.hour, tr.minute, tr.second); //calculate the duration of timer according to current time
     if(timer_duration != -1){
         tr.duration = timer_duration;
         return true;
@@ -98,14 +103,20 @@ bool initTime(TimeReferenceType timeReferenceType, int timeOffset, TimeUnitType 
 
 
 
-/******************/
+/*********************************************************************/
 /* Queue */
-/******************/
+/*********************************************************************/
 
+/*
+ * Initialize a priority queue for struct TimerRule. Elements are sorted according to the duration field in ascending order.
+ */
 void initQueue(){
     timerQueue = std::priority_queue<TimerRule, std::vector<TimerRule>, CompareTime>();
 }
 
+/*
+ * Add a TimerRule object to the priority queue
+ */
 bool addToQueue(Rule *rule){
     char *id = (char*)malloc((strlen(rule->ruleID)+1) * sizeof(char));
     memcpy(id, rule->ruleID, strlen(rule->ruleID));
@@ -120,12 +131,15 @@ bool addToQueue(Rule *rule){
     return false;
 }
 
+/*
+ * Remove the element from the top of the priority queue
+ */
 bool removeTopFromQueue(char *ruleID){
     if(!timerQueue.empty()){
         TimerRule tr = timerQueue.top();
         if(strcmp(tr.ruleID, ruleID) == 0){
-            TimerRule tr = timerQueue.pop();
-            free(tr.id);
+            timerQueue.pop();
+            free(tr.ruleID);
             return true;
         }
     }
@@ -133,6 +147,9 @@ bool removeTopFromQueue(char *ruleID){
     return false;
 }
 
+/*
+ * Get the top element from the priority queue
+ */
 bool getTopFromQueue(TimerRule *tRule){
     if(!timerQueue.empty()){
         TimerRule tr = timerQueue.top();
@@ -147,12 +164,14 @@ bool getTopFromQueue(TimerRule *tRule){
     return false;
 }
 
-
-
+/*
+ * Reset the priority queue: remove all the elements and then populate again from the DB
+ */
 bool resetQueue(){
     while (!timerQueue.empty()) {
-        TimerRule tr = timerQueue.pop();
-        free(tr.id);
+        TimerRule tr = timerQueue.top();
+        timerQueue.pop();
+        free(tr.ruleID);
     }
     timerQueue = {};
 
@@ -165,7 +184,6 @@ bool resetQueue(){
             deleteRule(&ruleset[i]);
         }
         ruleset.clear();
-        //free_allocated_memory_void((void**)&ruleset);
         return true;
     }else{
         printf("TimerQueueManager:: Rule retrieval failed!");
@@ -176,10 +194,13 @@ bool resetQueue(){
 
 
 
-/******************/
+/*********************************************************************/
 /* Timer */
-/******************/
+/*********************************************************************/
 
+/*
+ * Get the next Timer from the priority queue according to the ascending duration of timer
+ */
 bool getNextTimer(TimerRule *tRule){
     if(getTopFromQueue(tRule)){
         int duration = getUpdatedTime(tRule->hour, tRule->minute, tRule->second);
@@ -191,15 +212,23 @@ bool getNextTimer(TimerRule *tRule){
     return false;
 }
 
+/*
+ * Activate the Rule: send command to action-device
+ *  @params: ruleID of the rule
+ *  returns: true if successfully sent, else false
+ */
 bool startTimerRuleHandler(char *ruleID){
+    /* remove from priority queue */
     if(!removeTopFromQueue(ruleID))
         return false;
 
-    printf("TimerQueueManager:: #getEdgeFromDB with ruleid = %s", ruleID);
+    printf("TimerQueueManager:: #startTimerRuleHandler with ruleid = %s", ruleID);
     std::vector<Rule*> ruleset;
+    /* retrieve the rule from DB with ruleID */
     if(retrieveRulesFromDB(ruleset, 1, ruleID, "", BY_RULE)){
         printf("TimerQueueManager:: Retrieved rule!, size=%d", ruleset.size());
         for (int i = 0; i < ruleset.size(); ++i) {
+            /* send the rule action commands to the specified device */
             bool ret = sendRuleCommands(ruleset[i]);
             deleteRule(&ruleset[i]);
             return ret;

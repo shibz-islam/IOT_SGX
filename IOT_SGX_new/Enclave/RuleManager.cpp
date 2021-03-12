@@ -33,9 +33,9 @@ static inline void free_allocated_memory_void(void **pointer)
 
 
 
-/******************/
+/******************************************************/
 /* Setup */
-/******************/
+/******************************************************/
 
 
 void setupEnclave(){
@@ -61,10 +61,16 @@ void setupEnclave(){
 
 
 
-/******************/
+/******************************************************/
 /* Parsing */
-/******************/
+/******************************************************/
 
+/*
+ * startParsingRule:
+ *  Parse the decrypted rule string and make a Struct Rule
+ *  @params: decrypted rule string, Struct Rule
+ *  returns: true if successful, else false
+ */
 bool startParsingRule(char *ruleString, Rule *myRule){
     printf("RuleManager:: #startParsingRule ");
     RuleType ruleType = parseRuleTypeAction(ruleString);
@@ -93,6 +99,12 @@ bool startParsingRule(char *ruleString, Rule *myRule){
     return false;
 }
 
+/*
+ * startParsingDeviceEvent:
+ *  Parse the decrypted event string and make a Struct DeviceEvent
+ *  @params: decrypted event string, Struct DeviceEvent
+ *  returns: true if successful, else false
+ */
 bool startParsingDeviceEvent(char *event, DeviceEvent *myEvent){
     printf("RuleManager:: #startParsingDeviceEvent ");
     if(parseDeviceEventData(event, myEvent)){
@@ -107,9 +119,9 @@ bool startParsingDeviceEvent(char *event, DeviceEvent *myEvent){
 
 
 
-/******************/
+/******************************************************/
 /* Operation */
-/******************/
+/******************************************************/
 
 /*
  * returns false if there's no conflict, else return true.
@@ -120,7 +132,10 @@ bool startRuleConflictDetection(Rule *myRule){
 }
 
 /*
- * returns true if the Rule is satisfied, else return false.
+ * checkRuleSatisfiability:
+ *  if the device event matches the trigger properties of a Rule, then the rule is satisfied
+ *  @params: an incoming device event, a Rule fetched from DB
+ *  returns true if the Rule is satisfied, else false.
  */
 bool checkRuleSatisfiability(DeviceEvent *myEvent, Rule *myRule){
     if(strcmp(myEvent->deviceID, myRule->trigger->deviceID) == 0){
@@ -184,16 +199,22 @@ bool checkRuleSatisfiability(DeviceEvent *myEvent, Rule *myRule){
     return true;
 }
 
-
+/*
+ * startRuleAutomation:
+ *  Check if an incoming device event satisfies any rule stored in the DB.
+ *  @params: device event
+ *  returns: true if any Rule is satisfied, else returns false.
+ */
 bool startRuleAutomation(DeviceEvent *myEvent){
     printf("RuleManager:: #startRuleAutomation");
     std::vector<Rule*> ruleset;
     bool isSuccess = myEvent->valueType == STRING ? retrieveRulesFromDB(ruleset, 0, myEvent->deviceID, myEvent->valueString, BY_TRIGGER_DEVICE_ID_ATTR) : retrieveRulesFromDB(ruleset, 0, myEvent->deviceID, "", BY_TRIGGER_DEVICE_ID);
     if(isSuccess){
         for (int i = 0; i < ruleset.size(); ++i) {
+            /* verify if the rule is satisfied */
             if(checkRuleSatisfiability(myEvent, ruleset[i])){
                 //printRuleInfo(ruleset[i]);
-                sendRuleCommands(ruleset[i]);
+                sendRuleCommands(ruleset[i]); /* send action commands */
             }
             deleteRule(&ruleset[i]);
         }
@@ -206,12 +227,16 @@ bool startRuleAutomation(DeviceEvent *myEvent){
 }
 
 /*
- * sends action-commands to respective devices
+ * sendRuleCommands:
+ *  sends action-commands to respective devices according to the Action part of the Rule
+ *  @params: a Rule
+ *  returns: true if command sent successfully, else false
  */
 bool sendRuleCommands(Rule *myRule){
     Message *response = (Message*) malloc(sizeof(Message));
     response->address = myRule->action->deviceID;
     if(isEncryptionEnabled){
+        /* encrypt the command */
         int len = strlen(myRule->responseCommand);
         response->text = (char *) malloc(sizeof(char) * (len+1));
         response->tag = (char *) malloc(sizeof(char) * (SGX_AESGCM_MAC_SIZE+1));
@@ -227,8 +252,7 @@ bool sendRuleCommands(Rule *myRule){
     }
 
     size_t isSuccess = 1;
-    //TODO: uncomment
-    ocall_send_rule_commands(&isSuccess, response);
+    ocall_send_rule_commands(&isSuccess, response); /* pass the response to the REE via ocall */
 
     if (isSuccess){
         printf("RuleManager:: Successfully sent rule command to device!");

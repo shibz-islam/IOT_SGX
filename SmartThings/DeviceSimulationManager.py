@@ -192,7 +192,7 @@ def start_simulation():
             time.sleep(1)
             count += 1
             print("Count=", count)
-        if count == Properties.RULE_COUNT:
+        if count == 10:
             break
 
     socketClient.send_to_server(soc, "quit")

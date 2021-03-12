@@ -479,9 +479,6 @@ void start_timer_thread(){
  */
 int SGX_CDECL main(int argc, char *argv[])
 {
-    (void)(argc);
-    (void)(argv);
-
     /**
      * Run command: ./app <open_socket_for_rules> <open_socket_for_events> <start_timer_thread> <isEncryptionEnable>
      * True = 1, False = 0
@@ -503,28 +500,37 @@ int SGX_CDECL main(int argc, char *argv[])
 
     isEncryptionEnabled = strcmp(argv[argc - 1], "1") == 0;
     printf("isEncryptionEnabled: %d\n", isEncryptionEnabled);
+
+    /* initialize other services */
     mongoSetup();
     MQTTSetup();
 
+    /* setup the Enclave with argument values */
     ecall_initialize_enclave(global_eid, isEncryptionEnabled);
 
     int num_threads = 3;
     bool valid_threads[] = {false, false, false};
     boost::thread t[num_threads];
 
+    /* start a thread to handle rules */
     if(strcmp(argv[1], "1") == 0){
         valid_threads[0] = true;
         t[0] = boost::thread(open_socket_for_rules);
     }
+
+    /* start a thread to handle device events */
     if(strcmp(argv[2], "1") == 0){
         valid_threads[1] = true;
         t[1] = boost::thread(open_socket_for_events);
     }
+
+    /* start a thread to handle time-based events */
     if(strcmp(argv[3], "1") == 0){
         valid_threads[2] = true;
         t[2] = boost::thread(start_timer_thread);
     }
 
+    /* Join all the threads */
     for (int i = 0; i < num_threads; ++i) {
         if(valid_threads[i])  t[i].join();
     }
@@ -532,7 +538,7 @@ int SGX_CDECL main(int argc, char *argv[])
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
     
-    printf("Info: SampleEnclave successfully returned.\n");
+    printf("Info: Enclave successfully returned.\n");
 
     printf("Enter a character before exit ...\n");
     getchar();

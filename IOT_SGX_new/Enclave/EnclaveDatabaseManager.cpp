@@ -39,54 +39,9 @@ void setAttributeValue(RuleComponent *trigger, DatabaseElement *dbElement){
     }
 }
 
-
-bool storeRuleInDB(char *ruleString, Rule *myrule){
-    size_t len = strlen(ruleString);
-    DatabaseElement *dbElement = (DatabaseElement*) malloc(sizeof(struct DatabaseElement));
-    dbElement->data = (Message*) malloc(sizeof(struct Message));
-    dbElement->data->text = NULL;
-    dbElement->data->tag = NULL;
-    if(isEncryptionEnabled){
-        dbElement->data->isEncrypted = 1;
-        dbElement->data->text = (char *) malloc(sizeof(char) * (len+1));
-        dbElement->data->tag = (char *) malloc(sizeof(char) * (SGX_AESGCM_MAC_SIZE+1));
-
-        sgx_status_t status = encryptMessageAES(ruleString, len, dbElement->data->text, len, dbElement->data->tag);
-        if(status != SGX_SUCCESS){
-            //deleteMessage(&dbElement->data);
-            free_allocated_memory_void((void**)&dbElement->data->text);
-            free_allocated_memory_void((void**)&dbElement->data->tag);
-            free_allocated_memory_void((void**)&dbElement->data);
-            free_allocated_memory_void((void**)&dbElement);
-            return false;
-        }
-        dbElement->data->textLength = len;
-        dbElement->data->tagLength = SGX_AESGCM_MAC_SIZE;
-    }else{
-        dbElement->data->isEncrypted = 0;
-        dbElement->data->text = ruleString;
-        dbElement->data->textLength = len;
-    }
-    size_t isSuccess = 0;
-
-    dbElement->ruleID = myrule->ruleID;
-    dbElement->deviceID = myrule->trigger->deviceID;
-    dbElement->deviceIDAction = myrule->action->deviceID;
-    setAttributeValue(myrule->trigger, dbElement);
-    //dbElement->data = data;
-
-    ocall_write_to_file(&isSuccess, dbElement, 1);
-
-    //deleteMessage(&dbElement->data);
-    free_allocated_memory_void((void**)&dbElement->data->text);
-    free_allocated_memory_void((void**)&dbElement->data->tag);
-    free_allocated_memory_void((void**)&dbElement->data);
-    free_allocated_memory_void((void**)&dbElement);
-
-    return isSuccess == 1 ? true:false;
-}
-
-
+/*
+ * Construct DatabaseElement for query
+ */
 bool constructDatabaseQuery(DatabaseElement *dbElement, char *primaryKey, char *secondaryKey, DBQueryType queryType){
     switch (queryType){
         case BY_RULE:{
@@ -127,17 +82,83 @@ bool constructDatabaseQuery(DatabaseElement *dbElement, char *primaryKey, char *
 }
 
 
+/*
+ * storeRuleInDB:
+ *  store a rule in the DB after encrypting.
+ *  @params: rule string, rule struct
+ *  returns: true if successful, else false
+ */
+bool storeRuleInDB(char *ruleString, Rule *myrule){
+    /* initialize struct DatabaseElement */
+    DatabaseElement *dbElement = (DatabaseElement*) malloc(sizeof(struct DatabaseElement));
+    dbElement->data = (Message*) malloc(sizeof(struct Message));
+    dbElement->data->text = NULL;
+    dbElement->data->tag = NULL;
+    size_t len = strlen(ruleString);
+    if(isEncryptionEnabled){
+        /* encrypt */
+        dbElement->data->isEncrypted = 1;
+        dbElement->data->text = (char *) malloc(sizeof(char) * (len+1));
+        dbElement->data->tag = (char *) malloc(sizeof(char) * (SGX_AESGCM_MAC_SIZE+1));
+
+        sgx_status_t status = encryptMessageAES(ruleString, len, dbElement->data->text, len, dbElement->data->tag);
+        if(status != SGX_SUCCESS){
+            //deleteMessage(&dbElement->data);
+            free_allocated_memory_void((void**)&dbElement->data->text);
+            free_allocated_memory_void((void**)&dbElement->data->tag);
+            free_allocated_memory_void((void**)&dbElement->data);
+            free_allocated_memory_void((void**)&dbElement);
+            return false;
+        }
+        dbElement->data->textLength = len;
+        dbElement->data->tagLength = SGX_AESGCM_MAC_SIZE;
+    }else{
+        dbElement->data->isEncrypted = 0;
+        dbElement->data->text = ruleString;
+        dbElement->data->textLength = len;
+    }
+    size_t isSuccess = 0;
+
+    dbElement->ruleID = myrule->ruleID;
+    dbElement->deviceID = myrule->trigger->deviceID;
+    dbElement->deviceIDAction = myrule->action->deviceID;
+    setAttributeValue(myrule->trigger, dbElement);
+    //dbElement->data = data;
+
+    ocall_write_to_file(&isSuccess, dbElement, 1); /* pass the rule to the REE via ocall */
+
+    //deleteMessage(&dbElement->data);
+    free_allocated_memory_void((void**)&dbElement->data->text);
+    free_allocated_memory_void((void**)&dbElement->data->tag);
+    free_allocated_memory_void((void**)&dbElement->data);
+    free_allocated_memory_void((void**)&dbElement);
+
+    return isSuccess == 1 ? true:false;
+}
+
+/*
+ * retrieveRuleCountFromDB:
+ *  retrieve total number of Rules from DB for a query
+ *  @params: primaryKey = secondaryKey = query parameters; queryType = enum to represent the type of query
+ *  returns: total number of Rules
+ */
 size_t retrieveRuleCountFromDB(char *primaryKey, char *secondaryKey, DBQueryType queryType){
     //printf("EnclaveDatabaseManager:: retrieveRuleCountFromDB...");
     DatabaseElement *dbElement = (DatabaseElement*) malloc(sizeof(DatabaseElement));
     size_t ruleCount = 0;
     if(constructDatabaseQuery(dbElement, primaryKey, secondaryKey, queryType)){
-        ocall_read_rule_count(&ruleCount, dbElement);
+        ocall_read_rule_count(&ruleCount, dbElement); /* pass the query to the REE via ocall */
     }
     if(dbElement != NULL) free(dbElement);
     return ruleCount;
 }
 
+/*
+ * retrieveRulesFromDB:
+ *  retrieve Rules from DB for a query
+ *  @params: ruleset = vector to hold the retrieved rules; ruleCount = number of rules to retrieve; primaryKey = secondaryKey = query parameters; queryType = enum to represent the type of query
+ *  returns: true if successful, else false
+ */
 bool retrieveRulesFromDB(std::vector<Rule*>&ruleset, size_t ruleCount, char *primaryKey, char *secondaryKey, DBQueryType queryType){
     printf("EnclaveDatabaseManager:: retrieveRulesFromDB...");
     if (ruleCount <= 0){
@@ -168,7 +189,7 @@ bool retrieveRulesFromDB(std::vector<Rule*>&ruleset, size_t ruleCount, char *pri
         return false;
     }
 
-    /*  initialize DatabaseElement and Message */
+    /*  initialize structs DatabaseElement and Message */
     int count = 0;
     dbElement->data = startPosData;
     for(int i=0; i<ruleCount; i++){
@@ -208,6 +229,7 @@ bool retrieveRulesFromDB(std::vector<Rule*>&ruleset, size_t ruleCount, char *pri
         bool isSuccess = true;
         char *ruleString = (char *) malloc(sizeof(char) * (dbElement->data->textLength + 1));
         if(dbElement->data->isEncrypted){
+            /* decrypt fetched rule */
             sgx_status_t status = decryptMessageAES(dbElement->data->text, dbElement->data->textLength, ruleString, dbElement->data->textLength, dbElement->data->tag);
             if(status != SGX_SUCCESS){
                 isSuccess = false;
@@ -225,6 +247,7 @@ bool retrieveRulesFromDB(std::vector<Rule*>&ruleset, size_t ruleCount, char *pri
         }else{
             struct Rule *myRule;
             if(initRule(&myRule)){
+                /* parse rule */
                 if(startParsingRule(ruleString, myRule)){
                     printRuleInfo(myRule);
                     ruleset.push_back(myRule);

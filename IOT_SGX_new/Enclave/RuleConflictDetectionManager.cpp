@@ -70,9 +70,9 @@ bool isValueEqual(RuleComponent *item1, RuleComponent *item2){
     }
 }
 
-/***
+/******************************************************
  * Graph Creation
- ***/
+ ******************************************************/
 
 bool initGraph(){
     edgeMap = std::multimap<KeyPair, std::string>();
@@ -100,9 +100,9 @@ bool isEdgePresent(KeyPair key) {
 }
 
 
-/***
+/******************************************************
  * Rule Conflict Detection
- ***/
+ ******************************************************/
 
 bool checkShadowExecutionConflictBound(Rule *newEdge, Rule *oldEdge){
     if(isStringValue(newEdge->trigger) && isStringValue(oldEdge->trigger)){
@@ -116,6 +116,11 @@ bool checkShadowExecutionConflictBound(Rule *newEdge, Rule *oldEdge){
     return false;
 }
 
+/*
+ * Shadow or Execution Conflict detection
+ *  Shadow: For Rules X and Y  => Trigger(X) ⊆ Trigger(Y), Actuator(X) = Actuator(Y), Action(X) = Action(Y)
+ *  Execution: For Rules X and Y  => Trigger(X) ⊆ Trigger(Y), Actuator(X) = Actuator(Y), Action(X) ≠ Action(Y)
+ */
 ConflictType checkShadowExecutionConflict(Rule *newEdge, Rule *oldEdge){
     bool isSameAction = isValueEqual(newEdge->action, oldEdge->action);
     if(isSameAction){
@@ -125,6 +130,10 @@ ConflictType checkShadowExecutionConflict(Rule *newEdge, Rule *oldEdge){
     }
 }
 
+/*
+ * Environment Mutual Conflict (continuous toggle) detection
+ *  For Rules X and Y  => Trigger(X) ≠ Trigger(Y), Actuator(X) = Actuator(Y),  Action(X) ≠ Action(Y)
+ */
 ConflictType checkMutualConflict(Rule *newEdge, Rule *oldEdge){
     /*
     if(isStringValue(newEdge->action)){
@@ -142,14 +151,23 @@ ConflictType checkMutualConflict(Rule *newEdge, Rule *oldEdge){
     return NONE;
 }
 
+/*
+ * Dependence conflict detection
+ *  For Rules X and Y  => Action(X) ➜ Trigger(Y), Action(Y) ➜ Trigger(X)
+ */
 ConflictType checkDependenceConflict(Rule *newEdge, Rule *oldEdge){
     if(!isValueEqual(newEdge->action, oldEdge->trigger) && !isValueEqual(newEdge->trigger, oldEdge->action))
         return NONE;
     return DEPENDENCE;
 }
 
-ConflictType checkChainingConflict(Rule *newEdge, Rule *oldEdge, bool isForwardChaining){
-    if(isForwardChaining){
+/*
+ * Detection of Chaining of the rules with the given rule
+ *  Forward Chaining: new Rule's action activates an existing Rule's trigger
+ *  Backward Chaining: new Rule's trigger will be activated by an existing Rule's action
+ */
+ConflictType checkChainingConflict(Rule *newEdge, Rule *oldEdge, bool isBackwardChaining){
+    if(isBackwardChaining){
         if(isValueEqual(newEdge->trigger, oldEdge->action))
             return CHAIN;
     }else{
@@ -159,6 +177,83 @@ ConflictType checkChainingConflict(Rule *newEdge, Rule *oldEdge, bool isForwardC
     return NONE;
 }
 
+/*
+ * detectRuleConflicts2:
+ *  for a given rule, detects conflicts with existing rules in DB
+ *  @params: the given rule
+ *  returns: true if there exist a conflict, else false
+ */
+bool detectRuleConflicts2(Rule *edge){
+    ConflictType result = NONE;
+    std::vector<Rule*> ruleset;
+    /* check shadow, execution, and mutual conflicts: retrieve Rules from DB where action device match with the given Rule's action device */
+    if(retrieveRulesFromDB(ruleset, 0, edge->action->deviceID, NULL, BY_ACTION_DEVICE_ID)){
+        printf("RuleConflictDetectionManager:: Retrieved rule!, size=%d", ruleset.size());
+        for (int i = 0; i < ruleset.size(); ++i) {
+            if (strcmp(edge->trigger->deviceID, ruleset[i]->trigger->deviceID) == 0){
+                /* shadow or execution */
+                result =  checkShadowExecutionConflict(edge, ruleset[i]);
+                if(result != NONE) break;
+            }else{
+                /* mutual */
+                result = checkMutualConflict(edge, ruleset[i]);
+                if(result != NONE) break;
+            }
+        }
+        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
+        ruleset.clear();
+        if (result != NONE){
+            printConflictType(result);
+            return true;
+        }
+    }else{
+        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
+    }
+
+    /* check dependence and forward chaining conflicts: retrieve Rules from DB where trigger device match with the given Rule's action device */
+    if(retrieveRulesFromDB(ruleset, 0, edge->action->deviceID, NULL, BY_TRIGGER_DEVICE_ID)){
+        printf("*** Retrieved rule!, size=%d", ruleset.size());
+        for (int i = 0; i < ruleset.size(); ++i) {
+            if (strcmp(edge->trigger->deviceID, ruleset[i]->action->deviceID) == 0){
+                /* dependence */
+                result =  checkDependenceConflict(edge, ruleset[i]);
+                if(result != NONE) break;
+            }else{
+                /* forward chaining */
+                result = checkChainingConflict(edge, ruleset[i], false);
+                if(result != NONE) break;
+            }
+        }
+        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
+        ruleset.clear();
+        if (result != NONE){
+            printConflictType(result);
+            return true;
+        }
+    }else{
+        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
+    }
+
+    /* check backward chaining conflicts: retrieve Rules from DB where action device match with the given Rule's trigger device */
+    if(retrieveRulesFromDB(ruleset, 0, edge->trigger->deviceID, NULL, BY_ACTION_DEVICE_ID)){
+        printf("*** Retrieved rule!, size=%d", ruleset.size());
+        for (int i = 0; i < ruleset.size(); ++i) {
+            /* backward chaining */
+            result = checkChainingConflict(edge, ruleset[i], true);
+            if(result != NONE) break;
+        }
+        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
+        ruleset.clear();
+        if (result != NONE){
+            printConflictType(result);
+            return true;
+        }
+    }else{
+        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
+    }
+
+    return result == NONE? false:true;
+}
 
 Rule* getEdgeFromDB(std::string ruleID){
     printf("RuleConflictDetectionManager:: #getEdgeFromDB with ruleid = %s", (char*)ruleID.c_str());
@@ -218,75 +313,6 @@ ConflictType checkPossibleConflict(Rule *edge, std::string ruleID, ConflictType 
     return result;
 }
 
-bool detectRuleConflicts2(Rule *edge){
-    ConflictType result = NONE;
-    std::vector<Rule*> ruleset;
-    if(retrieveRulesFromDB(ruleset, 0, edge->action->deviceID, NULL, BY_ACTION_DEVICE_ID)){
-        printf("RuleConflictDetectionManager:: Retrieved rule!, size=%d", ruleset.size());
-        for (int i = 0; i < ruleset.size(); ++i) {
-            if (strcmp(edge->trigger->deviceID, ruleset[i]->trigger->deviceID) == 0){
-                /* shadow or execution */
-                result =  checkShadowExecutionConflict(edge, ruleset[i]);
-                if(result != NONE) break;
-            }else{
-                /* mutual */
-                result = checkMutualConflict(edge, ruleset[i]);
-                if(result != NONE) break;
-            }
-        }
-        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
-        ruleset.clear();
-        if (result != NONE){
-            printConflictType(result);
-            return true;
-        }
-    }else{
-        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
-    }
-
-    if(retrieveRulesFromDB(ruleset, 0, edge->action->deviceID, NULL, BY_TRIGGER_DEVICE_ID)){
-        printf("*** Retrieved rule!, size=%d", ruleset.size());
-        for (int i = 0; i < ruleset.size(); ++i) {
-            if (strcmp(edge->trigger->deviceID, ruleset[i]->action->deviceID) == 0){
-                /* dependence */
-                result =  checkDependenceConflict(edge, ruleset[i]);
-                if(result != NONE) break;
-            }else{
-                /* chaining */
-                result = checkChainingConflict(edge, ruleset[i], false);
-                if(result != NONE) break;
-            }
-        }
-        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
-        ruleset.clear();
-        if (result != NONE){
-            printConflictType(result);
-            return true;
-        }
-    }else{
-        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
-    }
-
-    if(retrieveRulesFromDB(ruleset, 0, edge->trigger->deviceID, "", BY_ACTION_DEVICE_ID)){
-        printf("*** Retrieved rule!, size=%d", ruleset.size());
-        for (int i = 0; i < ruleset.size(); ++i) {
-            /* forward chaining */
-            result = checkChainingConflict(edge, ruleset[i], true);
-            if(result != NONE) break;
-        }
-        for (int i = 0; i < ruleset.size(); ++i) deleteRule(&ruleset[i]);
-        ruleset.clear();
-        if (result != NONE){
-            printConflictType(result);
-            return true;
-        }
-    }else{
-        printf("RuleConflictDetectionManager:: Rule retrieval failed!");
-    }
-
-    return result == NONE? false:true;
-}
-
 bool detectRuleConflicts(Rule *edge){
     return detectRuleConflicts2(edge);
 
@@ -314,12 +340,12 @@ bool detectRuleConflicts(Rule *edge){
                 result = checkPossibleConflict(edge, itr->second, DEPENDENCE);
                 if(result != NONE) break;
             }else{
-                /* chaining */
+                /* forward chaining */
                 result = checkPossibleConflict(edge, itr->second, CHAIN);
                 if(result != NONE) break;
             }
         }else if(srcID == itr->first.second){
-            /* forward chaining */
+            /* backward chaining */
             result = checkPossibleConflict(edge, itr->second, CHAIN_FWD);
             if(result != NONE) break;
         }

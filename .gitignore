@@ -1,0 +1,12 @@
+iot_sgx/
+SampleEnclave/
+SimulatedIoTData/
+*.o
+*.xml
+*.json
+*.txt
+*.bin
+.DS_Store
+IOT_SGX_new/.idea/
+IOT_SGX_new/Enclave/._.DS_Store
+
